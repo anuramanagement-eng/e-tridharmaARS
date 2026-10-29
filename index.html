@@ -91,7 +91,7 @@
                 </div>
 
                 <div id="configAlert" class="alert alert-warning small" style="display:none; border-radius: 8px;">
-                    <i class="fas fa-tools me-1"></i> <b>Konfigurasi belum lengkap.</b> Isi <code>SUPABASE_URL</code> dan <code>SUPABASE_KEY</code> di file <code>config.js</code>, lalu deploy ulang.
+                    <i class="fas fa-tools me-1"></i> <b>Konfigurasi belum lengkap.</b>
                 </div>
 
                 <form id="formLogin" onsubmit="processLogin(event)">
@@ -115,6 +115,9 @@
                     </button>
                     <div class="text-center">
                         <small class="text-muted">Akun diberikan oleh admin Prodi ARS.</small>
+                    </div>
+                    <div class="text-center mt-3">
+                        <small class="text-muted" id="appVersion"></small>
                     </div>
                 </form>
             </div>
@@ -601,20 +604,48 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+    <script>window.supabase || document.write('<script src="https://unpkg.com/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"><\/script>');</script>
+    <script>
+        // =====================================================================
+        //  KONFIGURASI SUPABASE  (menyatu di sini, config.js tidak diperlukan lagi)
+        //  Kunci publishable AMAN ditaruh di sini (data dilindungi RLS Supabase).
+        //  JANGAN taruh "secret"/"service_role" key di sini.
+        //  Kalau proyek Supabase berganti, cukup ubah 2 baris di bawah ini.
+        // =====================================================================
+        window.APP_CONFIG = {
+            SUPABASE_URL: "https://bdbzyirfatckbaydegpl.supabase.co",
+            SUPABASE_KEY: "sb_publishable_p8bkMZZlu-3dFSAsik5dlg_HNApM534",
+            BUCKET: "dokumen"
+        };
+    </script>
     <script>
         // =============================================================
         //  INISIALISASI SUPABASE
         // =============================================================
+        // Naikkan nomor + tanggal ini setiap kali Anda meng-update aplikasi.
+        const APP_VERSION = "v2.2";
+        const APP_UPDATED = "29 Okt 2026";
         const CFG = window.APP_CONFIG || {};
         const BUCKET = CFG.BUCKET || "dokumen";
         const TABLE = "dokumen";
         const MAX_MB = 40;
-        const configOk = !!(CFG.SUPABASE_URL && CFG.SUPABASE_KEY &&
-                            CFG.SUPABASE_URL.indexOf("XXXX") === -1 &&
-                            CFG.SUPABASE_KEY.indexOf("XXXX") === -1);
-        const sb = (configOk && window.supabase) ? window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_KEY) : null;
+        const cfgUrl = String(CFG.SUPABASE_URL || "").trim();
+        const cfgKey = String(CFG.SUPABASE_KEY || "").trim();
+        let configProblem = "";
+        if (!window.APP_CONFIG) {
+            configProblem = "Blok <code>window.APP_CONFIG</code> di dalam <code>index.html</code> hilang. Gunakan <code>index.html</code> versi terbaru.";
+        } else if (!/^https:\/\/[a-z0-9]+\.supabase\.co\/?$/i.test(cfgUrl) || cfgUrl.indexOf("XXXX") > -1) {
+            configProblem = "<code>SUPABASE_URL</code> di <code>index.html</code> belum benar (masih contoh XXXX atau formatnya salah). Isi dengan Project URL Supabase, mis. <code>https://abcd1234.supabase.co</code>.";
+        } else if (!cfgKey || cfgKey.indexOf("XXXX") > -1) {
+            configProblem = "<code>SUPABASE_KEY</code> di <code>index.html</code> masih kosong/contoh. Isi dengan Publishable key (<code>sb_publishable_...</code>).";
+        } else if (/^sb_secret_/.test(cfgKey)) {
+            configProblem = "<code>SUPABASE_KEY</code> di <code>index.html</code> berisi <b>secret key</b>. Ganti dengan <b>Publishable key</b> (<code>sb_publishable_...</code>) dan segera buat ulang secret key Anda di Supabase.";
+        } else if (!window.supabase) {
+            configProblem = "Library Supabase gagal dimuat dari internet (kemungkinan diblokir jaringan/ad-blocker). Coba muat ulang halaman, matikan ad-blocker, atau gunakan jaringan lain.";
+        }
+        const configOk = !configProblem;
+        const sb = configOk ? window.supabase.createClient(cfgUrl.replace(/\/$/, ""), cfgKey) : null;
 
         window.allFilesData = [];
         window.fileIndex = {};
@@ -632,6 +663,8 @@
         //  SAAT HALAMAN DIMUAT
         // =============================================================
         document.addEventListener("DOMContentLoaded", async function() {
+            document.getElementById("appVersion").innerHTML =
+                '<i class="fas fa-code-branch me-1"></i>Versi ' + esc(APP_VERSION) + ' &middot; diperbarui ' + esc(APP_UPDATED);
             filterSemesterMK();
 
             // Perhitungan real-time checkbox SDG
@@ -651,7 +684,7 @@
             document.getElementById("btnConfirmDelete").addEventListener("click", doDelete);
 
             if (!sb) {
-                document.getElementById("configAlert").style.display = "block";
+                showConfigAlert();
                 return;
             }
 
@@ -663,6 +696,12 @@
                 if (event === "SIGNED_OUT") showLogin();
             });
         });
+
+        function showConfigAlert() {
+            const box = document.getElementById("configAlert");
+            box.innerHTML = '<i class="fas fa-tools me-1"></i> <b>Konfigurasi belum lengkap.</b> ' + configProblem;
+            box.style.display = "block";
+        }
 
         function updateSdgCounter() {
             const count = document.querySelectorAll(".sdg-cb:checked").length;
@@ -676,7 +715,7 @@
         async function processLogin(event) {
             event.preventDefault();
             const alertBox = document.getElementById("loginAlert");
-            if (!sb) { document.getElementById("configAlert").style.display = "block"; return; }
+            if (!sb) { showConfigAlert(); return; }
 
             const btn = document.getElementById("btnLogin");
             const original = btn.innerHTML;
