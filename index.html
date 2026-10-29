@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>e-Tri Dharma Prodi ARS - Universitas Borneo Lestari</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #f4f7fa; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow-x: hidden; }
+
+        /* DESAIN HALAMAN LOGIN */
+        .login-wrapper { min-height: 100vh; background: linear-gradient(135deg, #e9ecef, #f8f9fa); display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .login-card { background: white; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); overflow: hidden; max-width: 1000px; width: 100%; display: flex; flex-wrap: wrap; }
+        .login-left { background: linear-gradient(135deg, #0d6efd, #0043a8); color: white; padding: 40px; flex: 1 1 500px; }
+        .login-right { padding: 50px 40px; flex: 1 1 400px; display: flex; flex-direction: column; justify-content: center; background: white; }
+        .logo-container img { height: 70px; object-fit: contain; margin-right: 15px; border-radius: 8px; background: white; padding: 5px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .visi-misi-box { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 12px; border-left: 4px solid #ffc107; margin-top: 25px; }
+        @media (max-width: 576px) { .login-left, .login-right { padding: 28px 20px; } .logo-container img { height: 54px; } }
+
+        /* DESAIN NAVBAR & MAIN APP */
+        .navbar { background: linear-gradient(135deg, #0d6efd, #0043a8); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .navbar-brand { font-weight: 700; letter-spacing: 1px; color: white !important; }
+        .navbar-toggler { border-color: rgba(255,255,255,0.5); }
+        .navbar-toggler-icon { filter: invert(1); }
+        .nav-link { color: rgba(255,255,255,0.85) !important; font-weight: 500; transition: all 0.3s ease; padding: 8px 16px !important; border-radius: 8px; margin: 0 5px; }
+        .nav-link:hover { color: white !important; background-color: rgba(255,255,255,0.15); transform: translateY(-2px); }
+        .nav-link.active { background-color: white !important; color: #0d6efd !important; font-weight: 700; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transform: translateY(-2px); }
+        .user-chip { color: rgba(255,255,255,0.85); font-size: 0.85rem; }
+
+        .card { border: none; border-radius: 15px; box-shadow: 0 6px 18px rgba(0,0,0,0.05); }
+        .card-header { background-color: white; border-bottom: 2px solid #f0f2f5; border-radius: 15px 15px 0 0 !important; font-weight: bold; color: #333; }
+        .btn-primary { background-color: #0d6efd; border: none; border-radius: 8px; padding: 10px 20px; font-weight: 600; transition: 0.3s; }
+        .btn-primary:hover { background-color: #0b5ed7; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3); }
+        .badge-custom { font-size: 0.85em; padding: 5px 10px; border-radius: 6px; font-weight: 500; margin-right: 5px; margin-bottom: 5px; display: inline-block; }
+        .badge-kategori { background-color: #e7f1ff; color: #0d6efd; border: 1px solid #b6d4fe; }
+        .badge-tahun { background-color: #f8f9fa; color: #495057; border: 1px solid #dee2e6; }
+        .badge-metode { background-color: #e0f8e9; color: #198754; border: 1px solid #a3cfbb; }
+        .badge-kurikulum { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+        .badge-semester { background-color: #e2e3e5; color: #383d41; border: 1px solid #d6d8db; }
+        .table-hover tbody tr:hover { background-color: #f8f9fa; transition: 0.2s; }
+        .stat-card { border-radius: 12px; padding: 15px; text-align: center; color: white; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .stat-card h3 { margin: 0; font-weight: bold; font-size: 2rem; }
+        .stat-card p { margin: 0; font-size: 0.9rem; opacity: 0.9; }
+        .stat-blue { background: linear-gradient(135deg, #0d6efd, #0dcaf0); }
+        .stat-green { background: linear-gradient(135deg, #198754, #20c997); }
+        .stat-purple { background: linear-gradient(135deg, #6f42c1, #d63384); }
+        .stat-orange { background: linear-gradient(135deg, #fd7e14, #ffc107); }
+        .semester-breakdown { font-size: 0.85rem; font-weight: bold; background: rgba(255,255,255,0.2); border-radius: 6px; padding: 5px; margin-top: 8px; display: flex; justify-content: space-around; }
+
+        /* DESAIN CHECKBOX SDG */
+        .sdg-container { max-height: 250px; overflow-y: auto; overflow-x: hidden; }
+        .form-check-label { cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <!-- HALAMAN LOGIN -->
+    <div id="loginScreen" class="login-wrapper">
+        <div class="login-card">
+            <!-- Sisi Kiri: Info, Logo, Visi Misi -->
+            <div class="login-left">
+                <div class="logo-container mb-4 d-flex">
+                    <img src="https://ui-avatars.com/api/?name=UNBL&background=fff&color=0d6efd&font-size=0.33&bold=true" alt="Logo UNBL" title="Logo UNBL" onerror="this.style.display='none'">
+                    <img src="https://ui-avatars.com/api/?name=FIKST&background=fff&color=0d6efd&font-size=0.33&bold=true" alt="Logo FIKST" title="Logo FIKST" onerror="this.style.display='none'">
+                    <img src="https://ui-avatars.com/api/?name=ARS&background=fff&color=0d6efd&font-size=0.33&bold=true" alt="Logo Prodi ARS" title="Logo Prodi ARS" onerror="this.style.display='none'">
+                </div>
+                <h3 class="fw-bold mb-3">Selamat Datang di e-Tri Dharma</h3>
+                <p class="fs-5 opacity-75 mb-0">Program Studi Sarjana Administrasi Rumah Sakit<br>Fakultas Ilmu Kesehatan dan Sains Teknologi<br>Universitas Borneo Lestari</p>
+
+                <div class="visi-misi-box shadow-sm">
+                    <h5 class="fw-bold text-warning mb-2"><i class="fas fa-bullseye me-2"></i>Visi</h5>
+                    <p class="small mb-3">"Mewujudkan Program Studi Administrasi Rumah Sakit yang bersaing tingkat nasional dalam bidang mutu layanan berbasis teknologi informasi di layanan kesehatan."</p>
+
+                    <h5 class="fw-bold text-warning mb-2"><i class="fas fa-list-ul me-2"></i>Misi</h5>
+                    <ul class="small mb-0 ps-3">
+                        <li>Menyelenggarakan pendidikan akademik Administrasi Rumah Sakit yang unggul dalam mutu layanan berbasis teknologi informasi.</li>
+                        <li>Menyelenggarakan penelitian dan pengembangan ilmu pengetahuan dan teknologi di bidang Administrasi Rumah Sakit.</li>
+                        <li>Menyelenggarakan pengabdian masyarakat berbasis hasil penelitian, program pemberdayaan masyarakat dan transfer teknologi kesehatan yang berkualitas.</li>
+                        <li>Meningkatkan kualitas kerjasama untuk meningkatkan pendidikan, penelitian, dan pengabdian kepada masyarakat.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sisi Kanan: Form Login -->
+            <div class="login-right">
+                <div class="text-center mb-4">
+                    <i class="fas fa-user-circle text-primary mb-3" style="font-size: 4rem;"></i>
+                    <h4 class="fw-bold text-dark">Portal Dosen</h4>
+                    <p class="text-muted">Silakan masuk untuk mengakses Sistem e-Tri Dharma.</p>
+                </div>
+
+                <div id="configAlert" class="alert alert-warning small" style="display:none; border-radius: 8px;">
+                    <i class="fas fa-tools me-1"></i> <b>Konfigurasi belum lengkap.</b> Isi <code>SUPABASE_URL</code> dan <code>SUPABASE_KEY</code> di file <code>config.js</code>, lalu deploy ulang.
+                </div>
+
+                <form id="formLogin" onsubmit="processLogin(event)">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-secondary">Email</label>
+                        <div class="input-group shadow-sm">
+                            <span class="input-group-text bg-white border-end-0 text-primary"><i class="fas fa-envelope"></i></span>
+                            <input type="email" id="loginEmail" class="form-control border-start-0 py-2" placeholder="nama@unbl.ac.id" autocomplete="username" required>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-secondary">Kata Sandi (Password)</label>
+                        <div class="input-group shadow-sm">
+                            <span class="input-group-text bg-white border-end-0 text-primary"><i class="fas fa-lock"></i></span>
+                            <input type="password" id="loginPassword" class="form-control border-start-0 py-2" placeholder="Masukkan Password" autocomplete="current-password" required>
+                        </div>
+                    </div>
+                    <div id="loginAlert" class="alert alert-danger p-2 small mb-4" style="display: none; border-radius: 8px;"></div>
+                    <button type="submit" id="btnLogin" class="btn btn-primary w-100 py-2 fs-5 mb-3 shadow-sm">
+                        <i class="fas fa-sign-in-alt me-2"></i> Masuk Sistem
+                    </button>
+                    <div class="text-center">
+                        <small class="text-muted">Akun diberikan oleh admin Prodi ARS.</small>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APLIKASI -->
+    <div id="mainApp" style="display: none;">
+        <nav class="navbar navbar-expand-lg mb-4 sticky-top">
+            <div class="container">
+                <a class="navbar-brand" href="#"><i class="fas fa-hospital-user me-2"></i>e-Tri Dharma ARS</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto align-items-lg-center">
+                        <li class="nav-link" id="nav-upload" style="cursor:pointer;" onclick="switchTab('upload')"><i class="fas fa-cloud-upload-alt me-1"></i> Input Dokumen</li>
+                        <li class="nav-link active" id="nav-list" style="cursor:pointer;" onclick="switchTab('list')"><i class="fas fa-list me-1"></i> Daftar Dokumen</li>
+                        <li class="user-chip ms-lg-3 px-3 py-1" id="userEmail"></li>
+                        <li class="nav-link text-warning" style="cursor:pointer;" onclick="logout()"><i class="fas fa-power-off me-1"></i> Keluar</li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container pb-5">
+            <!-- TAB UPLOAD -->
+            <div id="tab-upload" style="display: none;">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header py-3"><i class="fas fa-file-signature me-2 text-primary"></i>Form Input Dokumen e-Tri Dharma</div>
+                            <div class="card-body p-4">
+                                <form id="uploadForm" onsubmit="handleFormSubmit(event)">
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label fw-bold">Pengunggah / Nama Dosen</label>
+                                            <input type="text" class="form-control" name="pengunggah" placeholder="Tuliskan Nama Anda" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label fw-bold">Kategori Dokumen</label>
+                                            <select class="form-select" id="kategori" name="kategori" onchange="toggleDynamicFields()" required>
+                                                <option value="">-- Pilih Kategori --</option>
+                                                <optgroup label="Pengajaran">
+                                                    <option value="RPS">RPS (Rencana Pembelajaran Semester)</option>
+                                                    <option value="Kontrak Ajar">Kontrak Ajar</option>
+                                                    <option value="Presensi Mahasiswa">Presensi Mahasiswa</option>
+                                                    <option value="Nilai Mahasiswa">Nilai Mahasiswa (DPNA)</option>
+                                                    <option value="Jurnal Dosen">Jurnal Mengajar Dosen</option>
+                                                    <option value="SK Mengajar">SK Mengajar</option>
+                                                </optgroup>
+                                                <optgroup label="Penelitian & Publikasi">
+                                                    <option value="Penelitian">Hasil Penelitian / Publikasi Ilmiah</option>
+                                                    <option value="HKI">HKI (Hak Kekayaan Intelektual)</option>
+                                                </optgroup>
+                                                <optgroup label="Pengabdian">
+                                                    <option value="Pengabdian Masyarakat">Hasil Pengabdian kepada Masyarakat</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label fw-bold">Tahun Ajaran</label>
+                                            <select class="form-select" name="tahunAjaran" required>
+                                                <option value="2023/2024">2023/2024</option>
+                                                <option value="2024/2025">2024/2025</option>
+                                                <option value="2025/2026">2025/2026</option>
+                                                <option value="2026/2027" selected>2026/2027</option>
+                                                <option value="2027/2028">2027/2028</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label fw-bold">Semester</label>
+                                            <select class="form-select" id="semester" name="semester" onchange="filterSemesterMK()" required>
+                                                <option value="Ganjil">Ganjil</option>
+                                                <option value="Genap">Genap</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label id="labelNamaFile" class="form-label fw-bold">Nama File / Dokumen</label>
+                                        <div id="containerNamaFileText">
+                                            <input type="text" class="form-control" id="namaFileText" name="namaFile" placeholder="Contoh: Modul Praktikum ABC">
+                                        </div>
+                                        <div id="containerMataKuliah" style="display: none;">
+                                            <input type="text" class="form-control" id="mataKuliahInput" name="mataKuliah" list="listMataKuliah" placeholder="-- Ketik atau Pilih Mata Kuliah --">
+                                            <datalist id="listMataKuliah">
+                                                <option value="Administrasi Rumah Sakit">
+                                                <option value="Akuntansi Biaya (Implementasi di rs)">
+                                                <option value="Anggaran dan Indikator Kinerja">
+                                                <option value="Antropologi kesehatan">
+                                                <option value="Aplikasi Komputer">
+                                                <option value="Aplikasi Komputer II">
+                                                <option value="Bahasa Indonesia">
+                                                <option value="Bahasa Inggris">
+                                                <option value="Bahasa Inggris (dasar dan profesi)">
+                                                <option value="Bahasa Inggris (profesi)">
+                                                <option value="Biologi Kesehatan">
+                                                <option value="Biostatistik dan Statistika Kesehatan">
+                                                <option value="Dasar - Dasar Komunikasi">
+                                                <option value="Dasar-dasar Administrasi dan Manajemen">
+                                                <option value="Dasar-dasar Akuntansi">
+                                                <option value="e-Hospital">
+                                                <option value="Ekonomi Kesehatan">
+                                                <option value="Epidemiologi Klinis">
+                                                <option value="Etika Profesi dan Hukum Kesehatan">
+                                                <option value="Evaluasi Kinerja Rumah Sakit">
+                                                <option value="Final Project I">
+                                                <option value="Final Project II">
+                                                <option value="Hospital Public Relation">
+                                                <option value="Ilmu Kesehatan Masyarakat">
+                                                <option value="Ilmu Sosial Dasar">
+                                                <option value="Kewarganegaraan">
+                                                <option value="Kewirausahaan">
+                                                <option value="KKN">
+                                                <option value="Leadership">
+                                                <option value="Magang">
+                                                <option value="Manajemen Aset dan Tata Ruang">
+                                                <option value="Manajemen Bisnis (RSB,RBA)">
+                                                <option value="Manajemen Jaminan Mutu Kesehatan">
+                                                <option value="Manajemen Kesehatan Lingkungan & Limbah Rumah Sakit">
+                                                <option value="Manajemen Kesehatan Lingkungan Rumah Sakit">
+                                                <option value="Manajemen Keselamatan dan Kesehatan Kerja RS">
+                                                <option value="Manajemen Keuangan">
+                                                <option value="Manajemen Komplain dan Customer Service">
+                                                <option value="Manajemen Logistik Medik & Non Medik">
+                                                <option value="Manajemen Pelayanan Kesehatan UKM/UKP">
+                                                <option value="Manajemen Pelayanan Kesehatan dan Rumah Sakit">
+                                                <option value="Manajemen Pemasaran RS">
+                                                <option value="Manajemen Penunjang Medis">
+                                                <option value="Manajemen Perilaku Organisasi">
+                                                <option value="Manajemen Produksi Rumah Sakit">
+                                                <option value="Manajemen Rekam Medis">
+                                                <option value="Manajemen Risiko Rumah Sakit">
+                                                <option value="Manajemen Sumber Daya Manusia (SDM) Kesehatan">
+                                                <option value="Matematika">
+                                                <option value="Metodologi Penelitian Kesehatan">
+                                                <option value="Pancasila">
+                                                <option value="Pelayanan Publik">
+                                                <option value="Pendidikan Agama">
+                                                <option value="Pendidikan dan Budaya Anti Korupsi">
+                                                <option value="Pengalaman Belajar Lapangan (PBL)">
+                                                <option value="Pengalaman Belajar Lapangan (PBL) II">
+                                                <option value="Pengalaman Belajar Lapangan 1 (PBL)">
+                                                <option value="Pengantar Ilmu Sosial Dasar">
+                                                <option value="Pengantar Kearifan Lokal Kalimantan">
+                                                <option value="Penyuluhan Kesehatan">
+                                                <option value="Penyuluhan Kesehatan Rumah Sakit">
+                                                <option value="Peraturan dan Kebijakan Kesehatan (AKRS)">
+                                                <option value="Praktik Administrasi Rumah Sakit">
+                                                <option value="Praktik Akuntansi Biaya (Implementasi di rs)">
+                                                <option value="Praktik Anggaran dan Indikator Kinerja">
+                                                <option value="Praktik Aplikasi Komputer">
+                                                <option value="Praktik Bahasa Inggris (dasar dan profesi)">
+                                                <option value="Praktik Biostatistik Dan Statistika Kesehatan">
+                                                <option value="Praktik Ekonomi Kesehatan">
+                                                <option value="Praktik Evaluasi Kinerja Rumah Sakit">
+                                                <option value="Praktik Hospital Public Relation">
+                                                <option value="Praktik Manajemen Aset dan Tata Ruang">
+                                                <option value="Praktik Manajemen Bisnis (RSB,RBA)">
+                                                <option value="Praktik Manajemen Jaminan Mutu Kesehatan">
+                                                <option value="Praktik Manajemen Kesehatan Lingkungan & Limbah Rumah Sakit">
+                                                <option value="Praktik Manajemen Kesehatan Lingkungan Rumah Sakit">
+                                                <option value="Praktik Manajemen Keselamatan Dan Kesehatan Kerja RS">
+                                                <option value="Praktik Manajemen Keuangan">
+                                                <option value="Praktik Manajemen Komplain Dan CS">
+                                                <option value="Praktik Manajemen Logistik Medik & Non Medik">
+                                                <option value="Praktik Manajemen Pelayanan Kesehatan dan Rumah Sakit">
+                                                <option value="Praktik Manajemen Produksi Rumah Sakit">
+                                                <option value="Praktik Manajemen Risiko Rumah Sakit">
+                                                <option value="Praktik Penyuluhan Kesehatan">
+                                                <option value="Praktik Penyuluhan Kesehatan Rumah Sakit">
+                                                <option value="Praktik Sistem Informasi Manajemen Rumah Sakit">
+                                                <option value="Praktik Sistem Perencanaan Rumah Sakit (fisik dan operasional)">
+                                                <option value="Praktik Standar & Akreditasi RS">
+                                                <option value="Praktik Studi Kelayakan Proyek">
+                                                <option value="PSKL (Product & Service Knowledge)">
+                                                <option value="Sistem Asuransi Kesehatan">
+                                                <option value="Sistem Casemix dan Remunerasi">
+                                                <option value="Sistem Informasi Manajemen Rumah Sakit">
+                                                <option value="Sistem Perencanaan Rumah Sakit (fisik dan operasional)">
+                                                <option value="SKRIPSI 1">
+                                                <option value="SKRIPSI II">
+                                                <option value="Standar & Akreditasi RS">
+                                                <option value="Studi Kelayakan Proyek">
+                                                <option value="Terminologi Medis">
+                                            </datalist>
+                                        </div>
+                                    </div>
+
+                                    <!-- DINAMIS: SEMESTER MK -->
+                                    <div class="mb-3 p-3 bg-light rounded border" id="divSemesterMK" style="display: none; border-left: 4px solid #6c757d !important;">
+                                        <label class="form-label fw-bold text-secondary"><i class="fas fa-calendar-alt me-2"></i>Semester Mata Kuliah</label>
+                                        <select class="form-select" id="semesterMK" name="semesterMK">
+                                            <option value="">-- Pilih Semester --</option>
+                                        </select>
+                                        <small class="text-muted">Pilihan otomatis menyesuaikan Genap/Ganjil yang Anda pilih di atas.</small>
+                                    </div>
+
+                                    <!-- DINAMIS: METODE & KURIKULUM RPS -->
+                                    <div class="row" id="divKhususRps" style="display: none;">
+                                        <div class="col-md-6 mb-3" id="divMetodeRps">
+                                            <div class="p-3 bg-light rounded border" style="border-left: 4px solid #198754 !important;">
+                                                <label class="form-label fw-bold text-success"><i class="fas fa-chalkboard-teacher me-2"></i>Metode Pembelajaran RPS</label>
+                                                <select class="form-select" name="metodePembelajaran">
+                                                    <option value="">-- Pilih Metode Dominan --</option>
+                                                    <option value="Case Method">Case Method (Pemecahan Kasus)</option>
+                                                    <option value="Team-Based Project">Team-Based Project (Proyek Tim)</option>
+                                                    <option value="Lainnya">Lainnya (Ceramah/Diskusi Biasa)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3" id="divKurikulumRps">
+                                            <div class="p-3 bg-light rounded border" style="border-left: 4px solid #ffc107 !important;">
+                                                <label class="form-label fw-bold" style="color: #d39e00 !important;"><i class="fas fa-book-open me-2"></i>Versi Kurikulum</label>
+                                                <select class="form-select" name="kurikulumRps">
+                                                    <option value="">-- Pilih Kurikulum --</option>
+                                                    <option value="Kurikulum 2024 (OBE)">Kurikulum 2024 (OBE)</option>
+                                                    <option value="Kurikulum 2021">Kurikulum 2021</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- DINAMIS: IMPLEMENTASI SDG KHUSUS RPS -->
+                                    <div id="divSdg" class="mb-3 p-3 bg-light rounded border" style="display: none; border-left: 4px solid #0dcaf0 !important;">
+                                        <label class="form-label fw-bold text-info"><i class="fas fa-globe-asia me-2"></i>Implementasi Tujuan Pembangunan Berkelanjutan (SDGs)</label>
+                                        <p class="small text-muted mb-2">Pilih poin-poin SDG yang diintegrasikan dalam materi atau CPL Mata Kuliah pada RPS Anda:</p>
+
+                                        <div class="sdg-container border bg-white p-3 rounded">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-check mb-2"><input class="form-check-input sdg-cb" type="checkbox" value="SDG 1: Tanpa Kemiskinan" id="sdg1"><label class="form-check-label small" for="sdg1">1. Tanpa Kemiskinan</label></div>
+                                                    <div class="form-check mb-2"><input class="form-check-input sdg-cb" type="checkbox" value="SDG 2: Tanpa Kelaparan" id="sdg2"><label class="form-check-label small" for="sdg2">2. Tanpa Kelaparan</label></div>
+                                                    <div class="form-check mb-2"><input class="form-check-input sdg-cb" type="checkbox" value="SDG 3: Kehidupan Sehat & Sejahtera" id="sdg3"><label class="form-check-label small" for="sdg3">3. Kehidupan Sehat & Sejahtera</label></div>
+                                                    <div class="form-check mb-2"><input class="form-check-input sdg-cb" type="checkbox" value="SDG 4: Pendidikan Berkualitas" id="sdg4"><label class="form-check-label small" for="sdg4">4. Pendidikan Berkualitas</label></div>
+                                                    <div class="form-check mb-2"><input class="form-check-input sdg-cb" type="checkbox" value="SDG 5: Kesetaraan Gender" id="sdg5"><label class="form-check-label small" for="sdg5">5. Kesetaraan Gender</label></div>
+                                                    <div class="form-check mb-2"><input class="form-check-input sdg-cb" type="checkbox" value="SDG 6: Air Bersih & Sanitasi" id="sdg6"><label class="form-check-label small" for="sdg6">6. Air Bersih & Sanitasi Layak</label></div>
+                                                    <div class="form-check mb-2"><input class="form-check-input sdg-cb" type="checkbox" value="SDG 7: Energi Bersih & Terjangkau" id="sdg7"><label class="form-check-label small" for="sdg7">7. Energi Bersih & Terjangkau</label></div>
+                                                    <div class="form-check mb-2"><input class="form-check-input sdg-cb" type="checkbox" value="SDG 8: Pekerjaan Layak & Pertumbuhan Ekonomi" id="sdg8"><label class="form-check-label small" for="sdg8">8. Pekerjaan Layak & Pertumbuhan Ekonomi</label></div>
+                                                    <div class="form-check mb-2"><input class="form-check-input sdg-cb" type="checkbox" value="SDG 9: Industri, Inovasi & Infrastruktur" id="sdg9"><label class="form-check-label small" for="sdg9">9. Industri, Inovasi & Infrastruktur</label></div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-check mb-2"><input class="form-check-input sdg-cb" type="checkbox" value="SDG 10: Berkurangnya Kesenjangan" id="sdg10"><label class="form-check-label small" for="sdg10">10. Berkurangnya Kesenjangan</label></div>
+                                                    <div class="form-check mb-2"><input class="form-check-input sdg-cb" type="checkbox" value="SDG 11: Kota & Pemukiman Berkelanjutan" id="sdg11"><label class="form-check-label small" for="sdg11">11. Kota & Pemukiman Berkelanjutan</label></div>
+                                                    <div class="form-check mb-2"><input class="form-check-input sdg-cb" type="checkbox" value="SDG 12: Konsumsi & Produksi Bertanggung Jawab" id="sdg12"><label class="form-check-label small" for="sdg12">12. Konsumsi & Produksi Bertanggung Jawab</label></div>
+                                                    <div class="form-check mb-2"><input class="form-check-input sdg-cb" type="checkbox" value="SDG 13: Penanganan Perubahan Iklim" id="sdg13"><label class="form-check-label small" for="sdg13">13. Penanganan Perubahan Iklim</label></div>
+                                                    <div class="form-check mb-2"><input class="form-check-input sdg-cb" type="checkbox" value="SDG 14: Ekosistem Lautan" id="sdg14"><label class="form-check-label small" for="sdg14">14. Ekosistem Lautan</label></div>
+                                                    <div class="form-check mb-2"><input class="form-check-input sdg-cb" type="checkbox" value="SDG 15: Ekosistem Daratan" id="sdg15"><label class="form-check-label small" for="sdg15">15. Ekosistem Daratan</label></div>
+                                                    <div class="form-check mb-2"><input class="form-check-input sdg-cb" type="checkbox" value="SDG 16: Perdamaian & Keadilan" id="sdg16"><label class="form-check-label small" for="sdg16">16. Perdamaian, Keadilan & Kelembagaan</label></div>
+                                                    <div class="form-check mb-2"><input class="form-check-input sdg-cb" type="checkbox" value="SDG 17: Kemitraan untuk Tujuan" id="sdg17"><label class="form-check-label small" for="sdg17">17. Kemitraan untuk Mencapai Tujuan</label></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3 text-end">
+                                            <span class="badge bg-info text-dark fs-6 shadow-sm border border-info" id="sdgCounter">0/17 Terpilih (0.0%)</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- DINAMIS: PENELITIAN -->
+                                    <div id="divBentukPenelitian" style="display: none;" class="mb-3 p-3 bg-light rounded border">
+                                        <label class="form-label fw-bold text-primary">Bentuk Hasil Publikasi</label>
+                                        <select class="form-select mb-2" id="bentukPenelitian" name="bentukPenelitian" onchange="togglePenelitianFields()">
+                                            <option value="">-- Pilih Bentuk --</option>
+                                            <option value="Jurnal">Artikel Jurnal Ilmiah</option>
+                                            <option value="Buku">Buku (Monograf/Referensi/Ajar)</option>
+                                            <option value="Produk">Produk / purwarupa / Karya Seni</option>
+                                            <option value="Lainnya">Laporan Penelitian / Lainnya</option>
+                                        </select>
+
+                                        <div id="divIndeksJurnal" style="display: none;" class="mt-2">
+                                            <label class="form-label fw-bold">Indeks Jurnal</label>
+                                            <select class="form-select" id="indeksJurnal" name="indeksJurnal" onchange="toggleIndeksLainnya()">
+                                                <option value="">-- Pilih Indeks --</option>
+                                                <option value="Garuda">Garuda</option>
+                                                <option value="SINTA 1">SINTA 1</option>
+                                                <option value="SINTA 2">SINTA 2</option>
+                                                <option value="SINTA 3">SINTA 3</option>
+                                                <option value="SINTA 4">SINTA 4</option>
+                                                <option value="SINTA 5">SINTA 5</option>
+                                                <option value="SINTA 6">SINTA 6</option>
+                                                <option value="Copernicus">Copernicus</option>
+                                                <option value="Scopus Q1">Scopus Q1</option>
+                                                <option value="Scopus Q2">Scopus Q2</option>
+                                                <option value="Scopus Q3">Scopus Q3</option>
+                                                <option value="Scopus Q4">Scopus Q4</option>
+                                                <option value="Lainnya">Lainnya (Tulis Manual)</option>
+                                            </select>
+                                            <input type="text" class="form-control mt-2" id="indeksJurnalLainnya" name="indeksJurnalLainnya" placeholder="Tuliskan nama indeks manual..." style="display: none;">
+                                        </div>
+
+                                        <div id="divPenerbitBuku" style="display: none;" class="mt-2">
+                                            <label class="form-label fw-bold">Nama Penerbit Buku</label>
+                                            <input type="text" class="form-control" name="penerbitBuku" placeholder="Contoh: PT. Pustaka Ilmu">
+                                        </div>
+                                        <div id="divIsbnBuku" style="display: none;" class="mt-2">
+                                            <label class="form-label fw-bold">Nomor ISBN</label>
+                                            <input type="text" class="form-control" name="isbnBuku" placeholder="Contoh: 978-602-XXXX-XX-X">
+                                        </div>
+
+                                        <div id="divJenisProduk" style="display: none;" class="mt-2">
+                                            <label class="form-label fw-bold">Jenis Produk / Karya</label>
+                                            <input type="text" class="form-control" name="jenisProduk" placeholder="Contoh: Aplikasi SIMRS, Modul, dll">
+                                        </div>
+                                        <div id="divDeskripsiProduk" style="display: none;" class="mt-2">
+                                            <label class="form-label fw-bold">Deskripsi Singkat Produk</label>
+                                            <textarea class="form-control" name="deskripsiProduk" rows="2" placeholder="Jelaskan secara singkat kegunaan produk..."></textarea>
+                                        </div>
+                                    </div>
+
+                                    <!-- DINAMIS: HKI -->
+                                    <div id="divNomorEC" style="display: none;" class="mb-3 p-3 bg-light rounded border border-info">
+                                        <label class="form-label fw-bold text-info"><i class="fas fa-certificate me-2"></i>Nomor Pencatatan (EC) / Sertifikat HKI</label>
+                                        <input type="text" class="form-control" name="nomorEC" placeholder="Contoh: EC00202312345">
+                                    </div>
+
+                                    <!-- DINAMIS: LINK PUBLIKASI -->
+                                    <div id="divLinkPublikasi" style="display: none;" class="mb-3">
+                                        <label class="form-label fw-bold">Link Publikasi / URL Eksternal (Opsional)</label>
+                                        <input type="url" class="form-control" name="linkPublikasi" placeholder="Contoh: https://jurnal.unbl.ac.id/...">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Keterangan Tambahan (Opsional)</label>
+                                        <textarea class="form-control" name="keterangan" rows="2" placeholder="Catatan tambahan jika ada..."></textarea>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label class="form-label fw-bold text-danger">Upload File Dokumen (PDF/Word/Excel)</label>
+                                        <input type="file" class="form-control" name="fileUpload" id="fileUpload" required>
+                                        <small class="text-muted">Maksimal ukuran file: 40 MB.</small>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary w-100" id="btnSubmit">
+                                        <i class="fas fa-paper-plane me-2"></i>Simpan & Upload Dokumen
+                                    </button>
+
+                                    <div id="alertArea" class="mt-3" style="display: none;"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB LIST -->
+            <div id="tab-list">
+                <div class="card mb-4">
+                    <div class="card-body bg-light rounded">
+                        <div class="row align-items-end">
+                            <div class="col-md-4 mb-2">
+                                <label class="form-label fw-bold">Filter Tahun & Semester</label>
+                                <select id="filterTahun" class="form-select shadow-sm" onchange="applyFilters()">
+                                    <option value="Semua" selected>Semua Tahun & Semester</option>
+                                    <option value="Ganjil 2023/2024">Ganjil 2023/2024</option>
+                                    <option value="Genap 2023/2024">Genap 2023/2024</option>
+                                    <option value="Ganjil 2024/2025">Ganjil 2024/2025</option>
+                                    <option value="Genap 2024/2025">Genap 2024/2025</option>
+                                    <option value="Ganjil 2025/2026">Ganjil 2025/2026</option>
+                                    <option value="Genap 2025/2026">Genap 2025/2026</option>
+                                    <option value="Ganjil 2026/2027">Ganjil 2026/2027</option>
+                                    <option value="Genap 2026/2027">Genap 2026/2027</option>
+                                    <option value="Ganjil 2027/2028">Ganjil 2027/2028</option>
+                                    <option value="Genap 2027/2028">Genap 2027/2028</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <label class="form-label fw-bold">Filter Kategori</label>
+                                <select id="filterKategori" class="form-select shadow-sm" onchange="applyFilters()">
+                                    <option value="Semua">-- Semua Kategori --</option>
+                                    <optgroup label="Pengajaran">
+                                        <option value="RPS">RPS (Rencana Pembelajaran Semester)</option>
+                                        <option value="Kontrak Ajar">Kontrak Ajar</option>
+                                        <option value="Presensi Mahasiswa">Presensi Mahasiswa</option>
+                                        <option value="Nilai Mahasiswa">Nilai Mahasiswa (DPNA)</option>
+                                        <option value="Jurnal Dosen">Jurnal Mengajar Dosen</option>
+                                        <option value="SK Mengajar">SK Mengajar</option>
+                                    </optgroup>
+                                    <optgroup label="Penelitian & Publikasi">
+                                        <option value="Penelitian">Hasil Penelitian / Publikasi Ilmiah</option>
+                                        <option value="HKI">HKI (Hak Kekayaan Intelektual)</option>
+                                    </optgroup>
+                                    <optgroup label="Pengabdian">
+                                        <option value="Pengabdian Masyarakat">Hasil Pengabdian kepada Masyarakat</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-2 text-end">
+                                <button class="btn btn-outline-primary shadow-sm" onclick="loadData()">
+                                    <i class="fas fa-sync-alt me-1"></i> Refresh Data
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="rpsDashboard" style="display: none;">
+                    <h5 class="mb-3 text-secondary border-bottom pb-2"><i class="fas fa-chart-pie me-2"></i>Statistik Metode Pembelajaran RPS</h5>
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="stat-card stat-blue">
+                                <h3 id="statTotalRps">0</h3>
+                                <p>Total RPS Diunggah</p>
+                                <div class="semester-breakdown" id="breakdownRps">-</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card stat-green">
+                                <h3 id="statCase">0%</h3>
+                                <p>Case Method</p>
+                                <small id="docCase" style="font-size: 0.75rem; opacity: 0.8;">0 Dokumen</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card stat-purple">
+                                <h3 id="statTeam">0%</h3>
+                                <p>Team-Based Project</p>
+                                <small id="docTeam" style="font-size: 0.75rem; opacity: 0.8;">0 Dokumen</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card stat-orange">
+                                <h3 id="statLain">0%</h3>
+                                <p>Metode Lainnya</p>
+                                <small id="docLain" style="font-size: 0.75rem; opacity: 0.8;">0 Dokumen</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-archive me-2 text-primary"></i>Arsip Dokumen</span>
+                        <span class="badge bg-primary rounded-pill" id="totalDataBadge">0 Dokumen</span>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="ps-4">Informasi Dokumen</th>
+                                        <th>Detail & Keterangan</th>
+                                        <th class="text-center pe-4" width="150">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="fileTableBody">
+                                    <tr>
+                                        <td colspan="3" class="text-center py-5 text-muted">
+                                            <div class="spinner-border text-primary mb-3" role="status"></div>
+                                            <p>Sedang memuat data dari database...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Konfirmasi Hapus -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+          <div class="modal-header bg-danger text-white border-0">
+            <h5 class="modal-title"><i class="fas fa-exclamation-triangle me-2"></i>Konfirmasi Hapus</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center p-4">
+            <h4 class="text-danger mb-3">Apakah Anda Yakin?</h4>
+            <p class="text-muted mb-0">Dokumen ini akan dihapus <b>secara permanen</b> dari database dan penyimpanan file. Tindakan ini tidak dapat dibatalkan.</p>
+          </div>
+          <div class="modal-footer border-0 justify-content-center pb-4">
+            <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Batal</button>
+            <button type="button" class="btn btn-danger px-4" id="btnConfirmDelete">Ya, Hapus Permanen!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script>
+        // =============================================================
+        //  INISIALISASI SUPABASE
+        // =============================================================
+        const CFG = window.APP_CONFIG || {};
+        const BUCKET = CFG.BUCKET || "dokumen";
+        const TABLE = "dokumen";
+        const MAX_MB = 40;
+        const configOk = !!(CFG.SUPABASE_URL && CFG.SUPABASE_KEY &&
+                            CFG.SUPABASE_URL.indexOf("XXXX") === -1 &&
+                            CFG.SUPABASE_KEY.indexOf("XXXX") === -1);
+        const sb = (configOk && window.supabase) ? window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_KEY) : null;
+
+        window.allFilesData = [];
+        window.fileIndex = {};
+        let idToDelete = null;
+        let deleteModal = null;
+
+        // Escape teks agar input pengguna tidak dirender sebagai HTML
+        function esc(s) {
+            return String(s === null || s === undefined ? "" : s).replace(/[&<>"']/g, function(c) {
+                return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+            });
+        }
+
+        // =============================================================
+        //  SAAT HALAMAN DIMUAT
+        // =============================================================
+        document.addEventListener("DOMContentLoaded", async function() {
+            filterSemesterMK();
+
+            // Perhitungan real-time checkbox SDG
+            document.querySelectorAll(".sdg-cb").forEach(function(cb) {
+                cb.addEventListener("change", updateSdgCounter);
+            });
+
+            // Tombol Lihat & Hapus pada tabel (event delegation)
+            document.getElementById("fileTableBody").addEventListener("click", function(e) {
+                const btn = e.target.closest("[data-action]");
+                if (!btn) return;
+                const id = btn.getAttribute("data-id");
+                if (btn.getAttribute("data-action") === "view") viewFile(id);
+                if (btn.getAttribute("data-action") === "delete") confirmDelete(id);
+            });
+
+            document.getElementById("btnConfirmDelete").addEventListener("click", doDelete);
+
+            if (!sb) {
+                document.getElementById("configAlert").style.display = "block";
+                return;
+            }
+
+            // Pulihkan sesi login jika masih aktif
+            const { data } = await sb.auth.getSession();
+            if (data && data.session) enterApp(data.session);
+
+            sb.auth.onAuthStateChange(function(event) {
+                if (event === "SIGNED_OUT") showLogin();
+            });
+        });
+
+        function updateSdgCounter() {
+            const count = document.querySelectorAll(".sdg-cb:checked").length;
+            const perc = ((count / 17) * 100).toFixed(1);
+            document.getElementById("sdgCounter").innerText = count + "/17 Terpilih (" + perc + "%)";
+        }
+
+        // =============================================================
+        //  LOGIN / LOGOUT (Supabase Auth)
+        // =============================================================
+        async function processLogin(event) {
+            event.preventDefault();
+            const alertBox = document.getElementById("loginAlert");
+            if (!sb) { document.getElementById("configAlert").style.display = "block"; return; }
+
+            const btn = document.getElementById("btnLogin");
+            const original = btn.innerHTML;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Memeriksa...';
+            btn.disabled = true;
+            alertBox.style.display = "none";
+
+            const { data, error } = await sb.auth.signInWithPassword({
+                email: document.getElementById("loginEmail").value.trim(),
+                password: document.getElementById("loginPassword").value
+            });
+
+            btn.innerHTML = original;
+            btn.disabled = false;
+
+            if (error) {
+                let msg = error.message || "Gagal masuk.";
+                if (/invalid login/i.test(msg)) msg = "Email atau password salah.";
+                else if (/email not confirmed/i.test(msg)) msg = "Akun belum dikonfirmasi. Minta admin mencentang 'Auto Confirm User'.";
+                alertBox.innerHTML = '<i class="fas fa-exclamation-circle me-1"></i> ' + esc(msg);
+                alertBox.style.display = "block";
+                return;
+            }
+            enterApp(data.session);
+        }
+
+        function enterApp(session) {
+            document.getElementById("loginScreen").style.display = "none";
+            document.getElementById("mainApp").style.display = "block";
+            document.getElementById("loginAlert").style.display = "none";
+            const email = session && session.user ? session.user.email : "";
+            document.getElementById("userEmail").innerHTML = email ? '<i class="fas fa-user me-1"></i>' + esc(email) : "";
+            loadData();
+        }
+
+        function showLogin() {
+            document.getElementById("loginPassword").value = "";
+            document.getElementById("mainApp").style.display = "none";
+            document.getElementById("loginScreen").style.display = "flex";
+        }
+
+        async function logout() {
+            if (sb) await sb.auth.signOut();
+            showLogin();
+        }
+
+        // =============================================================
+        //  NAVIGASI & FIELD DINAMIS
+        // =============================================================
+        function switchTab(tab) {
+            document.getElementById("tab-upload").style.display = (tab === "upload") ? "block" : "none";
+            document.getElementById("tab-list").style.display = (tab === "list") ? "block" : "none";
+            document.getElementById("nav-upload").classList.toggle("active", tab === "upload");
+            document.getElementById("nav-list").classList.toggle("active", tab === "list");
+        }
+
+        function filterSemesterMK() {
+            const sem = document.getElementById("semester").value;
+            const semMkSelect = document.getElementById("semesterMK");
+            semMkSelect.innerHTML = '<option value="">-- Pilih Semester --</option>';
+            const options = sem === "Ganjil" ? [1, 3, 5, 7] : [2, 4, 6, 8];
+            options.forEach(function(val) {
+                semMkSelect.innerHTML += '<option value="' + val + '">Semester ' + val + '</option>';
+            });
+        }
+
+        function toggleIndeksLainnya() {
+            const val = document.getElementById("indeksJurnal").value;
+            const inputLainnya = document.getElementById("indeksJurnalLainnya");
+            if (val === "Lainnya") {
+                inputLainnya.style.display = "block";
+                inputLainnya.required = true;
+            } else {
+                inputLainnya.style.display = "none";
+                inputLainnya.required = false;
+                inputLainnya.value = "";
+            }
+        }
+
+        function toggleDynamicFields() {
+            const kat = document.getElementById("kategori").value;
+            const labelNamaFile = document.getElementById("labelNamaFile");
+            const containerNamaFileText = document.getElementById("containerNamaFileText");
+            const containerMataKuliah = document.getElementById("containerMataKuliah");
+            const divSemester = document.getElementById("divSemesterMK");
+
+            const pembelajaranKategori = ["RPS", "Kontrak Ajar", "Presensi Mahasiswa", "Nilai Mahasiswa", "Jurnal Dosen", "SK Mengajar"];
+            const integrasiKategori = ["Penelitian", "Pengabdian Masyarakat"];
+
+            if (pembelajaranKategori.includes(kat)) {
+                labelNamaFile.innerHTML = "Mata Kuliah";
+                containerNamaFileText.style.display = "none";
+                containerMataKuliah.style.display = "block";
+                divSemester.style.display = "block";
+            } else if (integrasiKategori.includes(kat)) {
+                labelNamaFile.innerHTML = "Mata Kuliah Terintegrasi";
+                containerNamaFileText.style.display = "none";
+                containerMataKuliah.style.display = "block";
+                divSemester.style.display = "none";
+            } else {
+                labelNamaFile.innerHTML = "Nama File / Dokumen";
+                containerNamaFileText.style.display = "block";
+                containerMataKuliah.style.display = "none";
+                divSemester.style.display = "none";
+            }
+
+            document.getElementById("divKhususRps").style.display = (kat === "RPS") ? "flex" : "none";
+            document.getElementById("divSdg").style.display = (kat === "RPS") ? "block" : "none";
+            document.getElementById("divNomorEC").style.display = (kat === "HKI") ? "block" : "none";
+
+            const showPen = (kat === "Penelitian" || kat === "Pengabdian Masyarakat");
+            document.getElementById("divBentukPenelitian").style.display = showPen ? "block" : "none";
+            document.getElementById("divLinkPublikasi").style.display = showPen ? "block" : "none";
+        }
+
+        function togglePenelitianFields() {
+            const bentuk = document.getElementById("bentukPenelitian").value;
+            document.getElementById("divIndeksJurnal").style.display = (bentuk === "Jurnal") ? "block" : "none";
+            document.getElementById("divPenerbitBuku").style.display = (bentuk === "Buku") ? "block" : "none";
+            document.getElementById("divIsbnBuku").style.display = (bentuk === "Buku") ? "block" : "none";
+            document.getElementById("divJenisProduk").style.display = (bentuk === "Produk") ? "block" : "none";
+            document.getElementById("divDeskripsiProduk").style.display = (bentuk === "Produk") ? "block" : "none";
+        }
+
+        // =============================================================
+        //  UPLOAD DOKUMEN (Storage + Database)
+        // =============================================================
+        function safeName(s) {
+            return String(s || "file").normalize("NFKD").replace(/[^\w.\-]+/g, "_").replace(/_+/g, "_").slice(-120);
+        }
+
+        async function handleFormSubmit(event) {
+            event.preventDefault();
+            const btn = document.getElementById("btnSubmit");
+            const alertArea = document.getElementById("alertArea");
+            const form = document.getElementById("uploadForm");
+            const fileInput = document.getElementById("fileUpload");
+
+            const showAlert = function(type, icon, html) {
+                alertArea.innerHTML = '<div class="alert alert-' + type + '"><i class="fas ' + icon + ' me-2"></i>' + html + '</div>';
+                alertArea.style.display = "block";
+                window.scrollTo(0, document.body.scrollHeight);
+            };
+
+            if (!fileInput.files || fileInput.files.length === 0) {
+                showAlert("warning", "fa-exclamation-triangle", "Harap pilih file terlebih dahulu.");
+                return;
+            }
+            const file = fileInput.files[0];
+            const fileSizeMB = file.size / (1024 * 1024);
+            if (fileSizeMB > MAX_MB) {
+                showAlert("warning", "fa-exclamation-triangle", "<b>Gagal:</b> Ukuran file Anda " + fileSizeMB.toFixed(1) + " MB. Batas maksimal sistem adalah " + MAX_MB + " MB. Silakan kompres file Anda.");
+                return;
+            }
+
+            const fd = new FormData(form);
+            const v = function(k) { const x = (fd.get(k) || "").toString().trim(); return x || "-"; };
+            const kategori = v("kategori");
+
+            // Data SDG (khusus RPS)
+            let sdgTerpilih = "-", sdgPersentase = "-";
+            if (kategori === "RPS") {
+                const selected = [];
+                document.querySelectorAll(".sdg-cb:checked").forEach(function(cb) { selected.push(cb.value); });
+                if (selected.length > 0) {
+                    sdgTerpilih = selected.join(", ");
+                    sdgPersentase = ((selected.length / 17) * 100).toFixed(1) + "%";
+                }
+            }
+
+            let indeksJurnal = v("indeksJurnal");
+            if (indeksJurnal === "Lainnya" && v("indeksJurnalLainnya") !== "-") indeksJurnal = v("indeksJurnalLainnya");
+
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Sedang Mengupload...';
+            btn.disabled = true;
+            alertArea.style.display = "none";
+
+            const path = safeName(kategori) + "/" + Date.now() + "_" + safeName(file.name);
+
+            try {
+                // 1) Upload file ke Supabase Storage
+                const up = await sb.storage.from(BUCKET).upload(path, file, {
+                    contentType: file.type || "application/octet-stream",
+                    upsert: false
+                });
+                if (up.error) throw up.error;
+
+                // 2) Simpan metadata ke tabel
+                const row = {
+                    pengunggah: v("pengunggah"),
+                    kategori: kategori,
+                    tahun_ajaran: v("tahunAjaran"),
+                    semester: v("semester"),
+                    nama_file: v("namaFile"),
+                    mata_kuliah: v("mataKuliah"),
+                    semester_mk: v("semesterMK"),
+                    metode: v("metodePembelajaran"),
+                    kurikulum_rps: v("kurikulumRps"),
+                    bentuk_hasil: v("bentukPenelitian"),
+                    indeks_jurnal: indeksJurnal,
+                    penerbit_buku: v("penerbitBuku"),
+                    isbn: v("isbnBuku"),
+                    jenis_produk: v("jenisProduk"),
+                    deskripsi_produk: v("deskripsiProduk"),
+                    nomor_ec: v("nomorEC"),
+                    link_publikasi: v("linkPublikasi"),
+                    keterangan: v("keterangan"),
+                    file_path: path,
+                    file_name: file.name,
+                    sdg_terpilih: sdgTerpilih,
+                    sdg_persentase: sdgPersentase
+                };
+                const ins = await sb.from(TABLE).insert(row);
+                if (ins.error) {
+                    await sb.storage.from(BUCKET).remove([path]); // batalkan file yatim
+                    throw ins.error;
+                }
+
+                showAlert("success", "fa-check-circle", "Dokumen berhasil disimpan!");
+                form.reset();
+                updateSdgCounter();
+                filterSemesterMK();
+                toggleDynamicFields();
+                togglePenelitianFields();
+                loadData();
+                setTimeout(function() { switchTab("list"); alertArea.style.display = "none"; }, 2000);
+            } catch (err) {
+                showAlert("danger", "fa-times-circle", "<b>Error:</b> " + esc(err && err.message ? err.message : err));
+            } finally {
+                btn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Simpan & Upload Dokumen';
+                btn.disabled = false;
+            }
+        }
+
+        // =============================================================
+        //  MEMUAT DATA
+        // =============================================================
+        function fmtDate(iso) {
+            const d = new Date(iso);
+            if (isNaN(d)) return "-";
+            return ("0" + d.getDate()).slice(-2) + "/" + ("0" + (d.getMonth() + 1)).slice(-2) + "/" + d.getFullYear();
+        }
+
+        function mapRow(r) {
+            const d = function(x) { return (x === null || x === undefined || String(x).trim() === "") ? "-" : String(x); };
+            return {
+                id: r.id,
+                timestamp: fmtDate(r.created_at),
+                pengunggah: d(r.pengunggah), kategori: d(r.kategori),
+                tahunAjaran: d(r.tahun_ajaran), semester: d(r.semester),
+                namaFile: d(r.nama_file), mataKuliah: d(r.mata_kuliah), semesterMK: d(r.semester_mk),
+                metode: d(r.metode), kurikulumRps: d(r.kurikulum_rps),
+                bentukHasil: d(r.bentuk_hasil), indeksJurnal: d(r.indeks_jurnal),
+                penerbitBuku: d(r.penerbit_buku), isbnBuku: d(r.isbn),
+                jenisProduk: d(r.jenis_produk), deskripsiProduk: d(r.deskripsi_produk),
+                nomorEC: d(r.nomor_ec), linkPublikasi: d(r.link_publikasi), keterangan: d(r.keterangan),
+                filePath: r.file_path || "", fileUrl: r.file_url || "",
+                sdgTerpilih: d(r.sdg_terpilih), sdgPersentase: d(r.sdg_persentase)
+            };
+        }
+
+        async function loadData() {
+            const tbody = document.getElementById("fileTableBody");
+            tbody.innerHTML = '<tr><td colspan="3" class="text-center py-5 text-muted"><div class="spinner-border text-primary mb-3"></div><p>Sedang memuat data dari database...</p></td></tr>';
+            try {
+                const all = [];
+                const PAGE = 1000;
+                for (let from = 0; ; from += PAGE) {
+                    const res = await sb.from(TABLE).select("*").order("created_at", { ascending: false }).range(from, from + PAGE - 1);
+                    if (res.error) throw res.error;
+                    all.push.apply(all, res.data);
+                    if (res.data.length < PAGE) break;
+                }
+                window.allFilesData = all.map(mapRow);
+                window.fileIndex = {};
+                window.allFilesData.forEach(function(f) { window.fileIndex[f.id] = f; });
+                applyFilters();
+            } catch (err) {
+                tbody.innerHTML = '<tr><td colspan="3" class="text-center text-danger py-4">Gagal memuat data: ' + esc(err && err.message ? err.message : err) + '</td></tr>';
+            }
+        }
+
+        function applyFilters() {
+            const filterTahun = document.getElementById("filterTahun").value;
+            const filterKategori = document.getElementById("filterKategori").value;
+            const tbody = document.getElementById("fileTableBody");
+            const dashboard = document.getElementById("rpsDashboard");
+            tbody.innerHTML = "";
+
+            const sem = { "1":0, "2":0, "3":0, "4":0, "5":0, "6":0, "7":0, "8":0 };
+            let caseMethodCount = 0, teamBasedCount = 0, lainnyaCount = 0, totalRps = 0;
+
+            if (!window.allFilesData || window.allFilesData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" class="text-center py-5 text-muted"><i class="fas fa-database fs-1 mb-3 opacity-50"></i><br>Belum ada dokumen. Mulai dari menu <b>Input Dokumen</b>.</td></tr>';
+                document.getElementById("totalDataBadge").innerText = "0 Dokumen";
+                dashboard.style.display = "none";
+                return;
+            }
+
+            const target = filterTahun.trim().toLowerCase();
+            const filtered = window.allFilesData.filter(function(f) {
+                const gabungan = (f.semester + " " + f.tahunAjaran).trim().toLowerCase();
+                const matchTahun = (target === "semua" || gabungan === target);
+                const matchKategori = (filterKategori === "Semua" || f.kategori === filterKategori);
+                return matchTahun && matchKategori;
+            });
+
+            document.getElementById("totalDataBadge").innerText = filtered.length + " Dokumen";
+
+            let html = "";
+            filtered.forEach(function(f) {
+                if (f.kategori === "RPS") {
+                    totalRps++;
+                    if (f.metode === "Case Method") caseMethodCount++;
+                    else if (f.metode === "Team-Based Project") teamBasedCount++;
+                    else lainnyaCount++;
+                    const s = String(f.semesterMK).trim();
+                    if (sem[s] !== undefined) sem[s]++;
+                }
+
+                const docName = (f.namaFile !== "-") ? f.namaFile : ((f.mataKuliah !== "-") ? f.mataKuliah : "Dokumen Tanpa Nama");
+
+                let labels = '<span class="badge badge-custom badge-tahun"><i class="fas fa-calendar-alt me-1"></i>' + esc(f.semester) + ' ' + esc(f.tahunAjaran) + '</span>';
+                labels += '<span class="badge badge-custom badge-kategori"><i class="fas fa-tag me-1"></i>' + esc(f.kategori) + '</span>';
+                if (f.semesterMK !== "-") labels += '<span class="badge badge-custom badge-semester">📅 Semester ' + esc(f.semesterMK) + '</span>';
+
+                let info = '<b>Oleh:</b> ' + esc(f.pengunggah) + ' <br><small class="text-muted"><i class="far fa-clock me-1"></i>' + esc(f.timestamp) + '</small>';
+
+                if (f.kategori === "RPS") {
+                    if (f.metode !== "-") labels += '<span class="badge badge-custom badge-metode"><i class="fas fa-chalkboard-teacher me-1"></i>' + esc(f.metode) + '</span>';
+                    if (f.kurikulumRps !== "-") labels += '<span class="badge badge-custom badge-kurikulum"><i class="fas fa-book-open me-1"></i>' + esc(f.kurikulumRps) + '</span>';
+                    if (f.sdgPersentase !== "-") {
+                        labels += '<span class="badge badge-custom bg-info text-dark border border-info shadow-sm"><i class="fas fa-globe-asia me-1"></i>SDGs: ' + esc(f.sdgPersentase) + '</span>';
+                        info += '<br><small class="text-info mt-1 d-block"><i class="fas fa-globe-asia me-1"></i><b>SDG Terintegrasi:</b> ' + esc(f.sdgTerpilih) + '</small>';
+                    }
+                }
+
+                if (f.keterangan !== "-") info += '<br><small><b>Ket:</b> ' + esc(f.keterangan) + '</small>';
+                if (f.kategori === "HKI" && f.nomorEC !== "-") info += '<br><small class="text-info"><b>No. EC:</b> ' + esc(f.nomorEC) + '</small>';
+
+                if ((f.kategori === "Penelitian" || f.kategori === "Pengabdian Masyarakat") && f.bentukHasil !== "-") {
+                    info += '<br><small><b>Bentuk:</b> ' + esc(f.bentukHasil) + '</small>';
+                    if (f.bentukHasil === "Jurnal" && f.indeksJurnal !== "-") info += ' | <small class="text-primary"><b>Indeks:</b> ' + esc(f.indeksJurnal) + '</small>';
+                }
+                if (f.linkPublikasi !== "-" && /^https?:\/\//i.test(f.linkPublikasi)) {
+                    info += '<br><small><a href="' + esc(f.linkPublikasi) + '" target="_blank" rel="noopener"><i class="fas fa-link me-1"></i>Link Publikasi</a></small>';
+                }
+
+                html += '<tr>' +
+                    '<td class="ps-4"><div class="fw-bold text-dark mb-1 fs-6">' + esc(docName) + '</div><div>' + labels + '</div></td>' +
+                    '<td>' + info + '</td>' +
+                    '<td class="text-center pe-4">' +
+                        '<button class="btn btn-sm btn-outline-primary mb-1 w-100" data-action="view" data-id="' + esc(f.id) + '"><i class="fas fa-eye me-1"></i> Lihat</button>' +
+                        '<button class="btn btn-sm btn-outline-danger w-100" data-action="delete" data-id="' + esc(f.id) + '"><i class="fas fa-trash-alt me-1"></i> Hapus</button>' +
+                    '</td></tr>';
+            });
+
+            tbody.innerHTML = filtered.length ? html : '<tr><td colspan="3" class="text-center py-5 text-muted"><i class="fas fa-search fs-1 mb-3 opacity-50"></i><br>Tidak ada dokumen yang sesuai filter.</td></tr>';
+
+            if (filterKategori === "Semua" || filterKategori === "RPS") {
+                dashboard.style.display = "block";
+                document.getElementById("statTotalRps").innerText = totalRps;
+                let breakdown;
+                if (filterTahun.indexOf("Genap") > -1) breakdown = "S2: " + sem["2"] + " | S4: " + sem["4"] + " | S6: " + sem["6"] + " | S8: " + sem["8"];
+                else if (filterTahun.indexOf("Ganjil") > -1) breakdown = "S1: " + sem["1"] + " | S3: " + sem["3"] + " | S5: " + sem["5"] + " | S7: " + sem["7"];
+                else breakdown = "Ganjil: " + (sem["1"] + sem["3"] + sem["5"] + sem["7"]) + " | Genap: " + (sem["2"] + sem["4"] + sem["6"] + sem["8"]);
+                document.getElementById("breakdownRps").innerText = breakdown;
+
+                const pct = function(n) { return totalRps > 0 ? Math.round((n / totalRps) * 100) : 0; };
+                document.getElementById("statCase").innerText = pct(caseMethodCount) + "%";
+                document.getElementById("docCase").innerText = caseMethodCount + " Dokumen";
+                document.getElementById("statTeam").innerText = pct(teamBasedCount) + "%";
+                document.getElementById("docTeam").innerText = teamBasedCount + " Dokumen";
+                document.getElementById("statLain").innerText = pct(lainnyaCount) + "%";
+                document.getElementById("docLain").innerText = lainnyaCount + " Dokumen";
+            } else {
+                dashboard.style.display = "none";
+            }
+        }
+
+        // =============================================================
+        //  LIHAT FILE (Signed URL berlaku 1 jam)
+        // =============================================================
+        async function viewFile(id) {
+            const f = window.fileIndex[id];
+            if (!f) return;
+            if (f.filePath) {
+                const w = window.open("", "_blank"); // dibuka dulu agar tidak diblokir pop-up blocker
+                const res = await sb.storage.from(BUCKET).createSignedUrl(f.filePath, 3600);
+                if (res.error) {
+                    if (w) w.close();
+                    alert("Gagal membuka file: " + res.error.message);
+                    return;
+                }
+                if (w) w.location.href = res.data.signedUrl;
+                else window.location.href = res.data.signedUrl;
+            } else if (f.fileUrl) {
+                window.open(f.fileUrl, "_blank", "noopener"); // data lama (link Google Drive)
+            } else {
+                alert("File tidak tersedia untuk dokumen ini.");
+            }
+        }
+
+        // =============================================================
+        //  HAPUS DOKUMEN
+        // =============================================================
+        function confirmDelete(id) {
+            idToDelete = id;
+            if (!deleteModal) deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
+            deleteModal.show();
+        }
+
+        async function doDelete() {
+            const btn = document.getElementById("btnConfirmDelete");
+            const original = btn.innerHTML;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Menghapus...';
+            btn.disabled = true;
+            const f = window.fileIndex[idToDelete];
+            try {
+                const del = await sb.from(TABLE).delete().eq("id", idToDelete).select("id");
+                if (del.error) throw del.error;
+                if (!del.data || del.data.length === 0) throw new Error("Data tidak ditemukan atau Anda tidak punya izin menghapus.");
+                if (f && f.filePath) {
+                    const rm = await sb.storage.from(BUCKET).remove([f.filePath]);
+                    if (rm.error) console.warn("File storage gagal dihapus:", rm.error.message);
+                }
+                deleteModal.hide();
+                alert("Berhasil: Dokumen berhasil dihapus.");
+                loadData();
+            } catch (err) {
+                deleteModal.hide();
+                alert("Gagal menghapus dokumen: " + (err && err.message ? err.message : err));
+            } finally {
+                btn.innerHTML = original;
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
