@@ -59,6 +59,23 @@
         .kategori-info .doc-accept { background: #fff; border: 1px solid #dbe7ff; border-radius: 8px; padding: 8px 10px; }
         .kategori-info .fmt { display: inline-block; font-size: .72rem; font-weight: 600; background: #e7f1ff; color: #0a58ca; border-radius: 4px; padding: 1px 6px; margin: 2px 4px 0 0; }
         .mismatch-note { background: #fff4e5; border: 1px solid #ffc078; border-radius: 8px; padding: 8px 10px; }
+        .mk-check { border-radius: 6px; padding: 6px 9px; }
+        .dup-note { border-radius: 8px; padding: 8px 10px; }
+        .dup-note.checking { background: #f1f3f5; color: #495057; }
+        .dup-note.ok { background: #e9f7ef; border: 1px solid #a3d9b8; color: #1e6b3a; }
+        .dup-note.dup { background: #fdecea; border: 1px solid #f5b5ae; color: #842029; }
+        .dup-note.dup .dup-detail { background: #fff; border: 1px solid #f5c2c7; border-radius: 6px; padding: 6px 8px; margin-top: 6px; color: #212529; }
+        .mk-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+        .mk-sub-item { display: inline-block; background: #f1f3f5; border: 1px solid #dee2e6; border-radius: 4px; padding: 0 6px; margin: 0 4px 2px 0; color: #495057; }
+        .mk-chips .empty { color: #8a94a6; font-size: .85rem; font-style: italic; }
+        .mk-chip { display: inline-flex; align-items: center; gap: 6px; background: #e7f0ff; border: 1px solid #b6cdf5; color: #1d3f7a;
+                   border-radius: 999px; padding: 3px 6px 3px 12px; font-size: .88rem; }
+        .mk-chip.saran { background: #fff8e1; border: 1px dashed #f0b429; color: #6b4b00; }
+        .mk-chip .saran-tag { font-size: .68rem; background: #f0b429; color: #fff; border-radius: 4px; padding: 0 4px; }
+        .mk-chip button { border: 0; background: rgba(0,0,0,.08); color: inherit; width: 20px; height: 20px; border-radius: 50%; line-height: 18px; padding: 0; font-size: 14px; }
+        .mk-chip button:hover { background: #dc3545; color: #fff; }
+        .mk-check.warn { background: #fff4e5; border: 1px solid #ffc078; color: #7a4a00; }
+        .mk-check.ok { background: #e9f7ef; border: 1px solid #a3d9b8; color: #1e6b3a; }
         .step-num { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: #0d6efd; color: #fff; font-size: 0.75rem; margin-right: 8px; }
         .suggest-panel { background: #fffbea; border: 1px solid #ffe08a; border-radius: 10px; padding: 10px 12px; }
         .is-suggested { background-color: #fffbea !important; border-color: #ffc107 !important; }
@@ -197,6 +214,7 @@
                                         <label class="form-label fw-bold text-danger mb-1" for="fileUpload"><span class="step-num">2</span>Upload File Dokumen</label>
                                         <input type="file" class="form-control" name="fileUpload" id="fileUpload" required disabled>
                                         <div id="uploadLockNote" class="small text-muted mt-1"><i class="fas fa-lock me-1"></i>Pilih kategori dokumen di langkah 1 terlebih dahulu.</div>
+                                        <div id="dupNote" class="dup-note small mt-2" style="display:none;"></div>
                                         <div class="d-flex flex-wrap justify-content-between align-items-center mt-2 gap-2">
                                             <small class="text-muted" id="formatInfo">Maksimal ukuran file: 40 MB.</small>
                                             <div class="form-check form-switch mb-0">
@@ -245,13 +263,27 @@
                                         </div>
                                     </div>
 
+                                    <!-- DINAMIS: JUDUL PENELITIAN / PKM -->
+                                    <div class="mb-3" id="divJudulKarya" style="display: none;">
+                                        <label class="form-label fw-bold" for="judulKarya"><span id="labelJudulKarya">Judul Penelitian</span> <span class="text-danger">*</span></label>
+                                        <textarea class="form-control" id="judulKarya" name="judulKarya" rows="2" maxlength="400" placeholder="Tuliskan judul lengkap sesuai dokumen"></textarea>
+                                        <div class="form-text"><i class="fas fa-heading me-1"></i>Judul ini yang tampil sebagai nama dokumen di Daftar Dokumen.</div>
+                                    </div>
+
                                     <div class="mb-3">
                                         <label id="labelNamaFile" class="form-label fw-bold">Nama File / Dokumen</label>
                                         <div id="containerNamaFileText">
                                             <input type="text" class="form-control" id="namaFileText" name="namaFile" placeholder="Contoh: Modul Praktikum ABC">
                                         </div>
                                         <div id="containerMataKuliah" style="display: none;">
-                                            <input type="text" class="form-control" id="mataKuliahInput" name="mataKuliah" list="listMataKuliah" placeholder="-- Ketik atau Pilih Mata Kuliah --">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="mataKuliahInput" name="mataKuliah" list="listMataKuliah" placeholder="-- Ketik atau Pilih Mata Kuliah --" autocomplete="off">
+                                                <button type="button" class="btn btn-outline-primary" id="btnAddMk" onclick="tambahMkDariInput()" style="display:none;"><i class="fas fa-plus me-1"></i>Tambah</button>
+                                            </div>
+                                            <div id="mkMultiHint" class="form-text" style="display:none;"><i class="fas fa-layer-group me-1"></i>Bisa lebih dari satu: pilih dari daftar (atau ketik lalu tekan Enter) untuk menambah, klik <b>×</b> untuk menghapus.</div>
+                                            <div id="mkChips" class="mk-chips mt-2" style="display:none;"></div>
+                                            <div id="mkCheck" class="mk-check small mt-1" style="display:none;"></div>
+                                            <div class="form-text"><i class="fas fa-list me-1"></i>Nama mata kuliah harus dipilih dari daftar agar seragam di semua semester & tahun.</div>
                                             <datalist id="listMataKuliah">
                                                 <option value="Administrasi Rumah Sakit">
                                                 <option value="Akuntansi Biaya (Implementasi di rs)">
@@ -663,7 +695,7 @@
         //  INISIALISASI SUPABASE
         // =============================================================
         // Naikkan nomor + tanggal ini setiap kali Anda meng-update aplikasi.
-        const APP_VERSION = "v2.5";
+        const APP_VERSION = "v3.0";
         const APP_UPDATED = "29 Okt 2026";
         const CFG = window.APP_CONFIG || {};
         const BUCKET = CFG.BUCKET || "dokumen";
@@ -708,6 +740,9 @@
 
             // Saran isian otomatis dari isi dokumen yang di-upload
             document.getElementById("fileUpload").addEventListener("change", analyzeSelectedFile);
+            document.getElementById("fileUpload").addEventListener("change", function() {
+                checkDuplicate(this.files && this.files[0]);
+            });
             document.getElementById("autoFillToggle").addEventListener("change", function() {
                 if (this.checked) analyzeSelectedFile();
                 else { clearSuggestions(); document.getElementById("autoStatus").innerHTML = ""; }
@@ -716,6 +751,21 @@
             ["input", "change"].forEach(function(evt) {
                 document.getElementById("uploadForm").addEventListener(evt, onUserEdit);
             });
+            // Mata kuliah wajib dari daftar
+            const mkIn = document.getElementById("mataKuliahInput");
+            mkIn.addEventListener("input", function(e) {
+                // Memilih dari daftar dropdown (bukan mengetik) langsung menambah chip pada mode ganda
+                const picked = !e.inputType || e.inputType === "insertReplacementText";
+                checkMkInput(isMkMulti() && picked && isMkOption(mkIn.value.trim()));
+            });
+            mkIn.addEventListener("change", function() { checkMkInput(true); });
+            mkIn.addEventListener("keydown", function(e) {
+                if (e.key === "Enter") { e.preventDefault(); if (isMkMulti()) tambahMkDariInput(); else checkMkInput(true); }
+            });
+            renderMkChips();
+            // Klik "Simpan" tidak memindah fokus dulu: catatan yang muncul saat kolom kehilangan fokus
+            // bisa menggeser tombol sehingga klik pertama meleset. Pemeriksaan tetap dilakukan saat simpan.
+            document.getElementById("btnSubmit").addEventListener("mousedown", function(e) { e.preventDefault(); });
 
             // Perhitungan real-time checkbox SDG
             document.querySelectorAll(".sdg-cb").forEach(function(cb) {
@@ -822,15 +872,73 @@
         // ---------- 2) Mengenali informasi dari teks ----------
         function normTxt(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, " ").trim(); }
 
-        function mkList() {
-            return Array.from(document.querySelectorAll("#listMataKuliah option"))
-                .map(function(o) { return { v: o.value, n: normTxt(o.value) }; })
-                .sort(function(a, b) { return b.n.length - a.n.length; }); // terpanjang dulu
+        // ---- Mata kuliah: SEMUA hasil deteksi wajib berasal dari daftar dropdown (#listMataKuliah) ----
+        // Normalisasi agar beda penulisan tetap cocok: huruf besar/kecil, tanda baca, "&"="dan", "RS"="Rumah Sakit",
+        // "CS"="Customer Service", angka 1/2 = romawi I/II.
+        function normMk(s) {
+            return String(s || "").toLowerCase().replace(/&/g, " dan ").replace(/[^a-z0-9]+/g, " ")
+                .replace(/\brs\b/g, "rumah sakit").replace(/\bcs\b/g, "customer service")
+                .replace(/\b1\b/g, "i").replace(/\b2\b/g, "ii").replace(/\s+/g, " ").trim();
         }
+        let _mkCache = null;
+        function mkList() {
+            if (_mkCache) return _mkCache;
+            _mkCache = Array.from(document.querySelectorAll("#listMataKuliah option"))
+                .map(function(o) { return { v: o.value, n: normMk(o.value), b: normMk(o.value.replace(/\([^)]*\)/g, " ")) }; })
+                .sort(function(a, b) { return b.n.length - a.n.length; }); // terpanjang dulu
+            return _mkCache;
+        }
+        function isMkOption(v) { return mkList().some(function(x) { return x.v === v; }); }
+        // Cari nama MK dari daftar yang TERTULIS UTUH di dalam teks (dipakai untuk memindai dokumen)
         function findMkIn(str, minLen) {
-            const hay = " " + normTxt(str) + " ";
+            const hay = " " + normMk(str) + " ";
             const hit = mkList().find(function(x) { return x.n.length >= (minLen || 0) && hay.indexOf(" " + x.n + " ") > -1; });
             return hit ? hit.v : null;
+        }
+        // Semua nama MK dari daftar yang tertulis di teks (terpanjang dulu, bagian yang sudah cocok tidak dipakai ulang)
+        function findAllMkIn(str, minLen) {
+            let hay = " " + normMk(str) + " ";
+            const found = [];
+            mkList().forEach(function(x) {
+                if (x.n.length < (minLen || 0)) return;
+                const key = " " + x.n + " ";
+                const at = hay.indexOf(key);
+                if (at > -1) {
+                    found.push({ v: x.v, at: at });
+                    hay = hay.slice(0, at) + " " + "#".repeat(key.length - 2) + " " + hay.slice(at + key.length);
+                }
+            });
+            return found.sort(function(a, b) { return a.at - b.at; }).map(function(f) { return f.v; }); // urut sesuai dokumen
+        }
+        function levRatio(a, b) {
+            if (a === b) return 1;
+            const m = a.length, n = b.length; if (!m || !n) return 0;
+            let prev = Array.from({ length: n + 1 }, function(_, j) { return j; });
+            for (let i = 1; i <= m; i++) {
+                const cur = [i];
+                for (let j = 1; j <= n; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+                prev = cur;
+            }
+            return 1 - prev[n] / Math.max(m, n);
+        }
+        // Cocokkan satu nilai (isi sel/teks setelah label) ke nama baku di daftar. Hasil: nama dari daftar atau null.
+        function matchMk(raw) {
+            if (!raw) return null;
+            const list = mkList();
+            const c = normMk(cleanVal(raw, 140) || raw);
+            if (c.length < 3) return null;
+            let hit = list.find(function(x) { return x.n === c; });                 // 1) sama persis (setelah normalisasi)
+            if (hit) return hit.v;
+            const inText = findMkIn(raw, 5);                                         // 2) nama baku tertulis utuh di teks
+            if (inText) return inText;
+            const byBase = list.filter(function(x) { return x.b.length >= 8 && x.b === c; }); // 3) tanpa keterangan dalam kurung
+            if (byBase.length === 1) return byBase[0].v;
+            if (c.length < 8 || c.length > 90) return null;                          // 4) salah ketik kecil
+            let best = null, score = 0;
+            list.forEach(function(x) {
+                [x.n, x.b].forEach(function(t) { const r = levRatio(c, t); if (r > score) { score = r; best = x.v; } });
+            });
+            return score >= 0.88 ? best : null;
         }
         function cleanVal(v, max) {
             v = String(v || "").split(/\t|\s{3,}|\b(?:NIDN|NIDK|NIP|NIK|NUPTK|Kode\s*MK|SKS)\b/i)[0]
@@ -861,6 +969,89 @@
             [17, /kemitraan untuk mencapai tujuan|partnerships? for the goals/i]
         ];
         const ROMAWI = { I: 1, II: 2, III: 3, IV: 4, V: 5, VI: 6, VII: 7, VIII: 8 };
+
+        // ---- Judul Penelitian / PkM ----
+        // Baris "kepala" jurnal yang dilewati (nama jurnal, volume, ISSN, DOI, tanggal terima, dst.)
+        const JUDUL_NOISE = /\b(jurnal|journal|vol(ume)?\.?\s*\d|no\.\s*\d|e-?issn|p-?issn|issn|doi|received|accepted|revised|published|diterima|direvisi|disetujui|dipublikasi|terakreditasi|sinta\s*\d|copyright|available\s+online|open\s+access|original\s+article|research\s+article|artikel\s+penelitian|halaman|hlm\.)|https?:\/\/|www\.|©/i;
+        // Baris yang menandai judul sudah selesai (penulis, afiliasi, identitas tim, abstrak)
+        const JUDUL_STOP = /@|\b(abstra(k|ct)|kata\s+kunci|keywords?|universitas|university|fakultas|faculty|program\s+studi|institut|stikes|politeknik|sekolah\s+tinggi|akademi|department|departemen|corresponding|korespondensi)\b|^(oleh|disusun|diajukan|ketua|anggota|tim\b|pelaksana|pengusul|nidn|nidk|nim\b|skema|dibiayai|didanai|sumber\s+dana|tahun\s+anggaran|tahun\b|lppm|lembaga|mitra\b|lokasi\b|dosen\b|mahasiswa\b)/i;
+        // Baris isian identitas "Label : nilai" (judul yang memakai titik dua, mis. "Edukasi Gizi: Studi Kasus", tetap boleh)
+        const JUDUL_LABEL = /^(ketua|anggota|nama|nidn|nidk|nim|skema|mitra|lokasi|tahun|isbn|issn|penerbit|e-?mail|alamat|bidang|program|jumlah|biaya|dana|tanggal|waktu|tempat|sasaran|kata\s+kunci|keywords?|doi|vol|semester|mata\s+kuliah|kode)\b[^:：]{0,30}[:：]/i;
+        const isCaps = function(l) { return /[A-Z]/.test(l) && l === l.toUpperCase(); };
+        // Baris nama penulis: tidak kapital semua, kata-katanya berawalan huruf besar, ada koma/"dan"/angka/bintang
+        const isAuthorLine = function(l) {
+            if (isCaps(l) || l.length > 160) return false;
+            const words = l.replace(/[\d*¹²³⁴⁵,.;]+/g, " ").split(/\s+/).filter(function(w) { return w.length > 2 && !/^(dan|and)$/i.test(w); });
+            return words.length > 0 && words.every(function(w) { return /^[A-Z]/.test(w); }) && /,|\b(dan|and)\b|\d|\*/.test(l);
+        };
+        // Judul KAPITAL SEMUA → Huruf Awal Kapital; kata sambung kecil, singkatan tetap kapital
+        const KATA_KECIL = /^(di|ke|dari|dan|yang|pada|terhadap|untuk|dengan|dalam|atau|bagi|oleh|serta|sebagai|melalui|tentang|antara|of|and|the|in|on|for|to|at|by|with|a|an)$/;
+        const SINGKATAN = /^(rs|rsu|rsud|rsd|rsi|rsia|rsj|rsk|rsup|sop|spo|bpjs|jkn|umkm|pkm|sdm|k3|k3rs|asn|igd|icu|nicu|picu|hiv|aids|tbc|tb|dbd|ptm|ukm|ukp|bumdes|posyandu|puskesmas|dinkes|kemenkes|who|sdgs|ppi|rme|simrs|ehr|it|ai|covid-19|ii|iii|iv|vi|vii|viii|ix|xi|xii)$/;
+        function titleCaseId(t) {
+            return t.toLowerCase().split(" ").map(function(w, i) {
+                const core = w.replace(/^[("'“]+|[)"'”,.:;]+$/g, "");
+                if (/^(posyandu|puskesmas|dinkes|kemenkes)$/.test(core)) return w.charAt(0).toUpperCase() + w.slice(1);
+                if (SINGKATAN.test(core) || (core.length > 1 && !/[aiueo]/.test(core) && /^[a-z0-9]+$/.test(core))) return w.toUpperCase();
+                if (i > 0 && KATA_KECIL.test(core)) return w;
+                return w.replace(/[a-z]/, function(c) { return c.toUpperCase(); }).replace(/-([a-z])/g, function(_, c) { return "-" + c.toUpperCase(); });
+            }).join(" ");
+        }
+        const tidyJudul = function(t) {
+            t = String(t || "").replace(/\s+/g, " ").replace(/^[\s:："'“]+|[\s.:;,"'”]+$/g, "").trim();
+            if (t.length > 14 && isCaps(t)) t = titleCaseId(t);
+            return (t.length >= 10 && t.length <= 400 && t.split(" ").length >= 2) ? t : null;
+        };
+        function detectJudulKarya(text) {
+            const raw = String(text || "").split("\n").map(function(l) { return l.trim(); }).filter(Boolean).slice(0, 90);
+            const lines = raw.map(function(l) { return l.replace(/\t+/g, " ").replace(/\s+/g, " ").trim(); });
+            const collect = function(start, firstPart) {
+                const parts = firstPart ? [firstPart] : [];
+                for (let i = start; i < lines.length && parts.length < 5; i++) {
+                    const l = lines[i];
+                    if (JUDUL_STOP.test(l) || JUDUL_LABEL.test(l) || isAuthorLine(l) || /^\(?\d{4}\)?$/.test(l)) break;
+                    if (l.length < 3) break;
+                    // judul label "Judul: ..." hanya diteruskan bila baris berikutnya juga kapital (judul panjang yang terpotong)
+                    if (firstPart && !(isCaps(parts[parts.length - 1]) && isCaps(l))) break;
+                    parts.push(l);
+                    if (parts.join(" ").length > 300) break;
+                }
+                return tidyJudul(parts.join(" "));
+            };
+            // 1) Label eksplisit, mis. "Judul : ..." atau sel tabel "Judul Penelitian | ..."
+            const reLbl = /^judul(?:\s+(?:penelitian|pengabdian|kegiatan|artikel|laporan|program|pkm|usulan|karya|buku))*\s*(?:[:：\t]\s*(.*))?$/i;
+            for (let i = 0; i < raw.length; i++) {
+                const m = raw[i].match(reLbl);
+                if (!m) continue;
+                let val = (m[1] || "").replace(/\t+/g, " ").replace(/^[:：\s]+/, "").trim(), next = i + 1;
+                // Tabel Word: label dan isinya ada di sel (baris) berikutnya, kadang dipisah sel ":" sendiri
+                while (!val && next < lines.length && next <= i + 3) {
+                    const l = lines[next++].replace(/^[:：\s]+/, "").trim();
+                    if (l) val = l;
+                }
+                const t = val ? collect(next, val) : null;
+                if (t) return t;
+            }
+            // 2) Sampul laporan/proposal: judul tepat di bawah "LAPORAN AKHIR PENGABDIAN ..." dsb.
+            for (let i = 0; i < Math.min(lines.length, 20); i++) {
+                if (/^(laporan|proposal|usulan|artikel|makalah)\b.*\b(penelitian|pengabdian|pkm|kegiatan|kemajuan|akhir)\b|^laporan\s+(akhir|kemajuan|hasil)\b/i.test(lines[i])) {
+                    let j = i + 1;
+                    // lewati baris pendek / skema / sub-judul jenis laporan sebelum judul
+                    while (j < lines.length && j < i + 4 && (lines[j].length < 6 ||
+                        /^((pengabdian\s+)?(kepada|pada|kpd)\s+masyarakat|pengabdian\s+(kepada|pada|kpd)\s+masyarakat|penelitian\s+(dosen|terapan|dasar|kompetitif|internal|mandiri|pemula)|program\s+kemitraan|skema|bidang|tahun|hibah|pkm|dosen)\b/i.test(lines[j]))) j++;
+                    const t = collect(j);
+                    if (t) return t;
+                }
+            }
+            // 3) Artikel jurnal: baris sebelum nama penulis/afiliasi/abstrak, setelah kepala jurnal
+            const abs = lines.findIndex(function(l) { return /^(abstra(k|ct)|abstrak\b|abstract\b)/i.test(l); });
+            if (abs > 0) {
+                let i = 0;
+                while (i < abs && (JUDUL_NOISE.test(lines[i]) || lines[i].length < 6)) i++;
+                const t = collect(i);
+                if (t) return t;
+            }
+            return null;
+        }
 
         function detectFromText(raw) {
             const text = String(raw || "").replace(/\r/g, "");
@@ -893,13 +1084,44 @@
             }
 
             // Mata kuliah: label "Mata Kuliah:" → daftar MK di sekitar label → nama MK di awal dokumen
+            const HEADER_RE = /^(Kode|Nama|Rumpun|Prasyarat|Deskripsi|Capaian|Bobot|Kelompok)(\s*(MK|Mata\s*Kuliah|Bidang))?$/i;
+            // Hanya nama yang ADA DI DAFTAR yang boleh disarankan; teks asli disimpan untuk catatan bila tak cocok.
+            const isCode = function(v) { return /\d/.test(v) && !/[a-z]{3}/.test(v); }; // mis. "MK-ARS-301", "ARS301"
+            let mkRaw = null;
+            const noteRaw = function(v) {
+                v = cleanVal(v);
+                if (!mkRaw && v && v.length > 4 && !HEADER_RE.test(v) && !isCode(v) && /[a-z]/i.test(v)) mkRaw = v;
+            };
             m = text.match(/mata\s*kuliah\s*(?:\(MK\))?\s*[:：\t]\s*([^\n]{3,140})/i);
-            if (m) s.mataKuliah = findMkIn(m[1]) || cleanVal(m[1]);
+            if (m) {
+                // a) sel/teks di baris label, lalu b) baris data tabel di bawahnya (dokumen Word berbentuk tabel)
+                const tLines = text.substr(m.index + m[0].length - m[1].length).split("\n").slice(0, 6);
+                for (let li = 0; li < tLines.length && !s.mataKuliah; li++) {
+                    if (li === 0) { s.mataKuliah = matchMk(tLines[0]); }
+                    const cells = tLines[li].split("\t");
+                    for (let ci = 0; ci < cells.length && !s.mataKuliah; ci++) {
+                        const cv = cells[ci].trim();
+                        if (cv.length < 3 || HEADER_RE.test(cv) || isCode(cv)) continue;
+                        s.mataKuliah = matchMk(cv);
+                        if (!s.mataKuliah) noteRaw(cv);
+                    }
+                }
+            }
             if (!s.mataKuliah) {
                 const reMk = /mata\s*kuliah/gi;
                 while (!s.mataKuliah && (m = reMk.exec(flat))) s.mataKuliah = findMkIn(flat.substr(m.index + m[0].length, 150));
             }
             s.mataKuliahGuess = findMkIn(flat.slice(0, 4000), 10);
+            if (!s.mataKuliah && !s.mataKuliahGuess) s.mataKuliahRaw = mkRaw;
+
+            // Mata kuliah terintegrasi (Penelitian/PkM): bisa lebih dari satu, cari di sekitar label integrasi
+            const reInt = /(mata\s*kuliah|MK)\s*(yang\s*)?(ter)?integrasi|integrasi\s*(ke\s*(dalam\s*)?|dengan\s*|pada\s*)?(mata\s*kuliah|MK|pembelajaran)|terintegrasi\s*(ke\s*(dalam\s*)?|dengan\s*|pada\s*)(mata\s*kuliah|MK|pembelajaran)/gi;
+            let mkInt = [];
+            while ((m = reInt.exec(flat))) {
+                findAllMkIn(flat.substr(m.index, 400), 5).forEach(function(v) { if (mkInt.indexOf(v) < 0) mkInt.push(v); });
+            }
+            if (!mkInt.length && s.mataKuliah) mkInt = [s.mataKuliah];
+            s.mataKuliahList = mkInt.slice(0, 8);
 
             // Nama dosen
             m = text.match(/(?:dosen\s+pengampu|nama\s+dosen|koordinator\s+(?:mata\s*kuliah|MK)|pengampu\s+MK|pengampu)\s*[:：\t]\s*([^\n]{3,120})/i) ||
@@ -929,6 +1151,7 @@
             s.nomorEC = extractEC(flat);
             m = text.match(/judul\s+ciptaan\s*[:：\t]?\s*([^\n]{3,200})/i);
             if (m) s.judul = cleanVal(m[1], 200);
+            s.judulKarya = detectJudulKarya(text);
 
             // Penelitian / Pengabdian
             m = flat.match(/\bISBN\s*[:：]?\s*((?:97[89][\s-]?)?(?:\d[\s-]?){9}[\dXx])/);
@@ -995,6 +1218,8 @@
 
         function applySuggestions(s) {
             suggestItems = [];
+            if (document.getElementById("mataKuliahInput").dataset.touched !== "1") hideMkCheck();
+            removeSaranMk(); // saran MK terintegrasi dari file sebelumnya diganti
             const katEl = document.getElementById("kategori");
             const kat = katEl.value; // kategori selalu dipilih pengguna di langkah 1
 
@@ -1018,13 +1243,21 @@
             if (suggest(document.getElementById("semester"), semester, "Semester")) filterSemesterMK();
             suggest(byName("pengunggah"), s.pengunggah, "Nama Dosen");
 
+            // Nama MK di dokumen tidak ada di daftar → jangan disarankan, cukup beri catatan
+            const mkEl = document.getElementById("mataKuliahInput");
+            if (s.mataKuliahRaw && (ajar.indexOf(kat) > -1) && mkEl.dataset.touched !== "1")
+                showMkCheck("warn", '<i class="fas fa-exclamation-triangle me-1"></i>Dokumen menyebut mata kuliah <b>“' + esc(s.mataKuliahRaw) +
+                    '”</b>, tetapi nama ini tidak ada di daftar. Silakan pilih nama yang sesuai dari daftar.');
             if (ajar.indexOf(kat) > -1) {
                 suggest(document.getElementById("mataKuliahInput"), s.mataKuliah || s.mataKuliahGuess, "Mata Kuliah");
                 const semVal = document.getElementById("semester").value;
                 if (s.semesterMK && ((+s.semesterMK % 2 === 1) === (semVal === "Ganjil")))
                     suggest(document.getElementById("semesterMK"), s.semesterMK, "Semester Mata Kuliah");
             } else if (integrasi.indexOf(kat) > -1) {
-                suggest(document.getElementById("mataKuliahInput"), s.mataKuliah, "Mata Kuliah Terintegrasi");
+                suggest(document.getElementById("judulKarya"), s.judulKarya, kat === "Pengabdian Masyarakat" ? "Judul Kegiatan PkM" : "Judul Penelitian");
+                const added = [];
+                (s.mataKuliahList || []).forEach(function(v) { if (addMk(v, true)) added.push(v); });
+                if (added.length) suggestItems.push("<b>Mata Kuliah Terintegrasi:</b> " + added.map(esc).join(", "));
             } else if (kat) {
                 suggest(document.getElementById("namaFileText"), s.judul, "Nama / Judul Dokumen");
             }
@@ -1089,6 +1322,102 @@
             document.getElementById("suggestList").innerHTML = "";
             document.getElementById("suggestPanel").style.display = "none";
             const mm = document.getElementById("mismatchNote"); mm.style.display = "none"; mm.innerHTML = "";
+            if (document.getElementById("mataKuliahInput").dataset.touched !== "1") hideMkCheck();
+            removeSaranMk();
+        }
+
+        // ---------- Mata kuliah harus dari daftar: catatan & pemeriksaan isian manual ----------
+        function showMkCheck(kind, html) {
+            const box = document.getElementById("mkCheck");
+            box.className = "mk-check small mt-1 " + kind;
+            box.innerHTML = html; box.style.display = "block";
+        }
+        function hideMkCheck() {
+            const box = document.getElementById("mkCheck");
+            box.style.display = "none"; box.innerHTML = "";
+            document.getElementById("mataKuliahInput").classList.remove("is-invalid");
+        }
+        function pakaiMk(v) {
+            const el = document.getElementById("mataKuliahInput");
+            el.value = v; el.dataset.touched = "1";
+            if (suggestedEls.has(el)) unmark(el);
+            checkMkInput(true);
+        }
+        // ---------- Mata Kuliah Terintegrasi (Penelitian/PkM): bisa lebih dari satu ----------
+        let mkMulti = [];            // [{ v: nama baku, saran: true/false }]
+        const mkDismissed = new Set(); // saran yang sudah dihapus pengguna, jangan dimunculkan lagi
+        function isMkMulti() { return ["Penelitian", "Pengabdian Masyarakat"].indexOf(document.getElementById("kategori").value) > -1; }
+        function renderMkChips() {
+            const box = document.getElementById("mkChips");
+            box.style.display = isMkMulti() ? "flex" : "none";
+            box.innerHTML = mkMulti.length ? mkMulti.map(function(x, i) {
+                return '<span class="mk-chip' + (x.saran ? ' saran' : '') + '">' + esc(x.v) +
+                    (x.saran ? '<span class="saran-tag">saran</span>' : '') +
+                    '<button type="button" title="Hapus" aria-label="Hapus ' + esc(x.v) + '" onclick="hapusMk(' + i + ')">×</button></span>';
+            }).join("") : '<span class="empty">Belum ada mata kuliah terintegrasi dipilih.</span>';
+        }
+        function addMk(v, saran) {
+            if (!isMkOption(v)) return false;
+            if (saran && mkDismissed.has(v)) return false;
+            const ex = mkMulti.find(function(x) { return x.v === v; });
+            if (ex) { if (!saran) ex.saran = false; renderMkChips(); return false; }
+            mkMulti.push({ v: v, saran: !!saran });
+            renderMkChips();
+            return true;
+        }
+        function hapusMk(i) {
+            const x = mkMulti[i]; if (!x) return;
+            if (x.saran) mkDismissed.add(x.v);
+            mkMulti.splice(i, 1); renderMkChips();
+        }
+        function removeSaranMk() { mkMulti = mkMulti.filter(function(x) { return !x.saran; }); renderMkChips(); }
+        function resetMkMulti() { mkMulti = []; mkDismissed.clear(); renderMkChips(); }
+        function setMkMode() {
+            const multi = isMkMulti();
+            document.getElementById("btnAddMk").style.display = multi ? "" : "none";
+            document.getElementById("mkMultiHint").style.display = multi ? "block" : "none";
+            document.getElementById("mataKuliahInput").placeholder = multi
+                ? "-- Ketik / pilih mata kuliah, lalu Tambah --" : "-- Ketik atau Pilih Mata Kuliah --";
+            renderMkChips();
+        }
+        function tambahMkDariInput() {
+            const el = document.getElementById("mataKuliahInput");
+            if (!el.value.trim()) { el.focus(); return; }
+            checkMkInput(true);
+        }
+        // Mode ganda: nama yang valid dipindah dari kotak isian ke daftar chip
+        function takeIntoChips(v, note) {
+            const el = document.getElementById("mataKuliahInput");
+            const isNew = addMk(v, false);
+            el.value = "";
+            el.classList.remove("is-invalid");
+            showMkCheck("ok", '<i class="fas fa-check-circle me-1"></i>' + (isNew ? "Ditambahkan" : "Sudah ada di pilihan") + ': <b>' + esc(v) + '</b>' + (note || ""));
+        }
+
+        // final=true saat kolom selesai diisi (change/blur/submit); saat mengetik hanya hapus peringatan bila sudah cocok
+        function checkMkInput(final) {
+            const el = document.getElementById("mataKuliahInput");
+            const v = el.value.trim();
+            if (!v) { if (!isMkMulti()) hideMkCheck(); return true; }
+            if (isMkOption(v)) {
+                if (isMkMulti() && final) { takeIntoChips(v); return true; }
+                hideMkCheck(); return true;
+            }
+            if (!final) return false;
+            const hit = matchMk(v);
+            if (hit && normMk(hit) === normMk(v)) {
+                // hanya beda huruf besar/kecil, spasi, "&"/"dan", "RS"/"Rumah Sakit" → samakan otomatis
+                if (isMkMulti()) { takeIntoChips(hit, " (disesuaikan dengan nama baku di daftar)"); return true; }
+                el.value = hit;
+                showMkCheck("ok", '<i class="fas fa-check-circle me-1"></i>Disesuaikan dengan nama baku di daftar: <b>' + esc(hit) + '</b>');
+                el.classList.remove("is-invalid");
+                return true;
+            }
+            el.classList.add("is-invalid");
+            showMkCheck("warn", '<i class="fas fa-exclamation-triangle me-1"></i><b>“' + esc(v) + '”</b> tidak ada di daftar mata kuliah.' +
+                (hit ? ' Maksud Anda <button type="button" class="btn btn-sm btn-outline-success py-0 px-2 ms-1" data-mk="' + esc(hit) + '" onclick="pakaiMk(this.dataset.mk)">' + esc(hit) + '</button>?'
+                     : ' Pilih nama dari daftar (klik kolom lalu ketik sebagian nama).'));
+            return false;
         }
 
         // ---------- Langkah 1: kategori menentukan dokumen yang diterima ----------
@@ -1132,6 +1461,7 @@
 
             if (!kat) {
                 fileEl.value = "";
+                resetDup();
                 clearSuggestions();
                 document.getElementById("autoStatus").innerHTML = "";
             } else if (fileEl.files && fileEl.files[0]) {
@@ -1163,6 +1493,8 @@
             document.getElementById("suggestList").innerHTML = "";
             document.getElementById("autoStatus").innerHTML = "";
             const mm = document.getElementById("mismatchNote"); mm.style.display = "none"; mm.innerHTML = "";
+            hideMkCheck();
+            resetMkMulti();
         }
 
         function onUserEdit(e) {
@@ -1324,7 +1656,7 @@
                 containerMataKuliah.style.display = "block";
                 divSemester.style.display = "block";
             } else if (integrasiKategori.includes(kat)) {
-                labelNamaFile.innerHTML = "Mata Kuliah Terintegrasi";
+                labelNamaFile.innerHTML = 'Mata Kuliah Terintegrasi <span class="fw-normal text-muted small">(boleh lebih dari satu)</span>';
                 containerNamaFileText.style.display = "none";
                 containerMataKuliah.style.display = "block";
                 divSemester.style.display = "none";
@@ -1341,6 +1673,12 @@
             const showPen = (kat === "Penelitian" || kat === "Pengabdian Masyarakat");
             document.getElementById("divBentukPenelitian").style.display = showPen ? "block" : "none";
             document.getElementById("divLinkPublikasi").style.display = showPen ? "block" : "none";
+            // Judul wajib untuk Penelitian / PkM
+            const judulEl = document.getElementById("judulKarya");
+            document.getElementById("divJudulKarya").style.display = showPen ? "block" : "none";
+            judulEl.required = showPen;
+            document.getElementById("labelJudulKarya").textContent = (kat === "Pengabdian Masyarakat") ? "Judul Kegiatan PkM" : "Judul Penelitian";
+            setMkMode();
         }
 
         function togglePenelitianFields() {
@@ -1357,6 +1695,95 @@
         // =============================================================
         function safeName(s) {
             return String(s || "file").normalize("NFKD").replace(/[^\w.\-]+/g, "_").replace(/_+/g, "_").slice(-120);
+        }
+
+        // =============================================================
+        //  ANTI DUPLIKAT: sidik jari SHA-256 isi file
+        //  Lapis 1: diperiksa begitu file dipilih. Lapis 2: indeks unik di database.
+        // =============================================================
+        let hashSupported = true;  // false bila kolom file_hash belum ditambahkan di database (SQL update v3.0 belum dijalankan)
+        let dupState = { file: null, hash: null, dup: null };
+        let dupToken = 0;
+
+        async function fileSha256(file) {
+            if (!(window.crypto && crypto.subtle)) return null; // browser lama / bukan https → lewati
+            const h = await crypto.subtle.digest("SHA-256", await file.arrayBuffer());
+            return Array.from(new Uint8Array(h)).map(function(b) { return b.toString(16).padStart(2, "0"); }).join("");
+        }
+        async function findDuplicate(hash) {
+            if (!hash || !hashSupported) return null;
+            const res = await sb.from(TABLE)
+                .select("id,created_at,kategori,nama_file,mata_kuliah,pengunggah,tahun_ajaran,semester,file_name,file_path,file_url")
+                .eq("file_hash", hash).limit(1);
+            if (res.error) {
+                if (isMissingHashColumn(res.error)) { hashSupported = false; return null; }
+                throw res.error;
+            }
+            return (res.data && res.data[0]) || null;
+        }
+        // Kolom file_hash belum dibuat (SQL update v3.0 belum dijalankan) — BUKAN penolakan duplikat (23505)
+        function isMissingHashColumn(e) {
+            if (!e || e.code === "23505") return false;
+            return e.code === "42703" || e.code === "PGRST204" ||
+                /column[^]*file_hash|file_hash[^]*(column|does not exist|schema cache)/i.test(e.message || "");
+        }
+        function applyDupButton() {
+            document.getElementById("btnSubmit").disabled = !!dupState.dup;
+        }
+        function showDup(r) {
+            const f = mapRow(r);
+            window.fileIndex = window.fileIndex || {};
+            window.fileIndex[f.id] = f; // agar tombol "Lihat" bisa membuka file yang sudah ada
+            const nama = (f.namaFile !== "-") ? f.namaFile : (f.mataKuliah !== "-") ? f.mataKuliah : f.fileName;
+            const box = document.getElementById("dupNote");
+            box.className = "dup-note small mt-2 dup";
+            box.innerHTML = '<div><i class="fas fa-ban me-1"></i><b>Dokumen ini sudah pernah diupload.</b> Isinya sama persis dengan dokumen di arsip ' +
+                '(walaupun nama filenya bisa berbeda), jadi tidak perlu diupload lagi.</div>' +
+                '<div class="dup-detail"><div class="fw-bold">' + esc(nama) + '</div>' +
+                '<div class="text-muted">' + esc(f.kategori) + ' · ' + esc(f.semester) + ' ' + esc(f.tahunAjaran) +
+                ' · diupload oleh <b>' + esc(f.pengunggah) + '</b> pada ' + esc(f.timestamp) + '</div>' +
+                '<button type="button" class="btn btn-sm btn-outline-danger py-0 mt-1" onclick="viewFile(\'' + esc(f.id) + '\')"><i class="fas fa-eye me-1"></i>Lihat dokumen yang sudah ada</button></div>' +
+                '<div class="mt-1">Silakan pilih file lain.</div>';
+            box.style.display = "block";
+        }
+        function resetDup() {
+            dupToken++;
+            dupState = { file: null, hash: null, dup: null };
+            const box = document.getElementById("dupNote");
+            box.style.display = "none"; box.innerHTML = "";
+            applyDupButton();
+        }
+        // Dipanggil saat file dipilih, dan lagi saat simpan (bila belum diperiksa)
+        async function checkDuplicate(file) {
+            const box = document.getElementById("dupNote");
+            if (!file) { resetDup(); return null; }
+            if (dupState.file === file && dupState.hash) return dupState.dup;
+            const tok = ++dupToken;
+            dupState = { file: file, hash: null, dup: null };
+            applyDupButton();
+            box.className = "dup-note small mt-2 checking";
+            box.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Memeriksa apakah dokumen ini sudah pernah diupload...';
+            box.style.display = "block";
+            try {
+                const hash = await fileSha256(file);
+                const dup = await findDuplicate(hash);
+                if (tok !== dupToken) return null; // file sudah diganti
+                dupState = { file: file, hash: hash, dup: dup };
+                if (dup) showDup(dup);
+                else if (hash && hashSupported) {
+                    box.className = "dup-note small mt-2 ok";
+                    box.innerHTML = '<i class="fas fa-shield-alt me-1"></i>Dokumen ini belum ada di arsip.';
+                } else { box.style.display = "none"; box.innerHTML = ""; }
+                applyDupButton();
+                return dup;
+            } catch (err) {
+                if (tok !== dupToken) return null;
+                // Gagal memeriksa (mis. koneksi) → jangan menghalangi; database tetap menolak duplikat saat simpan
+                dupState = { file: file, hash: null, dup: null };
+                box.style.display = "none"; box.innerHTML = "";
+                applyDupButton();
+                return null;
+            }
         }
 
         async function handleFormSubmit(event) {
@@ -1380,6 +1807,18 @@
             const fileSizeMB = file.size / (1024 * 1024);
             if (fileSizeMB > MAX_MB) {
                 showAlert("warning", "fa-exclamation-triangle", "<b>Gagal:</b> Ukuran file Anda " + fileSizeMB.toFixed(1) + " MB. Batas maksimal sistem adalah " + MAX_MB + " MB. Silakan kompres file Anda.");
+                return;
+            }
+
+            if (document.getElementById("containerMataKuliah").style.display !== "none" && !checkMkInput(true)) {
+                showAlert("warning", "fa-exclamation-triangle", "<b>Mata kuliah belum sesuai daftar.</b> Pilih nama mata kuliah dari daftar agar penamaan seragam di semua semester & tahun.");
+                document.getElementById("mataKuliahInput").focus();
+                return;
+            }
+
+            // Anti duplikat (lapis 1): tolak sebelum file diupload
+            if (await checkDuplicate(file)) {
+                showAlert("danger", "fa-ban", "<b>Dokumen ini sudah ada di arsip.</b> File yang isinya sama persis tidak bisa diupload ulang. Lihat keterangannya di kotak upload (langkah 2).");
                 return;
             }
 
@@ -1421,8 +1860,10 @@
                     kategori: kategori,
                     tahun_ajaran: v("tahunAjaran"),
                     semester: v("semester"),
-                    nama_file: v("namaFile"),
-                    mata_kuliah: v("mataKuliah"),
+                    // Penelitian/PkM: judul disimpan sebagai nama dokumen
+                    nama_file: isMkMulti() ? (v("judulKarya").replace(/\s+/g, " ").trim() || "-") : v("namaFile"),
+                    // Penelitian/PkM: beberapa MK terintegrasi digabung dengan "; " (kolom yang sama, tanpa ubah database)
+                    mata_kuliah: isMkMulti() ? (mkMulti.map(function(x) { return x.v; }).join("; ") || "-") : v("mataKuliah"),
                     semester_mk: v("semesterMK"),
                     metode: v("metodePembelajaran"),
                     kurikulum_rps: v("kurikulumRps"),
@@ -1440,14 +1881,28 @@
                     sdg_terpilih: sdgTerpilih,
                     sdg_persentase: sdgPersentase
                 };
-                const ins = await sb.from(TABLE).insert(row);
+                if (hashSupported && dupState.file === file && dupState.hash) row.file_hash = dupState.hash;
+                let ins = await sb.from(TABLE).insert(row);
+                if (ins.error && row.file_hash && isMissingHashColumn(ins.error)) {
+                    // kolom file_hash belum ada di database → simpan tanpa sidik jari
+                    hashSupported = false; delete row.file_hash;
+                    ins = await sb.from(TABLE).insert(row);
+                }
                 if (ins.error) {
                     await sb.storage.from(BUCKET).remove([path]); // batalkan file yatim
+                    if (ins.error.code === "23505") {
+                        // Anti duplikat (lapis 2): database menolak sidik jari kembar
+                        const dup = await findDuplicate(row.file_hash).catch(function() { return null; });
+                        dupState = { file: file, hash: row.file_hash, dup: dup || { id: "-" } };
+                        if (dup) showDup(dup);
+                        throw new Error("Dokumen ini sudah ada di arsip (isinya sama persis). File tidak diupload ulang.");
+                    }
                     throw ins.error;
                 }
 
                 showAlert("success", "fa-check-circle", "Dokumen berhasil disimpan!");
                 form.reset();
+                resetDup();
                 resetSuggestState();
                 onKategoriChange(); // kategori kembali kosong → kotak upload terkunci lagi
                 updateSdgCounter();
@@ -1461,6 +1916,7 @@
             } finally {
                 btn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Simpan & Upload Dokumen';
                 btn.disabled = false;
+                applyDupButton();
             }
         }
 
@@ -1486,7 +1942,7 @@
                 penerbitBuku: d(r.penerbit_buku), isbnBuku: d(r.isbn),
                 jenisProduk: d(r.jenis_produk), deskripsiProduk: d(r.deskripsi_produk),
                 nomorEC: d(r.nomor_ec), linkPublikasi: d(r.link_publikasi), keterangan: d(r.keterangan),
-                filePath: r.file_path || "", fileUrl: r.file_url || "",
+                filePath: r.file_path || "", fileUrl: r.file_url || "", fileName: d(r.file_name),
                 sdgTerpilih: d(r.sdg_terpilih), sdgPersentase: d(r.sdg_persentase)
             };
         }
@@ -1550,7 +2006,21 @@
                     if (sem[s] !== undefined) sem[s]++;
                 }
 
-                const docName = (f.namaFile !== "-") ? f.namaFile : ((f.mataKuliah !== "-") ? f.mataKuliah : "Dokumen Tanpa Nama");
+                const isKarya = (f.kategori === "Penelitian" || f.kategori === "Pengabdian Masyarakat");
+                let docName, subLine = "";
+                if (isKarya) {
+                    // Penelitian/PkM: JUDUL tampil besar; data lama tanpa judul memakai nama file aslinya
+                    docName = (f.namaFile !== "-") ? f.namaFile
+                        : (f.fileName !== "-") ? f.fileName.replace(/\.[a-z0-9]{2,5}$/i, "").replace(/[_]+/g, " ")
+                        : "Judul belum diisi";
+                    if (f.mataKuliah !== "-") {
+                        const mks = f.mataKuliah.split(/\s*;\s*/).filter(Boolean);
+                        subLine = '<div class="mk-sub small text-muted mb-1"><i class="fas fa-layer-group me-1"></i>MK terintegrasi: ' +
+                            mks.map(function(x) { return '<span class="mk-sub-item">' + esc(x) + '</span>'; }).join("") + '</div>';
+                    }
+                } else {
+                    docName = (f.namaFile !== "-") ? f.namaFile : ((f.mataKuliah !== "-") ? f.mataKuliah : "Dokumen Tanpa Nama");
+                }
 
                 let labels = '<span class="badge badge-custom badge-tahun"><i class="fas fa-calendar-alt me-1"></i>' + esc(f.semester) + ' ' + esc(f.tahunAjaran) + '</span>';
                 labels += '<span class="badge badge-custom badge-kategori"><i class="fas fa-tag me-1"></i>' + esc(f.kategori) + '</span>';
@@ -1579,7 +2049,7 @@
                 }
 
                 html += '<tr>' +
-                    '<td class="ps-4"><div class="fw-bold text-dark mb-1 fs-6">' + esc(docName) + '</div><div>' + labels + '</div></td>' +
+                    '<td class="ps-4"><div class="fw-bold text-dark mb-1 fs-6">' + esc(docName) + '</div>' + subLine + '<div>' + labels + '</div></td>' +
                     '<td>' + info + '</td>' +
                     '<td class="text-center pe-4">' +
                         '<button class="btn btn-sm btn-outline-primary mb-1 w-100" data-action="view" data-id="' + esc(f.id) + '"><i class="fas fa-eye me-1"></i> Lihat</button>' +
