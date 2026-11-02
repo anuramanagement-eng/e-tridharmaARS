@@ -65,6 +65,96 @@
         .dup-note.ok { background: #e9f7ef; border: 1px solid #a3d9b8; color: #1e6b3a; }
         .dup-note.dup { background: #fdecea; border: 1px solid #f5b5ae; color: #842029; }
         .dup-note.dup .dup-detail { background: #fff; border: 1px solid #f5c2c7; border-radius: 6px; padding: 6px 8px; margin-top: 6px; color: #212529; }
+        /* ===== PRATINJAU DOKUMEN ===== */
+        #pvBody { background: #e9ecef; min-height: 60vh; }
+        .pv-status { padding: 60px 20px; text-align: center; color: #6c757d; }
+        .pv-pages { padding: 16px; overflow-x: auto; }
+        .pv-pages .pv-inner { margin: 0 auto; }
+        .pv-page { background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.18); margin: 0 auto 14px; position: relative; }
+        .pv-page canvas, .pv-page img { display: block; width: 100%; height: auto; }
+        .pv-page .pv-num { position: absolute; right: 8px; bottom: 6px; font-size: .72rem; color: #868e96; background: rgba(255,255,255,.85); padding: 0 5px; border-radius: 3px; }
+        .pv-docx { overflow: auto; }
+        .pv-docx .docx-wrapper { background: #e9ecef !important; padding: 16px !important; }
+        .pv-docx .docx-wrapper > section.docx { box-shadow: 0 1px 4px rgba(0,0,0,.18) !important; margin-bottom: 14px !important; }
+        .pv-sheet-tabs { position: sticky; top: 0; z-index: 2; background: #f8f9fa; border-bottom: 1px solid #dee2e6; padding: 6px 10px 0; display: flex; gap: 4px; overflow-x: auto; }
+        .pv-sheet-tabs button { border: 1px solid #dee2e6; border-bottom: 0; background: #fff; border-radius: 6px 6px 0 0; padding: 4px 12px; font-size: .82rem; white-space: nowrap; }
+        .pv-sheet-tabs button.active { background: #0d6efd; color: #fff; border-color: #0d6efd; }
+        .pv-sheet { overflow: auto; background: #fff; }
+        .pv-sheet table { border-collapse: collapse; font-size: .8rem; }
+        .pv-sheet td, .pv-sheet th { border: 1px solid #dee2e6; padding: 3px 7px; white-space: nowrap; max-width: 360px; overflow: hidden; text-overflow: ellipsis; }
+        .pv-sheet th { background: #f1f3f5; color: #6c757d; font-weight: 600; position: sticky; top: 0; text-align: center; }
+        .pv-sheet td.rn { background: #f1f3f5; color: #6c757d; text-align: right; position: sticky; left: 0; }
+        .pv-frame { width: 100%; height: 80vh; border: 0; display: block; background: #fff; }
+
+        /* ===== STATISTIK ===== */
+        .viz-root {
+            --surface-1: #ffffff; --text-primary: #1f2328; --text-secondary: #52514e; --text-muted: #7a7974;
+            --grid: #ecebe8; --track: #f3f2ef;
+            --series-1: #2a78d6;  /* Penelitian / nilai tunggal */
+            --series-2: #eb6834;  /* PkM */
+            --seq-100: #cde2fb; --seq-250: #86b6ef; --seq-450: #2a78d6; --seq-600: #184f95;
+        }
+        .viz-card { background: var(--surface-1); border: 1px solid #e6e8ec; border-radius: 12px; padding: 18px 20px; margin-bottom: 20px; }
+        .viz-card h5 { font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 2px; }
+        .viz-sub { color: var(--text-secondary); font-size: .85rem; margin-bottom: 14px; }
+        .kpi { background: var(--surface-1); border: 1px solid #e6e8ec; border-radius: 12px; padding: 14px 16px; height: 100%; }
+        .kpi .kpi-val { font-size: 1.9rem; font-weight: 700; color: var(--text-primary); line-height: 1.1; }
+        .kpi .kpi-lbl { font-size: .82rem; color: var(--text-secondary); margin-top: 2px; }
+        .kpi .kpi-note { font-size: .75rem; color: var(--text-muted); margin-top: 4px; }
+        .kpi .kpi-meter { height: 6px; background: var(--track); border-radius: 3px; margin-top: 8px; overflow: hidden; }
+        .kpi .kpi-meter > span { display: block; height: 100%; background: var(--series-1); border-radius: 3px; }
+        .viz-legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: .82rem; color: var(--text-secondary); margin-bottom: 10px; }
+        .viz-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+        /* batang horizontal */
+        .hbar-row { display: grid; grid-template-columns: minmax(120px, 34%) 1fr; align-items: center; gap: 10px; padding: 3px 0; }
+        .hbar-lbl { font-size: .84rem; color: var(--text-primary); text-align: right; line-height: 1.2; }
+        .hbar-track { display: flex; align-items: center; min-height: 22px; }
+        .hbar-bars { display: flex; height: 16px; min-width: 4px; }
+        .hbar-seg { height: 16px; min-width: 3px; flex-basis: 0; }
+        .hbar-seg + .hbar-seg { margin-left: 2px; }                  /* celah 2px antar segmen */
+        .hbar-seg:last-child { border-radius: 0 4px 4px 0; }         /* ujung data membulat */
+        .hbar-seg.s1 { background: var(--series-1); } .hbar-seg.s2 { background: var(--series-2); }
+        .hbar-val { font-size: .8rem; color: var(--text-secondary); margin-left: 8px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+        .hbar-row:hover .hbar-lbl { font-weight: 600; }
+        .hbar-row:hover .hbar-seg { filter: brightness(1.08); }
+        /* kolom vertikal (tren) */
+        .vcol-wrap { display: flex; align-items: flex-end; gap: 14px; height: 180px; border-bottom: 1px solid var(--grid); padding: 0 4px; }
+        .vcol { flex: 1; display: flex; flex-direction: column-reverse; max-width: 70px; height: 100%; }
+        .vstack { display: flex; flex-direction: column-reverse; min-height: 2px; }
+        .vstack .seg { width: 100%; flex-basis: 0; min-height: 3px; }
+        .vstack .seg + .seg { margin-bottom: 2px; }
+        .vstack .seg:last-child { border-radius: 4px 4px 0 0; }
+        .vstack .seg.s1 { background: var(--series-1); } .vstack .seg.s2 { background: var(--series-2); }
+        .vcol .vtop { font-size: .78rem; color: var(--text-secondary); text-align: center; margin-bottom: 3px; font-variant-numeric: tabular-nums; }
+        .vcol:hover .seg { filter: brightness(1.08); }
+        .vcol-lbls { display: flex; gap: 14px; padding: 4px 4px 0; }
+        .vcol-lbls div { flex: 1; max-width: 70px; text-align: center; font-size: .74rem; color: var(--text-secondary); }
+        /* tabel & matriks */
+        .viz-table { font-size: .84rem; }
+        .viz-table th { font-size: .78rem; color: var(--text-secondary); font-weight: 600; white-space: nowrap; }
+        .viz-table td.num, .viz-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+        .viz-table details summary { cursor: pointer; color: var(--series-1); font-size: .8rem; }
+        .viz-table details ul { margin: 4px 0 0; padding-left: 18px; font-size: .78rem; color: var(--text-secondary); }
+        .mx { border-collapse: separate; border-spacing: 2px; font-size: .78rem; }
+        .mx th { font-weight: 600; color: var(--text-secondary); text-align: center; padding: 2px 4px; white-space: nowrap; }
+        .mx th.mk, .mx td.mk { text-align: left; white-space: normal; min-width: 180px; max-width: 260px; color: var(--text-primary); font-weight: 400; padding-right: 8px; }
+        .mx td.c { width: 26px; height: 24px; border-radius: 4px; background: var(--track); }
+        .mx td.c.on { background: var(--series-1); }
+        .mx td.tot { text-align: center; color: var(--text-secondary); font-variant-numeric: tabular-nums; padding: 0 6px; }
+        .mx tr:hover td.mk { font-weight: 600; }
+        .chip-list span { display: inline-block; background: var(--track); border: 1px solid #e3e2de; border-radius: 4px; padding: 1px 7px; margin: 0 4px 4px 0; font-size: .78rem; color: var(--text-secondary); }
+        .viz-empty { color: var(--text-muted); font-size: .88rem; padding: 18px 0; text-align: center; }
+        #vizTip { position: fixed; z-index: 2000; pointer-events: none; background: #1f2328; color: #fff; font-size: .78rem; line-height: 1.35;
+                  padding: 6px 9px; border-radius: 6px; max-width: 280px; box-shadow: 0 4px 14px rgba(0,0,0,.18); display: none; }
+        .print-only { display: none; }
+        @media print {
+            nav, .no-print, #vizTip, .btn-csv { display: none !important; }
+            .print-only { display: block !important; }
+            body { background: #fff !important; }
+            .viz-card, .kpi { break-inside: avoid; }
+            .viz-table details:not([open]) ul { display: none; }
+            * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
         .mk-chips { display: flex; flex-wrap: wrap; gap: 6px; }
         .mk-sub-item { display: inline-block; background: #f1f3f5; border: 1px solid #dee2e6; border-radius: 4px; padding: 0 6px; margin: 0 4px 2px 0; color: #495057; }
         .mk-chips .empty { color: #8a94a6; font-size: .85rem; font-style: italic; }
@@ -146,6 +236,15 @@
                     <div class="text-center">
                         <small class="text-muted">Akun diberikan oleh admin Prodi ARS.</small>
                     </div>
+                    <div class="d-flex align-items-center my-3 text-muted small">
+                        <hr class="flex-grow-1 my-0"><span class="px-2">atau</span><hr class="flex-grow-1 my-0">
+                    </div>
+                    <button type="button" id="btnGuest" class="btn btn-outline-secondary w-100 py-2 shadow-sm" onclick="enterGuest()" formnovalidate>
+                        <i class="fas fa-eye me-2"></i>Masuk sebagai Tamu
+                    </button>
+                    <div class="text-center mt-1">
+                        <small class="text-muted">Tanpa password · melihat & mengunduh dokumen, statistik</small>
+                    </div>
                     <div class="text-center mt-3">
                         <small class="text-muted" id="appVersion"></small>
                     </div>
@@ -166,6 +265,7 @@
                     <ul class="navbar-nav ms-auto align-items-lg-center">
                         <li class="nav-link" id="nav-upload" style="cursor:pointer;" onclick="switchTab('upload')"><i class="fas fa-cloud-upload-alt me-1"></i> Input Dokumen</li>
                         <li class="nav-link active" id="nav-list" style="cursor:pointer;" onclick="switchTab('list')"><i class="fas fa-list me-1"></i> Daftar Dokumen</li>
+                        <li class="nav-link" id="nav-stat" style="cursor:pointer;" onclick="switchTab('stat')"><i class="fas fa-chart-bar me-1"></i> Statistik</li>
                         <li class="user-chip ms-lg-3 px-3 py-1" id="userEmail"></li>
                         <li class="nav-link text-warning" style="cursor:pointer;" onclick="logout()"><i class="fas fa-power-off me-1"></i> Keluar</li>
                     </ul>
@@ -538,6 +638,36 @@
                 </div>
             </div>
 
+            <div id="guestBanner" class="alert alert-secondary d-flex align-items-center py-2 small no-print" style="display:none !important;">
+                <i class="fas fa-eye me-2"></i>
+                <div class="flex-grow-1">Anda masuk sebagai <b>Tamu</b> (mode baca saja): bisa melihat Daftar Dokumen & Statistik serta <b>melihat/mengunduh</b> dokumen, tetapi tidak bisa mengupload atau menghapus dokumen.</div>
+                <button class="btn btn-sm btn-primary ms-2 text-nowrap" onclick="logout()"><i class="fas fa-sign-in-alt me-1"></i>Login dosen</button>
+            </div>
+
+            <!-- TAB STATISTIK -->
+            <div id="tab-stat" style="display: none;">
+                <div class="card mb-4 no-print">
+                    <div class="card-body bg-light rounded">
+                        <div class="row align-items-end g-2">
+                            <div class="col-md-5">
+                                <label class="form-label fw-bold" for="statPeriode"><i class="fas fa-calendar-alt me-1"></i>Periode Tahun Akademik</label>
+                                <select id="statPeriode" class="form-select shadow-sm" onchange="renderStatistik()">
+                                    <option value="all">Semua periode</option>
+                                </select>
+                            </div>
+                            <div class="col-md-7 text-md-end">
+                                <button class="btn btn-outline-secondary shadow-sm me-1" onclick="window.print()"><i class="fas fa-print me-1"></i> Cetak / PDF</button>
+                                <button class="btn btn-outline-primary shadow-sm" onclick="loadData()"><i class="fas fa-sync-alt me-1"></i> Refresh Data</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="print-only mb-3"><h4 class="mb-0">Statistik e-Tri Dharma ARS</h4><div id="statPrintPeriode" class="text-muted"></div></div>
+                <div id="statContent" class="viz-root">
+                    <div class="text-center py-5 text-muted"><div class="spinner-border text-primary mb-3"></div><p>Sedang memuat data...</p></div>
+                </div>
+            </div>
+
             <!-- TAB LIST -->
             <div id="tab-list">
                 <div class="card mb-4">
@@ -654,6 +784,28 @@
         </div>
     </div>
 
+    <!-- Modal Pratinjau Dokumen (tampil di aplikasi, tidak mengunduh) -->
+    <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="pvTitle" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-fullscreen-lg-down modal-dialog-scrollable">
+        <div class="modal-content border-0 shadow">
+          <div class="modal-header py-2 gap-2">
+            <div class="me-auto" style="min-width:0;">
+              <h6 class="modal-title text-truncate mb-0" id="pvTitle">Pratinjau dokumen</h6>
+              <small class="text-muted text-truncate d-block" id="pvSub"></small>
+            </div>
+            <div class="btn-group btn-group-sm" id="pvZoom" role="group" aria-label="Perbesar/perkecil" style="display:none;">
+              <button type="button" class="btn btn-outline-secondary" onclick="pvSetZoom(-1)" title="Perkecil"><i class="fas fa-search-minus"></i></button>
+              <button type="button" class="btn btn-outline-secondary" id="pvZoomLbl" onclick="pvSetZoom(0)" title="Kembali ke lebar layar">100%</button>
+              <button type="button" class="btn btn-outline-secondary" onclick="pvSetZoom(1)" title="Perbesar"><i class="fas fa-search-plus"></i></button>
+            </div>
+            <button type="button" class="btn btn-sm btn-success text-nowrap" id="pvDownload" style="display:none;"><i class="fas fa-download me-1"></i>Unduh</button>
+            <button type="button" class="btn-close ms-1" data-bs-dismiss="modal" aria-label="Tutup"></button>
+          </div>
+          <div class="modal-body p-0" id="pvBody"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- Modal Konfirmasi Hapus -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
@@ -695,8 +847,8 @@
         //  INISIALISASI SUPABASE
         // =============================================================
         // Naikkan nomor + tanggal ini setiap kali Anda meng-update aplikasi.
-        const APP_VERSION = "v3.0";
-        const APP_UPDATED = "29 Okt 2026";
+        const APP_VERSION = "v3.4";
+        const APP_UPDATED = "2 Nov 2026";
         const CFG = window.APP_CONFIG || {};
         const BUCKET = CFG.BUCKET || "dokumen";
         const TABLE = "dokumen";
@@ -778,6 +930,7 @@
                 if (!btn) return;
                 const id = btn.getAttribute("data-id");
                 if (btn.getAttribute("data-action") === "view") viewFile(id);
+                if (btn.getAttribute("data-action") === "download") downloadFile(id);
                 if (btn.getAttribute("data-action") === "delete") confirmDelete(id);
             });
 
@@ -791,9 +944,10 @@
             // Pulihkan sesi login jika masih aktif
             const { data } = await sb.auth.getSession();
             if (data && data.session) enterApp(data.session);
+            else if (hasGuestFlag()) enterGuest(); // tamu me-refresh halaman → tetap mode tamu
 
             sb.auth.onAuthStateChange(function(event) {
-                if (event === "SIGNED_OUT") showLogin();
+                if (event === "SIGNED_OUT" && !isGuest) showLogin();
             });
         });
 
@@ -1587,12 +1741,47 @@
             enterApp(data.session);
         }
 
+        // ---- Mode Tamu: tanpa login, baca saja (dibatasi juga oleh database: peran "anon") ----
+        let isGuest = false;
+        // Kolom yang boleh dibaca tamu (sesuai update-terbaru.sql)
+        const GUEST_COLS_BASE = "id,created_at,pengunggah,kategori,tahun_ajaran,semester,nama_file,mata_kuliah,semester_mk,metode,kurikulum_rps," +
+                           "bentuk_hasil,indeks_jurnal,penerbit_buku,isbn,jenis_produk,deskripsi_produk,nomor_ec,link_publikasi,keterangan,file_name,sdg_terpilih,sdg_persentase";
+        const GUEST_COLS = GUEST_COLS_BASE + ",file_path,file_url"; // v3.3: tamu bisa melihat & mengunduh file
+        let guestFileBlocked = false; // true bila database belum menjalankan update-terbaru.sql (lokasi file belum dibuka untuk tamu)
+        function setGuestFlag(on) {
+            try { if (on) sessionStorage.setItem("etd_tamu", "1"); else sessionStorage.removeItem("etd_tamu"); } catch (e) {}
+        }
+        function hasGuestFlag() { try { return sessionStorage.getItem("etd_tamu") === "1"; } catch (e) { return false; } }
+        function applyRoleUI() {
+            document.getElementById("nav-upload").style.display = isGuest ? "none" : "";
+            const gb = document.getElementById("guestBanner");
+            if (isGuest) gb.style.setProperty("display", "flex", "important"); else gb.style.setProperty("display", "none", "important");
+        }
+        function resetDataState() {
+            window.allFilesData = []; window.fileIndex = {}; window.dataLoaded = false;
+        }
+        async function enterGuest() {
+            if (!sb) { showConfigAlert(); return; }
+            const s = await sb.auth.getSession();
+            if (s.data && s.data.session) await sb.auth.signOut(); // pastikan benar-benar sebagai tamu
+            isGuest = true; guestFileBlocked = false; setGuestFlag(true); resetDataState();
+            document.getElementById("loginScreen").style.display = "none";
+            document.getElementById("mainApp").style.display = "block";
+            document.getElementById("loginAlert").style.display = "none";
+            document.getElementById("userEmail").innerHTML = '<i class="fas fa-eye me-1"></i>Tamu';
+            applyRoleUI();
+            switchTab("list");
+            loadData();
+        }
+
         function enterApp(session) {
+            isGuest = false; setGuestFlag(false);
             document.getElementById("loginScreen").style.display = "none";
             document.getElementById("mainApp").style.display = "block";
             document.getElementById("loginAlert").style.display = "none";
             const email = session && session.user ? session.user.email : "";
             document.getElementById("userEmail").innerHTML = email ? '<i class="fas fa-user me-1"></i>' + esc(email) : "";
+            applyRoleUI();
             loadData();
         }
 
@@ -1603,7 +1792,14 @@
         }
 
         async function logout() {
-            if (sb) await sb.auth.signOut();
+            if (isGuest) {
+                isGuest = false; setGuestFlag(false);
+            } else if (sb) {
+                await sb.auth.signOut();
+            }
+            resetDataState();
+            applyRoleUI();
+            switchTab("list");
             showLogin();
         }
 
@@ -1611,10 +1807,14 @@
         //  NAVIGASI & FIELD DINAMIS
         // =============================================================
         function switchTab(tab) {
-            document.getElementById("tab-upload").style.display = (tab === "upload") ? "block" : "none";
-            document.getElementById("tab-list").style.display = (tab === "list") ? "block" : "none";
-            document.getElementById("nav-upload").classList.toggle("active", tab === "upload");
-            document.getElementById("nav-list").classList.toggle("active", tab === "list");
+            if (isGuest && tab === "upload") tab = "list"; // tamu tidak boleh membuka form upload
+            ["upload", "list", "stat"].forEach(function(t) {
+                document.getElementById("tab-" + t).style.display = (tab === t) ? "block" : "none";
+                document.getElementById("nav-" + t).classList.toggle("active", tab === t);
+            });
+            if (tab === "stat") {
+                if (window.dataLoaded) renderStatistik(); else loadData();
+            }
         }
 
         function filterSemesterMK() {
@@ -1788,6 +1988,7 @@
 
         async function handleFormSubmit(event) {
             event.preventDefault();
+            if (isGuest) return; // tamu tidak mengupload (juga ditolak oleh database & storage)
             const btn = document.getElementById("btnSubmit");
             const alertArea = document.getElementById("alertArea");
             const form = document.getElementById("uploadForm");
@@ -1954,18 +2155,41 @@
                 const all = [];
                 const PAGE = 1000;
                 for (let from = 0; ; from += PAGE) {
-                    const res = await sb.from(TABLE).select("*").order("created_at", { ascending: false }).range(from, from + PAGE - 1);
+                    const cols = !isGuest ? "*" : (guestFileBlocked ? GUEST_COLS_BASE : GUEST_COLS);
+                    let res = await sb.from(TABLE).select(cols).order("created_at", { ascending: false }).range(from, from + PAGE - 1);
+                    if (res.error && isGuest && !guestFileBlocked && res.error.code === "42501") {
+                        // update-terbaru.sql belum dijalankan: tampilkan daftar tanpa akses file
+                        guestFileBlocked = true;
+                        res = await sb.from(TABLE).select(GUEST_COLS_BASE).order("created_at", { ascending: false }).range(from, from + PAGE - 1);
+                    }
                     if (res.error) throw res.error;
                     all.push.apply(all, res.data);
                     if (res.data.length < PAGE) break;
                 }
                 window.allFilesData = all.map(mapRow);
+                window.dataLoaded = true;
                 window.fileIndex = {};
                 window.allFilesData.forEach(function(f) { window.fileIndex[f.id] = f; });
                 applyFilters();
+                buildStatPeriode();
+                renderStatistik();
             } catch (err) {
                 tbody.innerHTML = '<tr><td colspan="3" class="text-center text-danger py-4">Gagal memuat data: ' + esc(err && err.message ? err.message : err) + '</td></tr>';
+                document.getElementById("statContent").innerHTML = '<div class="alert alert-danger">Gagal memuat data: ' + esc(err && err.message ? err.message : err) + '</div>';
             }
+        }
+
+        // Tombol aksi per dokumen: Lihat & Unduh untuk semua (termasuk tamu), Hapus hanya untuk pengguna login
+        function aksiHtml(f) {
+            const id = esc(f.id);
+            if (isGuest && guestFileBlocked) {
+                return '<span class="small text-muted d-inline-block" title="Admin perlu menjalankan update-terbaru.sql"><i class="fas fa-lock me-1"></i>File belum dibuka<br>untuk tamu</span>';
+            }
+            let h = '';
+            if (f.filePath || f.fileUrl) h += '<button class="btn btn-sm btn-outline-primary mb-1 w-100" data-action="view" data-id="' + id + '"><i class="fas fa-eye me-1"></i> Lihat</button>';
+            if (f.filePath) h += '<button class="btn btn-sm btn-outline-success mb-1 w-100" data-action="download" data-id="' + id + '"><i class="fas fa-download me-1"></i> Unduh</button>';
+            if (!isGuest) h += '<button class="btn btn-sm btn-outline-danger w-100" data-action="delete" data-id="' + id + '"><i class="fas fa-trash-alt me-1"></i> Hapus</button>';
+            return h || '<span class="small text-muted">File tidak tersedia</span>';
         }
 
         function applyFilters() {
@@ -1979,7 +2203,9 @@
             let caseMethodCount = 0, teamBasedCount = 0, lainnyaCount = 0, totalRps = 0;
 
             if (!window.allFilesData || window.allFilesData.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="3" class="text-center py-5 text-muted"><i class="fas fa-database fs-1 mb-3 opacity-50"></i><br>Belum ada dokumen. Mulai dari menu <b>Input Dokumen</b>.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="3" class="text-center py-5 text-muted"><i class="fas fa-database fs-1 mb-3 opacity-50"></i><br>' + (isGuest
+                    ? 'Belum ada dokumen yang bisa ditampilkan untuk tamu.<br><small>Jika seharusnya sudah ada dokumen, admin perlu menjalankan <code>update-terbaru.sql</code> di Supabase.</small>'
+                    : 'Belum ada dokumen. Mulai dari menu <b>Input Dokumen</b>.') + '</td></tr>';
                 document.getElementById("totalDataBadge").innerText = "0 Dokumen";
                 dashboard.style.display = "none";
                 return;
@@ -2051,10 +2277,7 @@
                 html += '<tr>' +
                     '<td class="ps-4"><div class="fw-bold text-dark mb-1 fs-6">' + esc(docName) + '</div>' + subLine + '<div>' + labels + '</div></td>' +
                     '<td>' + info + '</td>' +
-                    '<td class="text-center pe-4">' +
-                        '<button class="btn btn-sm btn-outline-primary mb-1 w-100" data-action="view" data-id="' + esc(f.id) + '"><i class="fas fa-eye me-1"></i> Lihat</button>' +
-                        '<button class="btn btn-sm btn-outline-danger w-100" data-action="delete" data-id="' + esc(f.id) + '"><i class="fas fa-trash-alt me-1"></i> Hapus</button>' +
-                    '</td></tr>';
+                    '<td class="text-center pe-4">' + aksiHtml(f) + '</td></tr>';
             });
 
             tbody.innerHTML = filtered.length ? html : '<tr><td colspan="3" class="text-center py-5 text-muted"><i class="fas fa-search fs-1 mb-3 opacity-50"></i><br>Tidak ada dokumen yang sesuai filter.</td></tr>';
@@ -2083,30 +2306,512 @@
         // =============================================================
         //  LIHAT FILE (Signed URL berlaku 1 jam)
         // =============================================================
-        async function viewFile(id) {
+        // =============================================================
+        //  STATISTIK: MK terintegrasi (Penelitian & PkM) dan SDG terintegrasi (RPS), per periode
+        // =============================================================
+        const KARYA_KAT = ["Penelitian", "Pengabdian Masyarakat"];
+        let statCsv = {};
+
+        function sdgNames() {
+            const o = {};
+            for (let i = 1; i <= 17; i++) {
+                const l = document.querySelector('label[for="sdg' + i + '"]');
+                o[i] = l ? l.textContent.replace(/^\s*\d+\.\s*/, "").trim() : "SDG " + i;
+            }
+            return o;
+        }
+        function parseSdg(str) {
+            const s = new Set();
+            (String(str || "").match(/SDG\s*(\d{1,2})/gi) || []).forEach(function(x) { const n = +x.replace(/\D/g, ""); if (n >= 1 && n <= 17) s.add(n); });
+            return Array.from(s).sort(function(a, b) { return a - b; });
+        }
+        function splitMk(str) { return String(str || "").split(/\s*;\s*/).map(function(s) { return s.trim(); }).filter(function(s) { return s && s !== "-"; }); }
+        function taStart(ta) { const m = String(ta).match(/(\d{4})/); return m ? +m[1] : 0; }
+        function judulDok(f) { return (f.namaFile !== "-") ? f.namaFile : (f.fileName && f.fileName !== "-") ? f.fileName.replace(/\.[a-z0-9]{2,5}$/i, "").replace(/_+/g, " ") : "(tanpa judul)"; }
+        const pct = function(a, b) { return b ? Math.round(a / b * 100) : 0; };
+
+        function buildStatPeriode() {
+            const sel = document.getElementById("statPeriode");
+            const cur = sel.value;
+            const tas = Array.from(new Set((window.allFilesData || []).map(function(f) { return f.tahunAjaran; })
+                .filter(function(t) { return /\d{4}\s*\/\s*\d{4}/.test(t); }))).sort(function(a, b) { return taStart(b) - taStart(a); });
+            let h = '<option value="all">Semua periode</option>';
+            tas.forEach(function(ta) {
+                h += '<optgroup label="Tahun Akademik ' + esc(ta) + '">' +
+                     '<option value="ta|' + esc(ta) + '">' + esc(ta) + ' (Ganjil + Genap)</option>' +
+                     '<option value="sem|Ganjil|' + esc(ta) + '">Ganjil ' + esc(ta) + '</option>' +
+                     '<option value="sem|Genap|' + esc(ta) + '">Genap ' + esc(ta) + '</option></optgroup>';
+            });
+            sel.innerHTML = h;
+            if (Array.from(sel.options).some(function(o) { return o.value === cur; })) sel.value = cur;
+        }
+        function inPeriode(f, p) {
+            if (!p || p === "all") return true;
+            const a = p.split("|");
+            return a[0] === "ta" ? f.tahunAjaran === a[1] : (f.semester === a[1] && f.tahunAjaran === a[2]);
+        }
+        function periodeLabel(p) {
+            if (!p || p === "all") return "Semua periode";
+            const a = p.split("|");
+            return a[0] === "ta" ? "Tahun Akademik " + a[1] : "Semester " + a[1] + " " + a[2];
+        }
+
+        // ---- komponen tampilan ----
+        function kpiTile(val, lbl, note, meter) {
+            return '<div class="col-6 col-md-4 col-xl-2 mb-3"><div class="kpi"><div class="kpi-val">' + val + '</div><div class="kpi-lbl">' + lbl + '</div>' +
+                (meter !== undefined ? '<div class="kpi-meter" role="img" aria-label="' + meter + '%"><span style="width:' + Math.min(100, meter) + '%"></span></div>' : '') +
+                (note ? '<div class="kpi-note">' + note + '</div>' : '') + '</div></div>';
+        }
+        // rows: [{label, segs:[{v, cls}], val, tip}] → batang horizontal (bertumpuk bila >1 segmen)
+        function hbarChart(rows, max) {
+            if (!rows.length) return '<div class="viz-empty">Belum ada data pada periode ini.</div>';
+            return rows.map(function(r) {
+                const tot = r.segs.reduce(function(a, s) { return a + s.v; }, 0);
+                const bars = tot ? '<div class="hbar-bars" style="width:' + (tot / (max || 1) * 82).toFixed(2) + '%">' +
+                    r.segs.filter(function(s) { return s.v > 0; }).map(function(s) { return '<div class="hbar-seg ' + s.cls + '" style="flex-grow:' + s.v + '"></div>'; }).join("") + '</div>' : '';
+                return '<div class="hbar-row" data-tip="' + esc(r.tip) + '"><div class="hbar-lbl">' + esc(r.label) + '</div>' +
+                    '<div class="hbar-track">' + bars + '<span class="hbar-val">' + esc(r.val) + '</span></div></div>';
+            }).join("");
+        }
+        // cols: [{label, segs:[{v, cls}], top, tip}] → kolom vertikal bertumpuk
+        function vcolChart(cols, max) {
+            return '<div class="vcol-wrap">' + cols.map(function(c) {
+                const tot = c.segs.reduce(function(a, s) { return a + s.v; }, 0);
+                return '<div class="vcol" data-tip="' + esc(c.tip) + '"><div class="vstack" style="height:' + (tot / (max || 1) * 85).toFixed(2) + '%">' +
+                    c.segs.filter(function(s) { return s.v > 0; }).map(function(s) { return '<div class="seg ' + s.cls + '" style="flex-grow:' + s.v + '"></div>'; }).join("") +
+                    '</div><div class="vtop">' + esc(c.top) + '</div></div>';
+            }).join("") + '</div><div class="vcol-lbls">' + cols.map(function(c) { return '<div>' + esc(c.label) + '</div>'; }).join("") + '</div>';
+        }
+        function csvBtn(key) {
+            return '<button type="button" class="btn btn-sm btn-outline-secondary btn-csv" onclick="unduhCsv(\'' + key + '\')"><i class="fas fa-file-excel me-1"></i>Unduh tabel (Excel/CSV)</button>';
+        }
+        function unduhCsv(key) {
+            const d = statCsv[key]; if (!d) return;
+            const cell = function(v) { v = String(v === undefined || v === null ? "" : v); return /[";\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
+            const csv = "﻿" + d.rows.map(function(r) { return r.map(cell).join(";"); }).join("\r\n"); // ";" + BOM agar langsung rapi di Excel Indonesia
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+            a.download = d.name + ".csv";
+            document.body.appendChild(a); a.click(); a.remove();
+            setTimeout(function() { URL.revokeObjectURL(a.href); }, 1000);
+        }
+
+        function renderStatistik() {
+            const box = document.getElementById("statContent");
+            if (!box || !window.dataLoaded) return;
+            const p = document.getElementById("statPeriode").value || "all";
+            const pLabel = periodeLabel(p);
+            document.getElementById("statPrintPeriode").textContent = pLabel + " · dicetak " + fmtDate(new Date().toISOString());
+            const fileSlug = pLabel.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+            const data = window.allFilesData.filter(function(f) { return inPeriode(f, p); });
+            const NAMA_SDG = sdgNames();
+
+            // ---- A. Mata kuliah terintegrasi (Penelitian & PkM) ----
+            const karya = data.filter(function(f) { return KARYA_KAT.indexOf(f.kategori) > -1; });
+            const nPen = karya.filter(function(f) { return f.kategori === "Penelitian"; }).length, nPkm = karya.length - nPen;
+            const mk = {}; let karyaBerMk = 0;
+            karya.forEach(function(f) {
+                const list = splitMk(f.mataKuliah);
+                if (list.length) karyaBerMk++;
+                list.forEach(function(n) {
+                    const r = mk[n] || (mk[n] = { n: n, pen: 0, pkm: 0, docs: [] });
+                    if (f.kategori === "Penelitian") r.pen++; else r.pkm++;
+                    r.docs.push(f);
+                });
+            });
+            const mkRows = Object.keys(mk).map(function(k) { return mk[k]; })
+                .sort(function(a, b) { return (b.pen + b.pkm) - (a.pen + a.pkm) || a.n.localeCompare(b.n, "id"); });
+            const daftarMk = Array.from(new Set(mkList().map(function(x) { return x.v; }))).sort(function(a, b) { return a.localeCompare(b, "id"); });
+            const mkTerint = daftarMk.filter(function(n) { return mk[n]; }).length;
+            const mkBelum = daftarMk.filter(function(n) { return !mk[n]; });
+            const maxMk = mkRows.reduce(function(a, r) { return Math.max(a, r.pen + r.pkm); }, 0);
+
+            // ---- B. SDG terintegrasi (RPS) ----
+            const rps = data.filter(function(f) { return f.kategori === "RPS"; });
+            const sdgCnt = Array(18).fill(0), sdgMk = {}, mkSdg = {};
+            let rpsBerSdg = 0, totTag = 0;
+            rps.forEach(function(f) {
+                const s = parseSdg(f.sdgTerpilih);
+                if (s.length) rpsBerSdg++;
+                totTag += s.length;
+                const nm = (f.mataKuliah !== "-") ? f.mataKuliah : judulDok(f);
+                const r = mkSdg[nm] || (mkSdg[nm] = { n: nm, set: new Set(), docs: 0 });
+                r.docs++;
+                s.forEach(function(n) { sdgCnt[n]++; r.set.add(n); (sdgMk[n] = sdgMk[n] || new Set()).add(nm); });
+            });
+            const sdgTercakup = sdgCnt.filter(function(v, i) { return i > 0 && v > 0; }).length;
+            const maxSdg = Math.max.apply(null, sdgCnt);
+
+            let h = "";
+            // ---- Ringkasan ----
+            h += '<div class="row">' +
+                kpiTile(nPen, "Dokumen Penelitian", nPen ? pct(karya.filter(function(f) { return f.kategori === "Penelitian" && splitMk(f.mataKuliah).length; }).length, nPen) + "% terintegrasi MK" : "") +
+                kpiTile(nPkm, "Dokumen PkM", nPkm ? pct(karya.filter(function(f) { return f.kategori !== "Penelitian" && splitMk(f.mataKuliah).length; }).length, nPkm) + "% terintegrasi MK" : "") +
+                kpiTile(mkTerint + '<small class="fs-6 text-muted fw-normal"> / ' + daftarMk.length + '</small>', "Mata kuliah terintegrasi", pct(mkTerint, daftarMk.length) + "% dari daftar MK", pct(mkTerint, daftarMk.length)) +
+                kpiTile(rps.length, "Dokumen RPS", rps.length ? "rata-rata " + (totTag / rps.length).toFixed(1).replace(".", ",") + " SDG per RPS" : "") +
+                kpiTile(rpsBerSdg, "RPS memuat SDG", pct(rpsBerSdg, rps.length) + "% dari RPS", pct(rpsBerSdg, rps.length)) +
+                kpiTile(sdgTercakup + '<small class="fs-6 text-muted fw-normal"> / 17</small>', "SDG tercakup di RPS", (17 - sdgTercakup) + " SDG belum tercakup", pct(sdgTercakup, 17)) +
+                '</div>';
+
+            // ---- Tren per tahun akademik (hanya pada "Semua periode") ----
+            if (p === "all") {
+                const tas = Array.from(new Set(data.map(function(f) { return f.tahunAjaran; }).filter(function(t) { return /\d{4}/.test(t); })))
+                    .sort(function(a, b) { return taStart(a) - taStart(b); });
+                if (tas.length >= 2) {
+                    const tr = tas.map(function(ta) {
+                        const k = data.filter(function(f) { return f.tahunAjaran === ta && KARYA_KAT.indexOf(f.kategori) > -1 && splitMk(f.mataKuliah).length; });
+                        const pen = k.filter(function(f) { return f.kategori === "Penelitian"; }).length;
+                        const r = data.filter(function(f) { return f.tahunAjaran === ta && f.kategori === "RPS"; });
+                        const rs = r.filter(function(f) { return parseSdg(f.sdgTerpilih).length; }).length;
+                        return { ta: ta, pen: pen, pkm: k.length - pen, rps: r.length, rpsSdg: rs };
+                    });
+                    const maxT = Math.max.apply(null, tr.map(function(t) { return t.pen + t.pkm; }).concat([1]));
+                    h += '<div class="row"><div class="col-lg-6"><div class="viz-card"><h5>Tren integrasi MK per tahun akademik</h5>' +
+                        '<div class="viz-sub">Jumlah dokumen Penelitian & PkM yang mencantumkan mata kuliah terintegrasi</div>' +
+                        '<div class="viz-legend"><span><i style="background:var(--series-1)"></i>Penelitian</span><span><i style="background:var(--series-2)"></i>PkM</span></div>' +
+                        vcolChart(tr.map(function(t) {
+                            return { label: t.ta, top: String(t.pen + t.pkm), segs: [{ v: t.pen, cls: "s1" }, { v: t.pkm, cls: "s2" }],
+                                     tip: t.ta + " — Penelitian: " + t.pen + " · PkM: " + t.pkm }; }), maxT) +
+                        '</div></div><div class="col-lg-6"><div class="viz-card"><h5>Tren RPS yang memuat SDG</h5>' +
+                        '<div class="viz-sub">Persentase dokumen RPS yang mencantumkan minimal satu SDG</div>' +
+                        vcolChart(tr.map(function(t) {
+                            const pc = pct(t.rpsSdg, t.rps);
+                            return { label: t.ta, top: t.rps ? pc + "%" : "–", segs: [{ v: pc, cls: "s1" }],
+                                     tip: t.ta + " — " + t.rpsSdg + " dari " + t.rps + " RPS (" + pc + "%)" }; }), 100) +
+                        '</div></div></div>';
+                }
+            }
+
+            // ---- Kartu MK terintegrasi ----
+            h += '<div class="viz-card"><div class="d-flex justify-content-between align-items-start flex-wrap gap-2">' +
+                '<div><h5><i class="fas fa-layer-group me-2 text-primary"></i>Mata Kuliah Terintegrasi Penelitian & PkM</h5>' +
+                '<div class="viz-sub">' + esc(pLabel) + ' · ' + karyaBerMk + ' dari ' + karya.length + ' dokumen mencantumkan MK terintegrasi · satu dokumen bisa terintegrasi ke beberapa MK</div></div>' +
+                (mkRows.length ? csvBtn("mk") : "") + '</div>';
+            if (mkRows.length) {
+                h += '<div class="viz-legend"><span><i style="background:var(--series-1)"></i>Penelitian</span><span><i style="background:var(--series-2)"></i>PkM</span></div>' +
+                    hbarChart(mkRows.map(function(r) {
+                        return { label: r.n, val: String(r.pen + r.pkm), segs: [{ v: r.pen, cls: "s1" }, { v: r.pkm, cls: "s2" }],
+                                 tip: r.n + " — Penelitian: " + r.pen + " · PkM: " + r.pkm + " · Total: " + (r.pen + r.pkm) };
+                    }), maxMk);
+                h += '<div class="table-responsive mt-3"><table class="table table-sm viz-table align-middle"><thead><tr><th>No</th><th>Mata Kuliah</th>' +
+                    '<th class="num">Penelitian</th><th class="num">PkM</th><th class="num">Total</th><th>Judul dokumen</th></tr></thead><tbody>' +
+                    mkRows.map(function(r, i) {
+                        return '<tr><td>' + (i + 1) + '</td><td>' + esc(r.n) + '</td><td class="num">' + r.pen + '</td><td class="num">' + r.pkm + '</td><td class="num fw-bold">' + (r.pen + r.pkm) + '</td>' +
+                            '<td><details><summary>' + r.docs.length + ' judul</summary><ul>' + r.docs.map(function(f) {
+                                return '<li><b>' + (f.kategori === "Penelitian" ? "Penelitian" : "PkM") + ':</b> ' + esc(judulDok(f)) + ' <span class="text-muted">(' + esc(f.semester) + ' ' + esc(f.tahunAjaran) + ', ' + esc(f.pengunggah) + ')</span></li>';
+                            }).join("") + '</ul></details></td></tr>';
+                    }).join("") + '</tbody></table></div>';
+                statCsv.mk = { name: "mk-terintegrasi-" + fileSlug, rows: [["No", "Mata Kuliah", "Penelitian", "PkM", "Total", "Judul dokumen"]].concat(
+                    mkRows.map(function(r, i) { return [i + 1, r.n, r.pen, r.pkm, r.pen + r.pkm, r.docs.map(judulDok).join(" | ")]; })) };
+            } else {
+                h += '<div class="viz-empty">Belum ada dokumen Penelitian/PkM yang mencantumkan mata kuliah terintegrasi pada periode ini.</div>';
+            }
+            h += '<details class="mt-2"' + (mkRows.length ? '' : ' open') + '><summary class="small fw-bold text-secondary" style="cursor:pointer">Mata kuliah yang belum terintegrasi (' + mkBelum.length + ' dari ' + daftarMk.length + ')</summary>' +
+                '<div class="chip-list mt-2">' + mkBelum.map(function(n) { return '<span>' + esc(n) + '</span>'; }).join("") + '</div></details></div>';
+
+            // ---- Kartu SDG ----
+            h += '<div class="viz-card"><div class="d-flex justify-content-between align-items-start flex-wrap gap-2">' +
+                '<div><h5><i class="fas fa-globe-asia me-2 text-primary"></i>SDGs Terintegrasi dalam RPS</h5>' +
+                '<div class="viz-sub">' + esc(pLabel) + ' · jumlah dokumen RPS yang mencantumkan tiap SDG (dari ' + rps.length + ' RPS)</div></div>' +
+                (rps.length ? csvBtn("sdg") : "") + '</div>';
+            if (rps.length) {
+                h += hbarChart([...Array(17).keys()].map(function(i) {
+                    const n = i + 1, v = sdgCnt[n];
+                    return { label: n + ". " + NAMA_SDG[n], val: v + " RPS · " + pct(v, rps.length) + "%", segs: [{ v: v, cls: "s1" }],
+                             tip: "SDG " + n + " " + NAMA_SDG[n] + " — " + v + " dari " + rps.length + " RPS (" + pct(v, rps.length) + "%)" };
+                }), maxSdg);
+                h += '<div class="table-responsive mt-3"><table class="table table-sm viz-table align-middle"><thead><tr><th>SDG</th><th>Tujuan</th>' +
+                    '<th class="num">Jumlah RPS</th><th class="num">% RPS</th><th>Mata kuliah</th></tr></thead><tbody>' +
+                    [...Array(17).keys()].map(function(i) {
+                        const n = i + 1, mks = sdgMk[n] ? Array.from(sdgMk[n]).sort() : [];
+                        return '<tr' + (sdgCnt[n] ? '' : ' class="text-muted"') + '><td>' + n + '</td><td>' + esc(NAMA_SDG[n]) + '</td><td class="num">' + sdgCnt[n] + '</td><td class="num">' + pct(sdgCnt[n], rps.length) + '%</td>' +
+                            '<td>' + (mks.length ? '<details><summary>' + mks.length + ' MK</summary><ul>' + mks.map(function(x) { return '<li>' + esc(x) + '</li>'; }).join("") + '</ul></details>' : '<span class="small">belum ada</span>') + '</td></tr>';
+                    }).join("") + '</tbody></table></div>';
+                statCsv.sdg = { name: "sdg-rps-" + fileSlug, rows: [["SDG", "Tujuan", "Jumlah RPS", "% RPS", "Mata kuliah"]].concat(
+                    [...Array(17).keys()].map(function(i) { const n = i + 1; return [n, NAMA_SDG[n], sdgCnt[n], pct(sdgCnt[n], rps.length) + "%", sdgMk[n] ? Array.from(sdgMk[n]).sort().join(" | ") : ""]; })) };
+            } else {
+                h += '<div class="viz-empty">Belum ada dokumen RPS pada periode ini.</div>';
+            }
+            h += '</div>';
+
+            // ---- Matriks MK × SDG ----
+            const mxRows = Object.keys(mkSdg).map(function(k) { return mkSdg[k]; })
+                .sort(function(a, b) { return b.set.size - a.set.size || a.n.localeCompare(b.n, "id"); });
+            if (mxRows.length) {
+                const colTot = Array(18).fill(0);
+                mxRows.forEach(function(r) { r.set.forEach(function(n) { colTot[n]++; }); });
+                h += '<div class="viz-card"><div class="d-flex justify-content-between align-items-start flex-wrap gap-2">' +
+                    '<div><h5><i class="fas fa-th me-2 text-primary"></i>Matriks Mata Kuliah × SDG (RPS)</h5>' +
+                    '<div class="viz-sub">' + esc(pLabel) + ' · kotak biru = SDG tercantum di RPS mata kuliah tersebut · arahkan kursor untuk detail</div></div>' + csvBtn("mx") + '</div>' +
+                    '<div class="viz-legend"><span><i style="background:var(--series-1)"></i>Tercantum</span><span><i style="background:var(--track);border:1px solid #e3e2de"></i>Tidak tercantum</span></div>' +
+                    '<div class="table-responsive"><table class="mx"><thead><tr><th class="mk">Mata kuliah</th>' +
+                    [...Array(17).keys()].map(function(i) { return '<th data-tip="SDG ' + (i + 1) + ' ' + esc(NAMA_SDG[i + 1]) + '">' + (i + 1) + '</th>'; }).join("") +
+                    '<th>Jml</th></tr></thead><tbody>' +
+                    mxRows.map(function(r) {
+                        return '<tr><td class="mk">' + esc(r.n) + (r.docs > 1 ? ' <span class="text-muted small">(' + r.docs + ' RPS)</span>' : '') + '</td>' +
+                            [...Array(17).keys()].map(function(i) {
+                                const on = r.set.has(i + 1);
+                                return '<td class="c' + (on ? ' on' : '') + '" data-tip="' + esc(r.n) + ' — SDG ' + (i + 1) + ' ' + esc(NAMA_SDG[i + 1]) + ': ' + (on ? 'tercantum' : 'tidak tercantum') + '"></td>';
+                            }).join("") + '<td class="tot">' + r.set.size + '</td></tr>';
+                    }).join("") +
+                    '<tr><td class="mk text-muted small">Jumlah MK</td>' + [...Array(17).keys()].map(function(i) { return '<td class="tot">' + colTot[i + 1] + '</td>'; }).join("") + '<td></td></tr>' +
+                    '</tbody></table></div></div>';
+                statCsv.mx = { name: "matriks-mk-sdg-" + fileSlug, rows: [["Mata kuliah"].concat([...Array(17).keys()].map(function(i) { return "SDG " + (i + 1); }), ["Jumlah SDG"])].concat(
+                    mxRows.map(function(r) { return [r.n].concat([...Array(17).keys()].map(function(i) { return r.set.has(i + 1) ? 1 : 0; }), [r.set.size]); })) };
+            }
+
+            if (!data.length) h = '<div class="viz-card"><div class="viz-empty"><i class="fas fa-database fs-2 d-block mb-2 opacity-50"></i>Belum ada dokumen pada periode ' + esc(pLabel) + '.</div></div>';
+            box.innerHTML = h;
+        }
+
+        // Tooltip untuk semua elemen ber-atribut data-tip (batang, kolom, sel matriks)
+        (function() {
+            const tip = document.createElement("div"); tip.id = "vizTip"; tip.setAttribute("role", "tooltip");
+            document.body.appendChild(tip);
+            const place = function(e) {
+                const w = tip.offsetWidth, h = tip.offsetHeight;
+                let x = e.clientX + 14, y = e.clientY + 14;
+                if (x + w > window.innerWidth - 8) x = e.clientX - w - 14;
+                if (y + h > window.innerHeight - 8) y = e.clientY - h - 14;
+                tip.style.left = x + "px"; tip.style.top = y + "px";
+            };
+            document.addEventListener("mouseover", function(e) {
+                const t = e.target.closest && e.target.closest("#statContent [data-tip]");
+                if (!t) { tip.style.display = "none"; return; }
+                tip.textContent = t.getAttribute("data-tip"); tip.style.display = "block"; place(e);
+            });
+            document.addEventListener("mousemove", function(e) { if (tip.style.display === "block") place(e); });
+            document.addEventListener("scroll", function() { tip.style.display = "none"; }, true);
+        })();
+
+        function fileErrorMsg(err) {
+            if (isGuest) return "File ini tidak dapat dibuka dalam mode Tamu.\n\nJika seharusnya bisa, admin perlu menjalankan update-terbaru.sql di Supabase (atau kategori ini sengaja ditutup untuk tamu).";
+            return "Gagal membuka file: " + (err && err.message ? err.message : err);
+        }
+
+        // Unduh: tautan bertanda tangan dengan nama file asli (Content-Disposition: attachment)
+        async function downloadFile(id) {
             const f = window.fileIndex[id];
-            if (!f) return;
-            if (f.filePath) {
-                const w = window.open("", "_blank"); // dibuka dulu agar tidak diblokir pop-up blocker
-                const res = await sb.storage.from(BUCKET).createSignedUrl(f.filePath, 3600);
-                if (res.error) {
-                    if (w) w.close();
-                    alert("Gagal membuka file: " + res.error.message);
+            if (!f || !f.filePath) return;
+            const name = (f.fileName && f.fileName !== "-") ? f.fileName : f.filePath.split("/").pop();
+            const res = await sb.storage.from(BUCKET).createSignedUrl(f.filePath, 600, { download: name });
+            if (res.error) { alert(fileErrorMsg(res.error)); return; }
+            const a = document.createElement("a");
+            a.href = res.data.signedUrl; a.rel = "noopener";
+            document.body.appendChild(a); a.click(); a.remove();
+        }
+
+        // Tombol "Lihat": selalu PRATINJAU di dalam aplikasi, tidak pernah mengunduh otomatis
+        function viewFile(id) {
+            const f = window.fileIndex[id];
+            if (f) openPreview(f);
+        }
+
+        // =============================================================
+        //  PRATINJAU DOKUMEN — ditampilkan di aplikasi (PDF, Word, Excel, gambar), TIDAK mengunduh
+        // =============================================================
+        let pvModal = null, pvToken = 0, pvUrls = [], pvZoomVal = 100;
+
+        async function ensureDocxPreview() {
+            if (window.docx && window.docx.renderAsync) return window.docx;
+            await ensureJSZip(); // docx-preview membutuhkan JSZip
+            await loadScript("https://cdn.jsdelivr.net/npm/docx-preview@0.3.7/dist/docx-preview.min.js");
+            return window.docx;
+        }
+        async function ensureXlsx() {
+            if (window.XLSX) return window.XLSX;
+            await loadScript("https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js");
+            return window.XLSX;
+        }
+        function pvExt(f) {
+            const n = ((f.fileName && f.fileName !== "-") ? f.fileName : (f.filePath || "")).toLowerCase();
+            const m = n.match(/\.([a-z0-9]{2,5})$/);
+            return m ? m[1] : "";
+        }
+        function pvBody() { return document.getElementById("pvBody"); }
+        function pvStatus(html) { pvBody().innerHTML = '<div class="pv-status">' + html + '</div>'; }
+        function pvDownloadBtnHtml() {
+            return '<button type="button" class="btn btn-success mt-3" onclick="document.getElementById(\'pvDownload\').click()"><i class="fas fa-download me-1"></i>Unduh file</button>';
+        }
+        function pvSetZoom(d) {
+            pvZoomVal = (d === 0) ? 100 : Math.max(50, Math.min(300, pvZoomVal + d * 25));
+            const inner = document.querySelector("#pvBody .pv-inner");
+            if (inner) { inner.style.width = pvZoomVal + "%"; inner.style.maxWidth = (pvZoomVal * 9) + "px"; } // 100% = lebar layar, maks. 900px
+            document.getElementById("pvZoomLbl").textContent = pvZoomVal + "%";
+        }
+        function driveEmbed(url) {
+            const m = String(url || "").match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]{10,})/);
+            return m ? "https://drive.google.com/file/d/" + m[1] + "/preview" : null;
+        }
+        // Tautan di dalam dokumen Word: hanya http(s)/mailto, dibuka di tab baru (cegah tautan berbahaya)
+        function pvSanitize(root) {
+            root.querySelectorAll("script, iframe, object, embed").forEach(function(el) { el.remove(); });
+            root.querySelectorAll("*").forEach(function(el) {
+                Array.from(el.attributes).forEach(function(a) {
+                    if (/^on/i.test(a.name)) el.removeAttribute(a.name);
+                    else if (/^(href|src|xlink:href)$/i.test(a.name) && /^\s*javascript:/i.test(a.value)) el.removeAttribute(a.name);
+                });
+            });
+            root.querySelectorAll("a[href]").forEach(function(a) {
+                if (!/^(https?:|mailto:|#)/i.test(a.getAttribute("href"))) a.removeAttribute("href");
+                else if (!/^#/.test(a.getAttribute("href"))) { a.target = "_blank"; a.rel = "noopener noreferrer"; }
+            });
+        }
+
+        async function openPreview(f) {
+            const tok = ++pvToken;
+            if (!pvModal) {
+                const el = document.getElementById("previewModal");
+                pvModal = new bootstrap.Modal(el);
+                el.addEventListener("hidden.bs.modal", function() {
+                    pvToken++; pvBody().innerHTML = "";
+                    pvUrls.forEach(function(u) { URL.revokeObjectURL(u); }); pvUrls = [];
+                });
+            }
+            const judul = (f.namaFile !== "-") ? f.namaFile : (f.mataKuliah !== "-") ? f.mataKuliah : (f.fileName && f.fileName !== "-" ? f.fileName : "Dokumen");
+            document.getElementById("pvTitle").textContent = judul;
+            document.getElementById("pvSub").textContent = [f.kategori, (f.semester + " " + f.tahunAjaran).trim(), (f.fileName && f.fileName !== "-") ? f.fileName : ""]
+                .filter(function(x) { return x && x !== "-" && x !== "- -"; }).join(" · ");
+            const dlBtn = document.getElementById("pvDownload");
+            dlBtn.style.display = f.filePath ? "" : "none";
+            dlBtn.onclick = function() { downloadFile(f.id); };
+            document.getElementById("pvZoom").style.display = "none";
+            pvZoomVal = 100;
+            pvStatus('<div class="spinner-border text-primary mb-3"></div><div>Memuat pratinjau...</div>');
+            pvModal.show();
+
+            try {
+                if (!f.filePath) {
+                    // Data lama: tautan Google Drive → pratinjau Drive (tidak mengunduh)
+                    const emb = driveEmbed(f.fileUrl);
+                    if (emb) { pvBody().innerHTML = '<iframe class="pv-frame" src="' + esc(emb) + '" title="Pratinjau dokumen" referrerpolicy="no-referrer"></iframe>'; return; }
+                    if (f.fileUrl) { pvStatus('Dokumen ini tersimpan sebagai tautan luar.<br><a class="btn btn-primary mt-3" href="' + esc(f.fileUrl) + '" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt me-1"></i>Buka tautan</a>'); return; }
+                    pvStatus("File tidak tersedia untuk dokumen ini.");
                     return;
                 }
-                if (w) w.location.href = res.data.signedUrl;
-                else window.location.href = res.data.signedUrl;
-            } else if (f.fileUrl) {
-                window.open(f.fileUrl, "_blank", "noopener"); // data lama (link Google Drive)
-            } else {
-                alert("File tidak tersedia untuk dokumen ini.");
+                const ext = pvExt(f);
+                // Format yang tidak bisa ditampilkan: jangan ambil file, langsung tawarkan Unduh
+                if (["pdf", "jpg", "jpeg", "png", "gif", "webp", "docx", "xlsx", "xls", "csv"].indexOf(ext) < 0) {
+                    pvStatus('<i class="far fa-file fs-1 mb-3 d-block"></i>Format <b>.' + esc(ext || "?") + '</b> ' +
+                        (ext === "doc" ? "(Word versi lama) " : "") + 'belum bisa dipratinjau di aplikasi.<br>Silakan unduh untuk membukanya.' + pvDownloadBtnHtml());
+                    return;
+                }
+                const dl = await sb.storage.from(BUCKET).download(f.filePath);
+                if (tok !== pvToken) return;
+                if (dl.error || !dl.data) {
+                    pvStatus('<i class="fas fa-lock fs-2 mb-3 d-block"></i>' + esc(fileErrorMsg(dl.error || "File tidak ditemukan")).replace(/\n/g, "<br>"));
+                    return;
+                }
+                const blob = dl.data;
+                if (ext === "pdf") await pvPdf(blob, tok);
+                else if (/^(jpe?g|png|gif|webp)$/.test(ext)) pvImage(blob);
+                else if (ext === "docx") await pvDocx(blob, tok);
+                else await pvSheet(blob, tok);
+            } catch (err) {
+                if (tok !== pvToken) return;
+                pvStatus('<i class="fas fa-exclamation-triangle fs-2 mb-3 d-block text-warning"></i>Pratinjau gagal ditampilkan: ' +
+                    esc(err && err.message ? err.message : err) + '<br>Silakan unduh untuk membuka file ini.' + (f.filePath ? pvDownloadBtnHtml() : ""));
             }
+        }
+
+        // PDF: setiap halaman digambar sebagai kanvas; halaman dimuat saat mendekati layar (hemat memori)
+        async function pvPdf(blob, tok) {
+            const lib = await ensurePdfjs();
+            const pdf = await lib.getDocument({ data: await blob.arrayBuffer() }).promise;
+            if (tok !== pvToken) return;
+            const body = pvBody();
+            body.innerHTML = '<div class="pv-pages"><div class="pv-inner"></div></div>';
+            const inner = body.querySelector(".pv-inner");
+            document.getElementById("pvZoom").style.display = "";
+            pvSetZoom(0);
+            document.getElementById("pvSub").textContent += " · " + pdf.numPages + " halaman";
+            const v1 = (await pdf.getPage(1)).getViewport({ scale: 1 });
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const d = document.createElement("div");
+                d.className = "pv-page"; d.dataset.page = i;
+                d.style.aspectRatio = v1.width + " / " + v1.height;
+                d.innerHTML = '<span class="pv-num">' + i + ' / ' + pdf.numPages + '</span>';
+                inner.appendChild(d);
+            }
+            const render = async function(d) {
+                const page = await pdf.getPage(+d.dataset.page);
+                if (tok !== pvToken) return;
+                const vp1 = page.getViewport({ scale: 1 });
+                d.style.aspectRatio = vp1.width + " / " + vp1.height;
+                const target = Math.min(1800, Math.max(900, inner.clientWidth * (window.devicePixelRatio || 1)));
+                const vp = page.getViewport({ scale: target / vp1.width });
+                const c = document.createElement("canvas");
+                c.width = Math.floor(vp.width); c.height = Math.floor(vp.height);
+                c.setAttribute("aria-label", "Halaman " + d.dataset.page);
+                d.insertBefore(c, d.firstChild);
+                await page.render({ canvasContext: c.getContext("2d"), viewport: vp }).promise;
+            };
+            const io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting) { io.unobserve(e.target); render(e.target).catch(function() {}); }
+                });
+            }, { root: body, rootMargin: "900px 0px" });
+            inner.querySelectorAll(".pv-page").forEach(function(d) { io.observe(d); });
+        }
+
+        function pvImage(blob) {
+            const u = URL.createObjectURL(blob); pvUrls.push(u);
+            pvBody().innerHTML = '<div class="pv-pages"><div class="pv-inner"><div class="pv-page"><img src="' + u + '" alt="Pratinjau gambar"></div></div></div>';
+            document.getElementById("pvZoom").style.display = "";
+            pvSetZoom(0);
+        }
+
+        async function pvDocx(blob, tok) {
+            const lib = await ensureDocxPreview();
+            if (tok !== pvToken) return;
+            const body = pvBody();
+            body.innerHTML = '<div class="pv-docx"></div>';
+            const box = body.firstChild;
+            await lib.renderAsync(blob, box, null, {
+                className: "docx", inWrapper: true, ignoreLastRenderedPageBreak: true, breakPages: true,
+                renderHeaders: true, renderFooters: true, renderFootnotes: true, renderEndnotes: true
+            });
+            if (tok !== pvToken) return;
+            pvSanitize(box);
+        }
+
+        async function pvSheet(blob, tok) {
+            const X = await ensureXlsx();
+            if (tok !== pvToken) return;
+            const wb = X.read(await blob.arrayBuffer(), { type: "array", cellDates: true });
+            const names = wb.SheetNames;
+            const body = pvBody();
+            body.innerHTML = '<div class="pv-sheet-tabs" role="tablist">' + names.map(function(n, i) {
+                return '<button type="button" role="tab" data-i="' + i + '"' + (i ? '' : ' class="active"') + '>' + esc(n) + '</button>';
+            }).join("") + '</div><div class="pv-sheet"></div>';
+            const MAXR = 2000, MAXC = 60;
+            const show = function(i) {
+                body.querySelectorAll(".pv-sheet-tabs button").forEach(function(b) { b.classList.toggle("active", +b.dataset.i === i); });
+                const rows = X.utils.sheet_to_json(wb.Sheets[names[i]], { header: 1, raw: false, defval: "" });
+                const ncol = Math.min(MAXC, rows.reduce(function(a, r) { return Math.max(a, r.length); }, 0));
+                let h;
+                if (!rows.length) h = '<div class="pv-status">Sheet ini kosong.</div>';
+                else {
+                    const cols = Array.from({ length: ncol }, function(_, c) { return c; });
+                    h = '<table><thead><tr><th></th>' + cols.map(function(c) { return '<th>' + X.utils.encode_col(c) + '</th>'; }).join("") + '</tr></thead><tbody>' +
+                        rows.slice(0, MAXR).map(function(r, ri) {
+                            return '<tr><td class="rn">' + (ri + 1) + '</td>' + cols.map(function(c) { return '<td title="' + esc(r[c]) + '">' + esc(r[c]) + '</td>'; }).join("") + '</tr>';
+                        }).join("") + '</tbody></table>';
+                    if (rows.length > MAXR) h += '<div class="p-2 small text-muted">Menampilkan ' + MAXR + ' dari ' + rows.length + ' baris. Unduh file untuk melihat seluruhnya.</div>';
+                }
+                body.querySelector(".pv-sheet").innerHTML = h;
+            };
+            body.querySelector(".pv-sheet-tabs").addEventListener("click", function(e) {
+                const b = e.target.closest("button"); if (b) show(+b.dataset.i);
+            });
+            show(0);
         }
 
         // =============================================================
         //  HAPUS DOKUMEN
         // =============================================================
         function confirmDelete(id) {
+            if (isGuest) return; // tamu tidak menghapus (juga ditolak oleh database)
             idToDelete = id;
             if (!deleteModal) deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
             deleteModal.show();
