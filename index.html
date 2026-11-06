@@ -86,6 +86,52 @@
         .pv-sheet td.rn { background: #f1f3f5; color: #6c757d; text-align: right; position: sticky; left: 0; }
         .pv-frame { width: 100%; height: 80vh; border: 0; display: block; background: #fff; }
 
+        /* ===== REKAP PERANGKAT PEMBELAJARAN (K6.1) ===== */
+        .stat-tabs .nav-link { border: 1px solid #dee2e6; background: #fff; color: #495057; margin-right: 6px; margin-bottom: 4px; font-size: .9rem; }
+        .stat-tabs .nav-link.active { background: #0d6efd; border-color: #0d6efd; color: #fff; }
+        .k61-hero { border: 1px solid #e6e8ec; border-radius: 12px; padding: 16px; text-align: center; height: 100%; }
+        .k61-ring { --p: 0; width: 120px; height: 120px; margin: 0 auto; border-radius: 50%;
+                    background: conic-gradient(var(--series-1) calc(var(--p) * 1%), var(--track) 0); display: grid; place-items: center; }
+        .k61-ring span { width: 92px; height: 92px; border-radius: 50%; background: #fff; display: grid; place-items: center;
+                         font-size: 1.6rem; font-weight: 700; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+        .k61-bars { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px 18px; }
+        .k61-bar .lbl { font-size: .82rem; color: var(--text-primary); }
+        .k61-bar .val { font-size: .95rem; font-weight: 700; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+        .k61-bar .track { height: 8px; background: var(--track); border-radius: 4px; overflow: hidden; margin: 3px 0 2px; }
+        .k61-bar .track span { display: block; height: 100%; background: var(--series-1); border-radius: 0 4px 4px 0; }
+        .k61-bar .sub { font-size: .72rem; color: var(--text-muted); }
+        .k61-wrap { overflow: auto; max-height: 75vh; border: 1px solid #e6e8ec; border-radius: 10px; }
+        .k61-table { border-collapse: separate; border-spacing: 0; font-size: .8rem; width: 100%; min-width: 1180px; }
+        .k61-table th, .k61-table td { padding: 6px 6px; border-bottom: 1px solid #eef0f2; vertical-align: middle; background: #fff; }
+        .k61-table thead th { position: sticky; top: 0; z-index: 3; background: #f1f6fd; color: #34495e; font-weight: 600; font-size: .74rem;
+                              text-align: center; line-height: 1.2; border-bottom: 2px solid #cfe2f3; }
+        .k61-table .no { position: sticky; left: 0; z-index: 2; box-sizing: border-box; width: 44px; min-width: 44px; max-width: 44px; text-align: center; color: var(--text-muted); }
+        .k61-table .mk { position: sticky; left: 44px; z-index: 2; box-sizing: border-box; width: 250px; min-width: 250px; max-width: 250px; box-shadow: 2px 0 0 #e3e6ea; text-align: left; }
+        .k61-table thead .no, .k61-table thead .mk { z-index: 4; background: #f1f6fd; }
+        .k61-table .mk .nm { font-weight: 600; color: var(--text-primary); line-height: 1.25; }
+        .k61-table .mk .kd { font-size: .72rem; color: var(--text-muted); }
+        .k61-table .dsn { min-width: 150px; max-width: 200px; font-size: .74rem; color: var(--text-secondary); }
+        .k61-table td.num { text-align: center; color: var(--text-secondary); }
+        .k61-table td.c, .k61-table th.c { text-align: center; min-width: 74px; }
+        .k61-table .kl { min-width: 96px; text-align: center; }
+        .k61-sec td { position: sticky; left: 0; background: #eaf2fd !important; color: #0b57d0; font-weight: 700; font-size: .84rem; padding: 8px 10px; }
+        .k61-table tbody tr.k61-row:hover td { background: #f8fafc; }
+        .k61-table tfoot td { position: sticky; bottom: 0; z-index: 3; background: #f1f3f5; font-weight: 700; color: var(--text-primary); border-top: 2px solid #dee2e6; text-align: center; }        .k61-c { display: inline-flex; align-items: center; gap: 3px; border-radius: 999px; padding: 2px 8px; font-size: .72rem; white-space: nowrap; border: 1px solid transparent; line-height: 1.5; }
+        .k61-c .ic { font-weight: 700; }
+        .k61-c.ok { background: #e6f4ea; color: #137333; border-color: #b7dfc3; }
+        button.k61-c.ok { cursor: pointer; }
+        button.k61-c.ok:hover { background: #ceead6; }
+        .k61-c.no { background: #fdecea; color: #a50e0e; border-color: #f6c7c3; }
+        .k61-c.sm { padding: 0 6px; }
+        .k61-meter { height: 6px; background: var(--track); border-radius: 3px; overflow: hidden; margin: 0 auto 2px; width: 70px; }
+        .k61-meter span { display: block; height: 100%; background: var(--series-1); }
+        @media print {
+            .k61-wrap { max-height: none; overflow: visible; border: 0; }
+            .k61-table { min-width: 0; font-size: .62rem; }
+            .k61-table thead th, .k61-table .no, .k61-table .mk, .k61-sec td, .k61-table tfoot td { position: static; }
+            .stat-pane { display: block !important; }
+        }
+
         /* ===== STATISTIK ===== */
         .viz-root {
             --surface-1: #ffffff; --text-primary: #1f2328; --text-secondary: #52514e; --text-muted: #7a7974;
@@ -451,6 +497,7 @@
                                                 <option value="Praktik Akuntansi Biaya (Implementasi di rs)">
                                                 <option value="Praktik Anggaran dan Indikator Kinerja">
                                                 <option value="Praktik Aplikasi Komputer">
+                                                <option value="Praktik Aplikasi Komputer II">
                                                 <option value="Praktik Bahasa Inggris (dasar dan profesi)">
                                                 <option value="Praktik Biostatistik Dan Statistika Kesehatan">
                                                 <option value="Praktik Ekonomi Kesehatan">
@@ -468,6 +515,7 @@
                                                 <option value="Praktik Manajemen Pelayanan Kesehatan dan Rumah Sakit">
                                                 <option value="Praktik Manajemen Produksi Rumah Sakit">
                                                 <option value="Praktik Manajemen Risiko Rumah Sakit">
+                                                <option value="Praktik Metodologi Penelitian Kesehatan">
                                                 <option value="Praktik Penyuluhan Kesehatan">
                                                 <option value="Praktik Penyuluhan Kesehatan Rumah Sakit">
                                                 <option value="Praktik Sistem Informasi Manajemen Rumah Sakit">
@@ -626,6 +674,7 @@
                                     </div>
 
 
+                                    <div id="isianNote" class="dup-note small mb-3" style="display:none;" role="status" aria-live="polite"></div>
                                     <button type="submit" class="btn btn-primary w-100" id="btnSubmit">
                                         <i class="fas fa-paper-plane me-2"></i>Simpan & Upload Dokumen
                                     </button>
@@ -847,8 +896,8 @@
         //  INISIALISASI SUPABASE
         // =============================================================
         // Naikkan nomor + tanggal ini setiap kali Anda meng-update aplikasi.
-        const APP_VERSION = "v3.4";
-        const APP_UPDATED = "2 Nov 2026";
+        const APP_VERSION = "v3.6";
+        const APP_UPDATED = "6 Nov 2026";
         const CFG = window.APP_CONFIG || {};
         const BUCKET = CFG.BUCKET || "dokumen";
         const TABLE = "dokumen";
@@ -902,6 +951,7 @@
             // Begitu pengguna mengubah sebuah kolom sendiri, kolom itu jadi miliknya (tidak disentuh saran lagi)
             ["input", "change"].forEach(function(evt) {
                 document.getElementById("uploadForm").addEventListener(evt, onUserEdit);
+                document.getElementById("uploadForm").addEventListener(evt, jadwalCekIsian); // periksa isian ganda saat mengisi
             });
             // Mata kuliah wajib dari daftar
             const mkIn = document.getElementById("mataKuliahInput");
@@ -1305,6 +1355,14 @@
             s.nomorEC = extractEC(flat);
             m = text.match(/judul\s+ciptaan\s*[:：\t]?\s*([^\n]{3,200})/i);
             if (m) s.judul = cleanVal(m[1], 200);
+            // SK Mengajar: "Nomor: 123/UNBL/SK/VIII/2025" + "TENTANG ..." → nama dokumen
+            const skNo = text.match(/\bnomor\s*[:：]?\s*([0-9]{1,5}[\w.\-]*(?:\s*\/\s*[\w.\-]+){1,8})/i);
+            const skTtg = text.match(/^\s*tentang\s*[:：]?\s*\n?\s*([^\n]{6,200}(?:\n(?!\s*(?:dekan|rektor|ketua|menimbang|mengingat|memperhatikan|memutuskan|menetapkan)\b)[^\n]{3,200}){0,2})/im);
+            if (skNo || skTtg) {
+                let t = skTtg ? skTtg[1].replace(/\s+/g, " ").trim().replace(/[.,;:]+$/, "") : "";
+                if (t.length > 14 && t === t.toUpperCase()) t = titleCaseId(t);
+                s.judulSk = ("SK" + (skNo ? " No. " + skNo[1].replace(/\s+/g, "") : "") + (t ? " tentang " + t : "")).slice(0, 220);
+            }
             s.judulKarya = detectJudulKarya(text);
 
             // Penelitian / Pengabdian
@@ -1388,7 +1446,7 @@
             } else {
                 mm.style.display = "none"; mm.innerHTML = "";
             }
-            const ajar = ["RPS", "Kontrak Ajar", "Presensi Mahasiswa", "Nilai Mahasiswa", "Jurnal Dosen", "SK Mengajar"];
+            const ajar = ["RPS", "Kontrak Ajar", "Presensi Mahasiswa", "Nilai Mahasiswa", "Jurnal Dosen"]; // SK Mengajar tidak per mata kuliah
             const integrasi = ["Penelitian", "Pengabdian Masyarakat"];
 
             let semester = s.semester;
@@ -1412,6 +1470,8 @@
                 const added = [];
                 (s.mataKuliahList || []).forEach(function(v) { if (addMk(v, true)) added.push(v); });
                 if (added.length) suggestItems.push("<b>Mata Kuliah Terintegrasi:</b> " + added.map(esc).join(", "));
+            } else if (kat === "SK Mengajar") {
+                suggest(document.getElementById("namaFileText"), s.judulSk, "Nomor / Perihal SK");
             } else if (kat) {
                 suggest(document.getElementById("namaFileText"), s.judul, "Nama / Judul Dokumen");
             }
@@ -1447,6 +1507,7 @@
             const panel = document.getElementById("suggestPanel");
             document.getElementById("suggestList").innerHTML = suggestItems.map(function(x) { return "<li>" + x + "</li>"; }).join("");
             panel.style.display = suggestItems.length ? "block" : "none";
+            jadwalCekIsian(); // isian hasil saran juga diperiksa (tidak memicu event input)
             return suggestItems.length;
         }
 
@@ -1847,10 +1908,18 @@
             const containerMataKuliah = document.getElementById("containerMataKuliah");
             const divSemester = document.getElementById("divSemesterMK");
 
-            const pembelajaranKategori = ["RPS", "Kontrak Ajar", "Presensi Mahasiswa", "Nilai Mahasiswa", "Jurnal Dosen", "SK Mengajar"];
+            // SK Mengajar sengaja TIDAK di sini: SK tidak memuat mata kuliah tertentu → cukup nomor/perihal SK
+            const pembelajaranKategori = ["RPS", "Kontrak Ajar", "Presensi Mahasiswa", "Nilai Mahasiswa", "Jurnal Dosen"];
             const integrasiKategori = ["Penelitian", "Pengabdian Masyarakat"];
+            const namaFileEl = document.getElementById("namaFileText");
+            namaFileEl.placeholder = (kat === "SK Mengajar") ? "Contoh: SK No. 123/UNBL/SK/VIII/2025 tentang Penugasan Mengajar Semester Ganjil" : "Contoh: Modul Praktikum ABC";
 
-            if (pembelajaranKategori.includes(kat)) {
+            if (kat === "SK Mengajar") {
+                labelNamaFile.innerHTML = "Nomor / Perihal SK";
+                containerNamaFileText.style.display = "block";
+                containerMataKuliah.style.display = "none";
+                divSemester.style.display = "none";
+            } else if (pembelajaranKategori.includes(kat)) {
                 labelNamaFile.innerHTML = "Mata Kuliah";
                 containerNamaFileText.style.display = "none";
                 containerMataKuliah.style.display = "block";
@@ -1928,7 +1997,123 @@
                 /column[^]*file_hash|file_hash[^]*(column|does not exist|schema cache)/i.test(e.message || "");
         }
         function applyDupButton() {
-            document.getElementById("btnSubmit").disabled = !!dupState.dup;
+            document.getElementById("btnSubmit").disabled = !!dupState.dup || !!isianState.dup;
+        }
+
+        // =============================================================
+        //  TOLAK ISIAN GANDA: satu isian hanya boleh ada satu kali, walaupun file berbeda
+        //  (aturan sama persis dengan fungsi database etd_kunci_isian — lapis 2 di database)
+        // =============================================================
+        const KAT_PER_MK = ["RPS", "Kontrak Ajar", "Jurnal Dosen", "Presensi Mahasiswa", "Nilai Mahasiswa"];
+        let isianState = { kunci: null, dup: null };
+        let isianToken = 0, isianTimer = null;
+
+        function etdNorm(t) {
+            return String(t || "").toLowerCase().replace(/&/g, " dan ").replace(/[^a-z0-9]+/g, " ")
+                .replace(/\brs\b/g, "rumah sakit").replace(/\s+/g, " ").trim();
+        }
+        function kunciIsian(r) {
+            const kat = r.kategori || "", ta = r.tahun_ajaran == null ? "" : r.tahun_ajaran, sem = r.semester == null ? "" : r.semester;
+            const isi = function(x) { return (x == null || x === "-") ? "" : x; };
+            if (KAT_PER_MK.indexOf(kat) > -1) {
+                const n = etdNorm(isi(r.mata_kuliah));
+                return n ? kat + "|" + ta + "|" + sem + "|" + isi(r.semester_mk) + "|" + n : null;
+            }
+            if (kat === "Penelitian" || kat === "Pengabdian Masyarakat") {
+                const n = etdNorm(isi(r.nama_file));
+                return n ? kat + "|" + n : null;
+            }
+            if (kat === "HKI") {
+                const ec = String(r.nomor_ec || "").trim();
+                if (ec && ec !== "-") return "HKI|EC|" + String(r.nomor_ec).replace(/\s/g, "").toUpperCase();
+                const n = etdNorm(isi(r.nama_file));
+                return n ? "HKI|" + n : null;
+            }
+            const n = etdNorm(isi(r.nama_file));
+            return n ? kat + "|" + ta + "|" + sem + "|" + n : null;
+        }
+        // Isian inti dari form (dipakai untuk pemeriksaan DAN untuk menyimpan, agar selalu sama)
+        function barisInti() {
+            const fd = new FormData(document.getElementById("uploadForm"));
+            const v = function(k) { const x = (fd.get(k) || "").toString().trim(); return x || "-"; };
+            const kategori = v("kategori");
+            const perMk = KAT_PER_MK.indexOf(kategori) > -1;
+            return {
+                kategori: kategori,
+                tahun_ajaran: v("tahunAjaran"),
+                semester: v("semester"),
+                // Penelitian/PkM: judul disimpan sebagai nama dokumen
+                nama_file: isMkMulti() ? (v("judulKarya").replace(/\s+/g, " ").trim() || "-") : (perMk ? "-" : v("namaFile")),
+                // Penelitian/PkM: beberapa MK terintegrasi digabung "; "; kategori non-MK (SK, HKI, dst.) tanpa mata kuliah
+                mata_kuliah: isMkMulti() ? (mkMulti.map(function(x) { return x.v; }).join("; ") || "-") : (perMk ? v("mataKuliah") : "-"),
+                semester_mk: perMk ? v("semesterMK") : "-",
+                nomor_ec: v("nomorEC")
+            };
+        }
+        // Cari dokumen di arsip dengan isian yang sama
+        async function cariIsianGanda(r) {
+            const k = kunciIsian(r);
+            if (!k || !sb) return null;
+            let q = sb.from(TABLE).select("id,created_at,kategori,nama_file,mata_kuliah,pengunggah,tahun_ajaran,semester,semester_mk,nomor_ec,file_name,file_path,file_url")
+                .eq("kategori", r.kategori);
+            if (r.kategori !== "Penelitian" && r.kategori !== "Pengabdian Masyarakat" && r.kategori !== "HKI")
+                q = q.eq("tahun_ajaran", r.tahun_ajaran).eq("semester", r.semester);
+            const res = await q.limit(1000);
+            if (res.error) throw res.error;
+            return (res.data || []).find(function(x) { return kunciIsian(x) === k; }) || null;
+        }
+        function ringkasIsian(r) {
+            if (KAT_PER_MK.indexOf(r.kategori) > -1)
+                return r.kategori + " " + r.mata_kuliah + " · " + r.semester + " " + r.tahun_ajaran + (r.semester_mk && r.semester_mk !== "-" ? " · semester MK " + r.semester_mk : "");
+            if (r.kategori === "HKI" && r.nomor_ec && r.nomor_ec !== "-") return "HKI nomor " + r.nomor_ec;
+            if (r.kategori === "Penelitian" || r.kategori === "Pengabdian Masyarakat") return r.kategori + " “" + r.nama_file + "”";
+            return r.kategori + " “" + r.nama_file + "” · " + r.semester + " " + r.tahun_ajaran;
+        }
+        function showIsianGanda(ada) {
+            const f = mapRow(ada);
+            window.fileIndex = window.fileIndex || {};
+            window.fileIndex[f.id] = f;
+            const box = document.getElementById("isianNote");
+            box.className = "dup-note small mb-3 dup";
+            box.innerHTML = '<div><i class="fas fa-ban me-1"></i><b>Isian ini sudah ada di arsip.</b> Untuk menjaga statistik tetap akurat, ' +
+                'satu isian hanya boleh diupload satu kali, walaupun filenya berbeda.</div>' +
+                '<div class="dup-detail"><div class="fw-bold">' + esc(ringkasIsian(ada)) + '</div>' +
+                '<div class="text-muted">diupload oleh <b>' + esc(f.pengunggah) + '</b> pada ' + esc(f.timestamp) + (f.fileName && f.fileName !== "-" ? ' · file: ' + esc(f.fileName) : '') + '</div>' +
+                ((f.filePath || f.fileUrl) ? '<button type="button" class="btn btn-sm btn-outline-danger py-0 mt-1" onclick="viewFile(\'' + esc(f.id) + '\')"><i class="fas fa-eye me-1"></i>Lihat dokumen yang sudah ada</button>' : '') + '</div>' +
+                '<div class="mt-1">Periksa kembali isian Anda. Jika dokumen yang lama keliru, hapus dulu dari <b>Daftar Dokumen</b>, lalu upload yang baru.</div>';
+            box.style.display = "block";
+        }
+        function resetIsian() {
+            isianToken++; clearTimeout(isianTimer);
+            isianState = { kunci: null, dup: null };
+            const box = document.getElementById("isianNote");
+            box.style.display = "none"; box.innerHTML = "";
+            applyDupButton();
+        }
+        // Pemeriksaan saat mengisi form (ditunda sebentar agar tidak membebani server)
+        function jadwalCekIsian() {
+            if (isGuest) return;
+            clearTimeout(isianTimer);
+            isianTimer = setTimeout(cekIsianSekarang, 600);
+        }
+        async function cekIsianSekarang() {
+            const r = barisInti();
+            const k = kunciIsian(r);
+            if (k === isianState.kunci) return isianState.dup;
+            const tok = ++isianToken;
+            if (!k) { isianState = { kunci: null, dup: null }; document.getElementById("isianNote").style.display = "none"; applyDupButton(); return null; }
+            try {
+                const ada = await cariIsianGanda(r);
+                if (tok !== isianToken) return null;
+                isianState = { kunci: k, dup: ada };
+                if (ada) showIsianGanda(ada); else { const box = document.getElementById("isianNote"); box.style.display = "none"; box.innerHTML = ""; }
+                applyDupButton();
+                return ada;
+            } catch (e) {
+                // gagal memeriksa (mis. koneksi) → jangan menghalangi; database tetap menolak isian ganda
+                if (tok === isianToken) isianState = { kunci: null, dup: null };
+                return null;
+            }
         }
         function showDup(r) {
             const f = mapRow(r);
@@ -2023,6 +2208,14 @@
                 return;
             }
 
+            // Tolak isian ganda (lapis 1): isian yang sama walau file berbeda — diperiksa sebelum file diupload
+            const inti = barisInti();
+            isianState.kunci = null; // paksa periksa ulang dengan data terbaru
+            if (await cekIsianSekarang()) {
+                showAlert("danger", "fa-ban", "<b>Isian ini sudah ada di arsip</b> (" + esc(ringkasIsian(isianState.dup)) + "). Lihat keterangannya di atas tombol Simpan.");
+                return;
+            }
+
             const fd = new FormData(form);
             const v = function(k) { const x = (fd.get(k) || "").toString().trim(); return x || "-"; };
             const kategori = v("kategori");
@@ -2055,17 +2248,15 @@
                 });
                 if (up.error) throw up.error;
 
-                // 2) Simpan metadata ke tabel
+                // 2) Simpan metadata ke tabel (isian inti = yang sudah diperiksa di atas)
                 const row = {
                     pengunggah: v("pengunggah"),
-                    kategori: kategori,
-                    tahun_ajaran: v("tahunAjaran"),
-                    semester: v("semester"),
-                    // Penelitian/PkM: judul disimpan sebagai nama dokumen
-                    nama_file: isMkMulti() ? (v("judulKarya").replace(/\s+/g, " ").trim() || "-") : v("namaFile"),
-                    // Penelitian/PkM: beberapa MK terintegrasi digabung dengan "; " (kolom yang sama, tanpa ubah database)
-                    mata_kuliah: isMkMulti() ? (mkMulti.map(function(x) { return x.v; }).join("; ") || "-") : v("mataKuliah"),
-                    semester_mk: v("semesterMK"),
+                    kategori: inti.kategori,
+                    tahun_ajaran: inti.tahun_ajaran,
+                    semester: inti.semester,
+                    nama_file: inti.nama_file,
+                    mata_kuliah: inti.mata_kuliah,
+                    semester_mk: inti.semester_mk,
                     metode: v("metodePembelajaran"),
                     kurikulum_rps: v("kurikulumRps"),
                     bentuk_hasil: v("bentukPenelitian"),
@@ -2091,6 +2282,18 @@
                 }
                 if (ins.error) {
                     await sb.storage.from(BUCKET).remove([path]); // batalkan file yatim
+                    if (ins.error.code === "23505" && /ISIAN_GANDA/.test(ins.error.message || "")) {
+                        // Tolak isian ganda (lapis 2): database menolak isian yang sama
+                        let ada = null;
+                        if (ins.error.details) {
+                            const q = await sb.from(TABLE).select("id,created_at,kategori,nama_file,mata_kuliah,pengunggah,tahun_ajaran,semester,semester_mk,nomor_ec,file_name,file_path,file_url")
+                                .eq("id", ins.error.details).limit(1);
+                            ada = q.data && q.data[0];
+                        }
+                        isianState = { kunci: kunciIsian(row), dup: ada || row };
+                        showIsianGanda(ada || row);
+                        throw new Error("Isian ini sudah ada di arsip. Dokumen tidak disimpan.");
+                    }
                     if (ins.error.code === "23505") {
                         // Anti duplikat (lapis 2): database menolak sidik jari kembar
                         const dup = await findDuplicate(row.file_hash).catch(function() { return null; });
@@ -2104,6 +2307,7 @@
                 showAlert("success", "fa-check-circle", "Dokumen berhasil disimpan!");
                 form.reset();
                 resetDup();
+                resetIsian();
                 resetSuggestState();
                 onKategoriChange(); // kategori kembali kosong → kotak upload terkunci lagi
                 updateSdgCounter();
@@ -2396,6 +2600,335 @@
             setTimeout(function() { URL.revokeObjectURL(a.href); }, 1000);
         }
 
+        // =============================================================
+        //  REKAPITULASI PERANGKAT PEMBELAJARAN PS PER TA (format K6.1)
+        //  Status "Ada / Belum Ada" dihitung otomatis dari dokumen yang diupload.
+        // =============================================================
+        // Kurikulum Prodi S1 ARS (dari file K6.1 TA 2025/2026): [kode MK, nama MK (nama baku di daftar), semester MK, SKS]
+        const KURIKULUM = [
+            ["UNBL24001", "Pendidikan Agama", 1, null],
+            ["UNBL24002", "Bahasa Indonesia", 1, null],
+            ["UNBL24003", "Bahasa Inggris", 1, null],
+            ["UNBL24004", "Pancasila", 1, null],
+            ["SARS101", "Epidemiologi Klinis", 1, null],
+            ["SARS102", "Matematika", 1, null],
+            ["SARS103", "Dasar-dasar Akuntansi", 1, null],
+            ["SARS104", "PSKL (Product & Service Knowledge)", 1, null],
+            ["SARS105", "Dasar - Dasar Komunikasi", 1, 2],
+            ["SARS106", "Pengantar Ilmu Sosial Dasar", 1, null],
+            ["UNBL24006", "Pengantar Kearifan Lokal Kalimantan", 3, null],
+            ["SARS301", "Sistem Informasi Manajemen Rumah Sakit", 3, null],
+            ["SARS302", "Praktik Sistem Informasi Manajemen Rumah Sakit", 3, null],
+            ["SARS303", "Akuntansi Biaya (Implementasi di rs)", 3, null],
+            ["SARS304", "Praktik Akuntansi Biaya (Implementasi di rs)", 3, null],
+            ["SARS305", "Praktik Aplikasi Komputer II", 3, null],
+            ["SARS306", "Manajemen Rekam Medis", 3, null],
+            ["SARS307", "Manajemen Logistik Medik & Non Medik", 3, 3],
+            ["SARS310", "Manajemen Sumber Daya Manusia (SDM) Kesehatan", 3, 3],
+            ["SARS308", "Penyuluhan Kesehatan Rumah Sakit", 3, 1],
+            ["SARS309", "Praktik Penyuluhan Kesehatan Rumah Sakit", 3, 1],
+            ["SARS311", "Peraturan dan Kebijakan Kesehatan (AKRS)", 3, null],
+            ["SAR538", "Manajemen Jaminan Mutu Kesehatan", 5, null],
+            ["SAR539", "Praktik Manajemen Jaminan Mutu Kesehatan", 5, null],
+            ["SAR540", "Manajemen Produksi Rumah Sakit", 5, null],
+            ["SAR541", "Praktik Manajemen Produksi Rumah Sakit", 5, null],
+            ["SAR542", "Anggaran dan Indikator Kinerja", 5, null],
+            ["SAR543", "Praktik Anggaran dan Indikator Kinerja", 5, null],
+            ["SAR544", "Manajemen Pelayanan Kesehatan dan Rumah Sakit", 5, null],
+            ["SAR545", "Praktik Manajemen Pelayanan Kesehatan dan Rumah Sakit", 5, null],
+            ["SAR546", "Manajemen Risiko Rumah Sakit", 5, null],
+            ["SAR547", "Praktik Manajemen Risiko Rumah Sakit", 5, null],
+            ["SAR548", "Manajemen Pelayanan Kesehatan UKM/UKP", 5, null],
+            ["SAR549", "Manajemen Aset dan Tata Ruang", 5, 1],
+            ["SAR550", "Praktik Manajemen Aset dan Tata Ruang", 5, 1],
+            ["SAR974", "Sistem Asuransi Kesehatan", 5, null],
+            ["SAR762", "Manajemen Keselamatan dan Kesehatan Kerja RS", 7, null],
+            ["SAR763", "Praktik Manajemen Keselamatan Dan Kesehatan Kerja RS", 7, null],
+            ["SAR764", "Hospital Public Relation", 7, null],
+            ["SAR765", "Metodologi Penelitian Kesehatan", 7, 2],
+            ["SAR766", "Praktik Metodologi Penelitian Kesehatan", 7, 1],
+            ["SAR767", "Evaluasi Kinerja Rumah Sakit", 7, null],
+            ["SAR768", "Praktik Evaluasi Kinerja Rumah Sakit", 7, null],
+            ["SAR975", "Standar & Akreditasi RS", 7, null],
+            ["SAR976", "Praktik Standar & Akreditasi RS", 7, null],
+            ["UNBL24005", "Kewarganegaraan", 2, null],
+            ["SARS201", "Bahasa Inggris (profesi)", 2, null],
+            ["SARS202", "Pendidikan dan Budaya Anti Korupsi", 2, null],
+            ["SARS203", "Antropologi kesehatan", 2, null],
+            ["SARS204", "Ekonomi Kesehatan", 2, null],
+            ["SARS205", "Ilmu Kesehatan Masyarakat", 2, 2],
+            ["SARS206", "Administrasi Rumah Sakit", 2, null],
+            ["SARS207", "Etika Profesi dan Hukum Kesehatan", 2, null],
+            ["SARS208", "Manajemen Perilaku Organisasi", 2, 2],
+            ["SARS209", "Aplikasi Komputer", 2, null],
+            ["SARS210", "Praktik Aplikasi Komputer", 2, null],
+            ["SARS401", "Manajemen Pelayanan Kesehatan dan Rumah Sakit", 4, null],
+            ["SARS402", "Praktik Manajemen Pelayanan Kesehatan dan Rumah Sakit", 4, null],
+            ["SARS403", "Manajemen Penunjang Medis", 4, null],
+            ["SARS404", "Manajemen Keuangan", 4, null],
+            ["SARS405", "Praktik Manajemen Keuangan", 4, null],
+            ["SARS406", "Sistem Perencanaan Rumah Sakit (fisik dan operasional)", 4, null],
+            ["SARS407", "Praktik Sistem Perencanaan Rumah Sakit (fisik dan operasional)", 4, null],
+            ["SARS408", "Leadership", 4, null],
+            ["SARS409", "Manajemen Aset dan Tata Ruang", 4, 2],
+            ["SARS410", "Manajemen Pelayanan Kesehatan UKM/UKP", 4, null],
+            ["SARS411", "Manajemen Komplain dan Customer Service", 4, null],
+            ["SAR412", "Pelayanan Publik", 4, 2],
+            ["SAR651", "Manajemen Pemasaran RS", 6, 2],
+            ["SAR652", "Manajemen Komplain dan Customer Service", 6, null],
+            ["SAR653", "Praktik Manajemen Komplain Dan CS", 6, null],
+            ["SAR654", "Manajemen Kesehatan Lingkungan Rumah Sakit", 6, null],
+            ["SAR655", "Praktik Manajemen Kesehatan Lingkungan Rumah Sakit", 6, null],
+            ["SAR656", "Manajemen Bisnis (RSB,RBA)", 6, null],
+            ["SAR657", "Praktik Manajemen Bisnis (RSB,RBA)", 6, null],
+            ["SAR658", "Studi Kelayakan Proyek", 6, null],
+            ["SAR659", "Praktik Studi Kelayakan Proyek", 6, null],
+            ["SAR660", "Manajemen Penunjang Medis", 6, null],
+            ["SAR977", "Standar & Akreditasi RS", 6, 2],
+            ["SAR978", "Praktik Standar & Akreditasi RS", 6, 1]
+        ];
+        const K61_KOLOM = [
+            { key: "rps",      label: "RPS",                              short: "RPS" },
+            { key: "pen",      label: "Integrasi Hasil Penelitian",       short: "Integrasi<br>Penelitian" },
+            { key: "pkm",      label: "Integrasi Hasil PkM",              short: "Integrasi<br>PkM" },
+            { key: "cm",       label: "Case Method / Team Based Project", short: "Case Method<br>/ TBP" },
+            { key: "kontrak",  label: "Kontrak Perkuliahan",              short: "Kontrak<br>Kuliah" },
+            { key: "jurnal",   label: "Jurnal Dosen",                     short: "Jurnal<br>Dosen" },
+            { key: "presensi", label: "Presensi Mahasiswa",               short: "Presensi<br>Mhs" },
+            { key: "nilai",    label: "Nilai Mahasiswa",                  short: "Nilai<br>Mhs" },
+            { key: "bk",       label: "Bahan Kajian SDGs (dari RPS)",     short: "Bahan Kajian<br>SDGs" }
+        ];
+        const K61_KAT = { "RPS": "rps", "Kontrak Ajar": "kontrak", "Jurnal Dosen": "jurnal", "Presensi Mahasiswa": "presensi", "Nilai Mahasiswa": "nilai" };
+        let k61Last = null;      // hasil terakhir, untuk unduh Excel
+        let statSubTab = (function() { try { return localStorage.getItem("etd_stat_tab") || "k61"; } catch (e) { return "k61"; } })();
+
+        function setStatSubTab(t) {
+            statSubTab = t;
+            try { localStorage.setItem("etd_stat_tab", t); } catch (e) {}
+            document.querySelectorAll("#statContent .stat-pane").forEach(function(p) { p.style.display = (p.dataset.pane === t) ? "block" : "none"; });
+            document.querySelectorAll("#statContent .stat-tabs .nav-link").forEach(function(b) { b.classList.toggle("active", b.dataset.pane === t); });
+        }
+        function smtNum(v) {
+            const s = String(v || "").trim().toUpperCase();
+            if (/^\d+$/.test(s)) return +s;
+            const r = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII"].indexOf(s);
+            return r > 0 ? r : 0;
+        }
+        // Periode rekap: TA dari filter; "Semua periode" → TA terbaru yang punya data
+        function k61Periode(p) {
+            const both = ["Ganjil", "Genap"];
+            if (p && p !== "all") {
+                const a = p.split("|");
+                return a[0] === "ta" ? { ta: a[1], sems: both } : { ta: a[2], sems: [a[1]] };
+            }
+            const tas = Array.from(new Set((window.allFilesData || []).map(function(f) { return f.tahunAjaran; })
+                .filter(function(t) { return /\d{4}\s*\/\s*\d{4}/.test(t); }))).sort(function(a, b) { return taStart(b) - taStart(a); });
+            if (tas.length) return { ta: tas[0], sems: both, auto: true };
+            const d = new Date(), y = d.getMonth() >= 7 ? d.getFullYear() : d.getFullYear() - 1;
+            return { ta: y + "/" + (y + 1), sems: both, auto: true };
+        }
+
+        function k61Build(ta, sems) {
+            const inTa = (window.allFilesData || []).filter(function(f) { return f.tahunAjaran === ta; });
+            const karya = inTa.filter(function(f) { return KARYA_KAT.indexOf(f.kategori) > -1; });
+            const emptyDocs = function() { return { rps: [], kontrak: [], jurnal: [], presensi: [], nilai: [], pen: [], pkm: [] }; };
+            const sections = sems.map(function(sem) {
+                const odd = (sem === "Ganjil");
+                const rows = KURIKULUM.map(function(k, i) { return { kode: k[0], nama: k[1], smt: k[2], sks: k[3], idx: i, n: normMk(k[1]), docs: emptyDocs(), extra: false }; })
+                    .filter(function(r) { return (r.smt % 2 === 1) === odd; });
+                // dokumen perangkat pembelajaran pada semester ini → baris mata kuliahnya
+                inTa.filter(function(f) { return f.semester === sem && K61_KAT[f.kategori] && f.mataKuliah !== "-"; }).forEach(function(f) {
+                    const n = normMk(f.mataKuliah), smt = smtNum(f.semesterMK);
+                    const cands = rows.filter(function(r) { return r.n === n; });
+                    let r = cands.find(function(c) { return c.smt === smt; }) || cands[0];
+                    if (!r) { // MK di luar kurikulum: tetap ditampilkan agar tidak ada dokumen yang terlewat
+                        r = { kode: "-", nama: f.mataKuliah, smt: smt, sks: null, idx: 999, n: n, docs: emptyDocs(), extra: true };
+                        rows.push(r);
+                    }
+                    r.docs[K61_KAT[f.kategori]].push(f);
+                });
+                // integrasi hasil Penelitian/PkM pada TA yang sama
+                karya.forEach(function(f) {
+                    splitMk(f.mataKuliah).forEach(function(m) {
+                        const n = normMk(m);
+                        rows.filter(function(r) { return r.n === n; }).forEach(function(r) { r.docs[f.kategori === "Penelitian" ? "pen" : "pkm"].push(f); });
+                    });
+                });
+                rows.forEach(function(r) {
+                    const met = new Set(), sdg = new Set();
+                    r.docs.rps.forEach(function(f) {
+                        if (/case/i.test(f.metode)) met.add("Case Method");
+                        if (/team|project|tbp/i.test(f.metode)) met.add("Team Based Project");
+                        parseSdg(f.sdgTerpilih).forEach(function(x) { sdg.add(x); });
+                    });
+                    r.metode = Array.from(met).join(" & ");
+                    r.sdg = Array.from(sdg).sort(function(a, b) { return a - b; });
+                    r.st = {
+                        rps: r.docs.rps.length > 0, pen: r.docs.pen.length > 0, pkm: r.docs.pkm.length > 0, cm: met.size > 0,
+                        kontrak: r.docs.kontrak.length > 0, jurnal: r.docs.jurnal.length > 0, presensi: r.docs.presensi.length > 0,
+                        nilai: r.docs.nilai.length > 0, bk: sdg.size > 0
+                    };
+                    const src = r.docs.rps.length ? r.docs.rps : [].concat(r.docs.kontrak, r.docs.jurnal, r.docs.presensi, r.docs.nilai);
+                    r.dosen = Array.from(new Set(src.map(function(f) { return f.pengunggah; }).filter(function(x) { return x && x !== "-"; })));
+                    r.skor = K61_KOLOM.filter(function(c) { return r.st[c.key]; }).length;
+                });
+                rows.sort(function(a, b) { return (a.extra - b.extra) || (a.smt - b.smt) || (a.idx - b.idx) || a.nama.localeCompare(b.nama, "id"); });
+                return { sem: sem, rows: rows };
+            });
+            const all = [].concat.apply([], sections.map(function(s) { return s.rows; }));
+            const persen = {};
+            K61_KOLOM.forEach(function(c) {
+                persen[c.key] = { n: all.filter(function(r) { return r.st[c.key]; }).length };
+                sections.forEach(function(s) { persen[c.key][s.sem] = pct(s.rows.filter(function(r) { return r.st[c.key]; }).length, s.rows.length); });
+                persen[c.key].p = pct(persen[c.key].n, all.length);
+            });
+            const totalAda = all.reduce(function(a, r) { return a + r.skor; }, 0);
+            return {
+                ta: ta, sems: sems, sections: sections, total: all.length, persen: persen,
+                rata: all.length ? Math.round(totalAda / (all.length * K61_KOLOM.length) * 100) : 0,
+                lengkap: all.filter(function(r) { return r.skor === K61_KOLOM.length; }).length,
+                kosong: all.filter(function(r) { return r.skor === 0; }).length
+            };
+        }
+
+        function k61Cell(r, c) {
+            const ok = r.st[c.key];
+            let docs = [], tip, label = "Ada";
+            if (c.key === "cm") { docs = r.docs.rps; label = r.metode === "Case Method & Team Based Project" ? "CM & TBP" : (r.metode === "Team Based Project" ? "TBP" : "Case Method"); }
+            else if (c.key === "bk") { docs = r.docs.rps; label = "SDG " + r.sdg.join(", "); }
+            else docs = r.docs[c.key];
+            if (ok) {
+                const f = docs[0];
+                tip = r.nama + " — " + c.label + ": " + (c.key === "cm" ? r.metode : c.key === "bk" ? "SDG " + r.sdg.join(", ") :
+                    docs.length + " dokumen" + (f ? " (" + (KARYA_KAT.indexOf(f.kategori) > -1 ? judulDok(f) + ", " : "") + "oleh " + f.pengunggah + ", " + f.timestamp + ")" : "")) +
+                    (f ? " · klik untuk melihat" : "");
+                return '<td class="c"><button type="button" class="k61-c ok"' + (f ? ' data-doc="' + esc(f.id) + '"' : '') + ' data-tip="' + esc(tip) + '">' +
+                    '<span class="ic" aria-hidden="true">✓</span>' + esc(label) + '</button></td>';
+            }
+            tip = r.nama + " — " + c.label + ": belum ada" + (c.key === "cm" && r.st.rps ? " (metode di RPS bukan Case Method/TBP)" : c.key === "bk" && r.st.rps ? " (RPS belum mencantumkan SDG)" : "");
+            return '<td class="c"><span class="k61-c no" data-tip="' + esc(tip) + '"><span class="ic" aria-hidden="true">✗</span>Belum</span></td>';
+        }
+
+        function k61Html(p) {
+            const per = k61Periode(p);
+            const d = k61Build(per.ta, per.sems);
+            k61Last = d;
+            const semLabel = per.sems.length === 2 ? "Semester Ganjil & Genap" : "Semester " + per.sems[0];
+            const N = K61_KOLOM.length;
+            let h = '<div class="viz-card"><div class="d-flex justify-content-between align-items-start flex-wrap gap-2">' +
+                '<div><h5><i class="fas fa-clipboard-check me-2 text-primary"></i>Rekapitulasi Perangkat Pembelajaran PS per TA</h5>' +
+                '<div class="viz-sub">Tahun Akademik <b>' + esc(d.ta) + '</b> · ' + semLabel + ' · ' + d.total + ' mata kuliah · status dihitung otomatis dari dokumen yang diupload</div></div>' +
+                '<button type="button" class="btn btn-sm btn-success btn-csv" onclick="unduhK61()"><i class="fas fa-file-excel me-1"></i>Unduh Excel (format K6.1)</button></div>' +
+                (per.auto ? '<div class="small text-muted mb-3"><i class="fas fa-info-circle me-1"></i>Menampilkan tahun akademik terbaru. Pilih tahun akademik lain pada filter <b>Periode</b> di atas.</div>' : '');
+
+            // ---- ringkasan: kelengkapan rata-rata + persentase per perangkat ----
+            h += '<div class="row g-3 mb-3"><div class="col-lg-3"><div class="k61-hero">' +
+                '<div class="k61-ring" style="--p:' + d.rata + '" role="img" aria-label="Kelengkapan rata-rata ' + d.rata + '%"><span>' + d.rata + '%</span></div>' +
+                '<div class="fw-bold mt-2">Kelengkapan rata-rata</div>' +
+                '<div class="small text-muted">' + d.lengkap + ' MK lengkap (' + N + '/' + N + ') · ' + d.kosong + ' MK belum ada dokumen</div></div></div>' +
+                '<div class="col-lg-9"><div class="k61-bars">' + K61_KOLOM.map(function(c) {
+                    const s = d.persen[c.key];
+                    const sub = d.sems.length === 2 ? 'Ganjil ' + s.Ganjil + '% · Genap ' + s.Genap + '%' : '';
+                    return '<div class="k61-bar" data-tip="' + esc(c.label + ': ' + s.n + ' dari ' + d.total + ' MK (' + s.p + '%)' + (sub ? ' · ' + sub : '')) + '">' +
+                        '<div class="d-flex justify-content-between"><span class="lbl">' + esc(c.label) + '</span><span class="val">' + s.p + '%</span></div>' +
+                        '<div class="track"><span style="width:' + s.p + '%"></span></div>' +
+                        '<div class="sub">' + s.n + ' dari ' + d.total + ' MK' + (sub ? ' · ' + sub : '') + '</div></div>';
+                }).join("") + '</div></div></div>';
+
+            // ---- tabel ----
+            h += '<div class="k61-tools d-flex flex-wrap align-items-center gap-2 mb-2 no-print">' +
+                '<div class="input-group input-group-sm" style="max-width:300px;"><span class="input-group-text"><i class="fas fa-search"></i></span>' +
+                '<input type="search" class="form-control" id="k61Cari" placeholder="Cari mata kuliah / kode / dosen" oninput="k61Filter()"></div>' +
+                '<div class="form-check form-switch mb-0 ms-1"><input class="form-check-input" type="checkbox" id="k61Belum" onchange="k61Filter()">' +
+                '<label class="form-check-label small" for="k61Belum">Hanya yang belum lengkap</label></div>' +
+                '<div class="ms-auto small text-muted"><span class="k61-c ok sm"><span class="ic">✓</span>Ada</span> klik untuk melihat dokumen · ' +
+                '<span class="k61-c no sm"><span class="ic">✗</span>Belum</span></div></div>';
+            h += '<div class="k61-wrap"><table class="k61-table"><thead><tr><th class="no">No</th><th class="mk">Mata Kuliah</th><th>SKS</th><th class="dsn">Dosen Pengampu</th><th>Smt</th>' +
+                K61_KOLOM.map(function(c) { return '<th class="c" title="' + esc(c.label) + '">' + c.short + '</th>'; }).join("") +
+                '<th class="kl">Kelengkapan</th></tr></thead><tbody>';
+            let no = 0;
+            d.sections.forEach(function(sec) {
+                const rata = sec.rows.length ? Math.round(sec.rows.reduce(function(a, r) { return a + r.skor; }, 0) / (sec.rows.length * N) * 100) : 0;
+                h += '<tr class="k61-sec"><td colspan="' + (6 + N) + '">Semester ' + esc(sec.sem) + ' TA ' + esc(d.ta) +
+                    '<span class="fw-normal ms-2">· ' + sec.rows.length + ' mata kuliah · kelengkapan ' + rata + '%</span></td></tr>';
+                sec.rows.forEach(function(r) {
+                    no++;
+                    const q = (r.nama + " " + r.kode + " " + r.dosen.join(" ")).toLowerCase();
+                    h += '<tr class="k61-row" data-q="' + esc(q) + '" data-skor="' + r.skor + '">' +
+                        '<td class="no">' + no + '</td>' +
+                        '<td class="mk"><div class="nm">' + esc(r.nama) + '</div><div class="kd">' + (r.extra ? '<span class="badge bg-warning-subtle text-dark border">di luar kurikulum</span>' : esc(r.kode)) + '</div></td>' +
+                        '<td class="num">' + (r.sks || "–") + '</td>' +
+                        '<td class="dsn">' + (r.dosen.length ? r.dosen.map(esc).join("<br>") : '<span class="text-muted">–</span>') + '</td>' +
+                        '<td class="num">' + (r.smt || "–") + '</td>' +
+                        K61_KOLOM.map(function(c) { return k61Cell(r, c); }).join("") +
+                        '<td class="kl"><div class="k61-meter" title="' + r.skor + ' dari ' + N + ' perangkat"><span style="width:' + Math.round(r.skor / N * 100) + '%"></span></div><span class="small">' + r.skor + '/' + N + '</span></td></tr>';
+                });
+            });
+            h += '</tbody><tfoot><tr><td colspan="5" class="text-end">Persentase (' + d.total + ' MK)</td>' +
+                K61_KOLOM.map(function(c) { return '<td class="c">' + d.persen[c.key].p + '%</td>'; }).join("") +
+                '<td class="kl">' + d.rata + '%</td></tr></tfoot></table></div>' +
+                '<div id="k61Kosong" class="viz-empty" style="display:none;">Tidak ada mata kuliah yang cocok dengan pencarian.</div>';
+            h += '<div class="small text-muted mt-2"><i class="fas fa-info-circle me-1"></i>' +
+                'Baris mata kuliah diambil dari kurikulum Prodi; RPS, kontrak, jurnal, presensi & nilai dicocokkan per semester. ' +
+                'Integrasi Penelitian/PkM dihitung dari dokumen Penelitian/PkM pada TA yang sama yang mencantumkan mata kuliah tersebut. ' +
+                'Bahan kajian saat ini dihitung dari SDGs pada RPS.</div></div>';
+            return h;
+        }
+
+        function k61Filter() {
+            const q = (document.getElementById("k61Cari").value || "").toLowerCase().trim();
+            const belum = document.getElementById("k61Belum").checked;
+            let shown = 0;
+            document.querySelectorAll("#statContent .k61-table tbody tr").forEach(function(tr) {
+                if (tr.classList.contains("k61-sec")) return;
+                const vis = (!q || tr.dataset.q.indexOf(q) > -1) && (!belum || +tr.dataset.skor < K61_KOLOM.length);
+                tr.style.display = vis ? "" : "none";
+                if (vis) shown++;
+            });
+            // sembunyikan judul semester yang tidak punya baris tampil
+            document.querySelectorAll("#statContent .k61-table tbody tr.k61-sec").forEach(function(sec) {
+                let n = sec.nextElementSibling, any = false;
+                while (n && !n.classList.contains("k61-sec")) { if (n.style.display !== "none") { any = true; break; } n = n.nextElementSibling; }
+                sec.style.display = any ? "" : "none";
+            });
+            document.getElementById("k61Kosong").style.display = shown ? "none" : "block";
+        }
+
+        // Unduh Excel dengan susunan kolom yang sama seperti format K6.1
+        async function unduhK61() {
+            const d = k61Last; if (!d) return;
+            let X;
+            try { X = await ensureXlsx(); } catch (e) { alert("Gagal memuat pembuat Excel. Periksa koneksi internet lalu coba lagi."); return; }
+            const yn = function(b) { return b ? "Ada" : "Belum Ada"; };
+            const aoa = [
+                ["No.", "Kode Mata Kuliah", "Nama Mata Kuliah", "Bobot SKS", "Dosen Pengampu", "Jadwal Kuliah", "Semester", "Kelas", "RPS",
+                 "Integrasi Hasil Penelitian", "Integrasi Hasil PkM", "Case Method/Team Based Project", "Kontrak Perkuliahan", "Jurnal Dosen",
+                 "Presensi Mahasiswa", "Nilai Mahasiswa",
+                 "Persentase keberadaan Mata Kuliah bahan kajian yang memuat: a) Kearifan Lokal Kalimantan; b) SDGs; c) NAPZA; d) Pendidikan anti korupsi."],
+                Array.from({ length: 17 }, function(_, i) { return "(" + (i + 1) + ")"; })
+            ];
+            let no = 0;
+            d.sections.forEach(function(sec) {
+                aoa.push(["Semester " + sec.sem + " TA " + d.ta]);
+                sec.rows.forEach(function(r) {
+                    no++;
+                    aoa.push([no, r.kode === "-" ? "" : r.kode, r.nama, r.sks || "", r.dosen.join("\n"), "", r.smt || "", "",
+                        yn(r.st.rps), yn(r.st.pen), yn(r.st.pkm), r.metode || "", yn(r.st.kontrak), yn(r.st.jurnal),
+                        yn(r.st.presensi), yn(r.st.nilai), r.st.bk ? "Ada" : "Belum Ada"]);
+                });
+            });
+            const pRow = aoa.length;
+            aoa.push(["Persentase", "", "", "", "", "", "", ""].concat(K61_KOLOM.map(function(c) { return d.total ? d.persen[c.key].n / d.total : 0; })));
+            const ws = X.utils.aoa_to_sheet(aoa);
+            for (let c = 8; c <= 16; c++) { const a = X.utils.encode_cell({ r: pRow, c: c }); if (ws[a]) ws[a].z = "0.00%"; }
+            ws["!merges"] = [{ s: { r: pRow, c: 0 }, e: { r: pRow, c: 7 } }];
+            ws["!cols"] = [4, 14, 48, 9, 38, 12, 9, 7, 11, 13, 13, 22, 12, 11, 12, 12, 30].map(function(w) { return { wch: w }; });
+            const wb = X.utils.book_new();
+            X.utils.book_append_sheet(wb, ws, "Perangkat Pembelajaran");
+            X.writeFile(wb, "K6.1 Rekapitulasi Perangkat Pembelajaran PS TA " + d.ta.replace("/", "-") +
+                (d.sems.length === 1 ? " " + d.sems[0] : "") + ".xlsx");
+        }
+
         function renderStatistik() {
             const box = document.getElementById("statContent");
             if (!box || !window.dataLoaded) return;
@@ -2421,7 +2954,8 @@
             });
             const mkRows = Object.keys(mk).map(function(k) { return mk[k]; })
                 .sort(function(a, b) { return (b.pen + b.pkm) - (a.pen + a.pkm) || a.n.localeCompare(b.n, "id"); });
-            const daftarMk = Array.from(new Set(mkList().map(function(x) { return x.v; }))).sort(function(a, b) { return a.localeCompare(b, "id"); });
+            // Pembanding: mata kuliah di kurikulum Prodi (bukan seluruh variasi nama di daftar)
+            const daftarMk = Array.from(new Set(KURIKULUM.map(function(k) { return k[1]; }))).sort(function(a, b) { return a.localeCompare(b, "id"); });
             const mkTerint = daftarMk.filter(function(n) { return mk[n]; }).length;
             const mkBelum = daftarMk.filter(function(n) { return !mk[n]; });
             const maxMk = mkRows.reduce(function(a, r) { return Math.max(a, r.pen + r.pkm); }, 0);
@@ -2561,8 +3095,25 @@
             }
 
             if (!data.length) h = '<div class="viz-card"><div class="viz-empty"><i class="fas fa-database fs-2 d-block mb-2 opacity-50"></i>Belum ada dokumen pada periode ' + esc(pLabel) + '.</div></div>';
-            box.innerHTML = h;
+
+            // Dua tab: Rekap Perangkat Pembelajaran (K6.1) & Integrasi Penelitian/PkM + SDGs
+            const panes = [
+                { id: "k61", label: '<i class="fas fa-clipboard-check me-1"></i>Perangkat Pembelajaran (K6.1)', html: k61Html(p) },
+                { id: "integrasi", label: '<i class="fas fa-layer-group me-1"></i>Integrasi Penelitian/PkM & SDGs', html: h }
+            ];
+            if (!panes.some(function(x) { return x.id === statSubTab; })) statSubTab = "k61";
+            box.innerHTML = '<ul class="nav nav-pills stat-tabs mb-3 no-print" role="tablist">' + panes.map(function(x) {
+                    return '<li class="nav-item"><button type="button" class="nav-link" role="tab" data-pane="' + x.id + '" onclick="setStatSubTab(\'' + x.id + '\')">' + x.label + '</button></li>';
+                }).join("") + '</ul>' +
+                panes.map(function(x) { return '<div class="stat-pane" data-pane="' + x.id + '">' + x.html + '</div>'; }).join("");
+            setStatSubTab(statSubTab);
         }
+
+        // Rekap K6.1: klik sel "✓ Ada" → pratinjau dokumennya
+        document.addEventListener("click", function(e) {
+            const b = e.target.closest && e.target.closest("#statContent [data-doc]");
+            if (b) viewFile(b.dataset.doc);
+        });
 
         // Tooltip untuk semua elemen ber-atribut data-tip (batang, kolom, sel matriks)
         (function() {
