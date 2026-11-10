@@ -87,8 +87,14 @@
         .pv-frame { width: 100%; height: 80vh; border: 0; display: block; background: #fff; }
 
         /* ===== REKAP PERANGKAT PEMBELAJARAN (K6.1) ===== */
-        .stat-tabs .nav-link { border: 1px solid #dee2e6; background: #fff; color: #495057; margin-right: 6px; margin-bottom: 4px; font-size: .9rem; }
-        .stat-tabs .nav-link.active { background: #0d6efd; border-color: #0d6efd; color: #fff; }
+        /* Tab Statistik: menimpa gaya menu navigasi atas (tulisan putih) agar terbaca di latar terang */
+        #statContent .stat-tabs .nav-link { border: 1.5px solid #9ec5fe !important; background: #fff !important; color: #0b4fa8 !important;
+            font-weight: 600; margin: 0 8px 6px 0 !important; padding: 8px 16px !important; font-size: .92rem; border-radius: 10px;
+            transform: none !important; box-shadow: 0 1px 2px rgba(13,110,253,.08); }
+        #statContent .stat-tabs .nav-link:hover { background: #eaf2ff !important; color: #0a3f86 !important; border-color: #6ea8fe !important; }
+        #statContent .stat-tabs .nav-link.active { background: #0d6efd !important; border-color: #0d6efd !important; color: #fff !important;
+            box-shadow: 0 4px 10px rgba(13,110,253,.25); }
+        #statContent .stat-tabs .nav-link:focus-visible { outline: 3px solid #86b7fe; outline-offset: 2px; }
         .k61-hero { border: 1px solid #e6e8ec; border-radius: 12px; padding: 16px; text-align: center; height: 100%; }
         .k61-ring { --p: 0; width: 120px; height: 120px; margin: 0 auto; border-radius: 50%;
                     background: conic-gradient(var(--series-1) calc(var(--p) * 1%), var(--track) 0); display: grid; place-items: center; }
@@ -123,6 +129,15 @@
         button.k61-c.ok:hover { background: #ceead6; }
         .k61-c.no { background: #fdecea; color: #a50e0e; border-color: #f6c7c3; }
         .k61-c.sm { padding: 0 6px; }
+        .k61-cek { border-radius: 8px; padding: 8px 12px; font-size: .86rem; }
+        .k61-cek.ok { background: #e6f4ea; border: 1px solid #b7dfc3; color: #0f5c2a; }
+        .k61-cek.warn { background: #fff4e5; border: 1px solid #ffc078; color: #7a4a00; }
+        .k61-cek.info { background: #f1f3f5; border: 1px solid #dee2e6; color: #495057; }
+        .k61-table tr.k61-sub td { background: #f7f5fd !important; color: #5a32a3; font-size: .76rem; padding: 4px 6px; border-bottom: 1px solid #e6def8; }
+        .k61-table tr.k61-sub td.mk { font-weight: 700; text-align: right; color: #5a32a3; }
+        .k61-table tr.k61-sub td.num { font-weight: 700; font-size: .84rem; color: #3d1f85; }
+        .k61-periksa { border: 1px solid #e6e8ec; border-radius: 10px; padding: 10px 14px; background: #fcfcfd; }
+        .k61-periksa summary { cursor: pointer; font-weight: 600; color: var(--text-primary); }
         .k61-meter { height: 6px; background: var(--track); border-radius: 3px; overflow: hidden; margin: 0 auto 2px; width: 70px; }
         .k61-meter span { display: block; height: 100%; background: var(--series-1); }
         @media print {
@@ -547,7 +562,14 @@
 
                                     <!-- DINAMIS: METODE & KURIKULUM RPS -->
                                     <div class="row" id="divKhususRps" style="display: none;">
-                                        <div class="col-md-6 mb-3" id="divMetodeRps">
+                                        <div class="col-md-3 mb-3" id="divSksRps">
+                                            <div class="p-3 bg-light rounded border h-100" style="border-left: 4px solid #6f42c1 !important;">
+                                                <label class="form-label fw-bold" for="sksRps" style="color: #6f42c1 !important;"><i class="fas fa-hashtag me-2"></i>Jumlah SKS <span class="text-danger">*</span></label>
+                                                <input type="number" class="form-control" id="sksRps" name="sksRps" min="1" max="8" step="1" inputmode="numeric" placeholder="mis. 3">
+                                                <small class="text-muted">Bobot SKS mata kuliah (1–8)</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5 mb-3" id="divMetodeRps">
                                             <div class="p-3 bg-light rounded border" style="border-left: 4px solid #198754 !important;">
                                                 <label class="form-label fw-bold text-success"><i class="fas fa-chalkboard-teacher me-2"></i>Metode Pembelajaran RPS</label>
                                                 <select class="form-select" name="metodePembelajaran">
@@ -558,7 +580,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 mb-3" id="divKurikulumRps">
+                                        <div class="col-md-4 mb-3" id="divKurikulumRps">
                                             <div class="p-3 bg-light rounded border" style="border-left: 4px solid #ffc107 !important;">
                                                 <label class="form-label fw-bold" style="color: #d39e00 !important;"><i class="fas fa-book-open me-2"></i>Versi Kurikulum</label>
                                                 <select class="form-select" name="kurikulumRps">
@@ -896,8 +918,8 @@
         //  INISIALISASI SUPABASE
         // =============================================================
         // Naikkan nomor + tanggal ini setiap kali Anda meng-update aplikasi.
-        const APP_VERSION = "v3.6";
-        const APP_UPDATED = "6 Nov 2026";
+        const APP_VERSION = "v3.8";
+        const APP_UPDATED = "10 Nov 2026";
         const CFG = window.APP_CONFIG || {};
         const BUCKET = CFG.BUCKET || "dokumen";
         const TABLE = "dokumen";
@@ -960,7 +982,8 @@
                 const picked = !e.inputType || e.inputType === "insertReplacementText";
                 checkMkInput(isMkMulti() && picked && isMkOption(mkIn.value.trim()));
             });
-            mkIn.addEventListener("change", function() { checkMkInput(true); });
+            mkIn.addEventListener("change", function() { checkMkInput(true); saranSksKurikulum(); });
+            document.getElementById("semesterMK").addEventListener("change", saranSksKurikulum);
             mkIn.addEventListener("keydown", function(e) {
                 if (e.key === "Enter") { e.preventDefault(); if (isMkMulti()) tambahMkDariInput(); else checkMkInput(true); }
             });
@@ -1336,6 +1359,10 @@
             const nCase = (flat.match(/case[\s-]*method|studi\s+kasus|pemecahan\s+kasus/gi) || []).length;
             const nTeam = (flat.match(/team[\s-]*based[\s-]*project|project[\s-]*based|berbasis\s+proyek|\bPjBL\b/gi) || []).length;
             if (nCase || nTeam) s.metode = nCase >= nTeam ? "Case Method" : "Team-Based Project";
+            // SKS: "SKS : 3", "Bobot (sks) : 2", "3 SKS", atau "T=2 P=1"
+            m = text.match(/\b(?:bobot\s*\(?\s*sks\s*\)?|sks|bobot)\s*[:：=\t]\s*(\d)\b/i) || text.match(/\b(\d)\s*sks\b/i);
+            if (m && +m[1] >= 1 && +m[1] <= 8) s.sks = m[1];
+            else if ((m = text.match(/\bT\s*[:=]\s*(\d)\s*[,;/]?\s*P\s*[:=]\s*(\d)\b/i)) && (+m[1] + +m[2]) >= 1 && (+m[1] + +m[2]) <= 8) s.sks = String(+m[1] + +m[2]);
             if (/\bOBE\b|outcome[\s-]*based|kurikulum\s*2024/i.test(flat)) s.kurikulum = "Kurikulum 2024 (OBE)";
             else if (/kurikulum\s*2021/i.test(flat)) s.kurikulum = "Kurikulum 2021";
 
@@ -1477,6 +1504,7 @@
             }
 
             if (kat === "RPS") {
+                suggest(document.getElementById("sksRps"), s.sks || sksKurikulum(s.mataKuliah || s.mataKuliahGuess, s.semesterMK), "Jumlah SKS");
                 suggest(byName("metodePembelajaran"), s.metode, "Metode Pembelajaran");
                 suggest(byName("kurikulumRps"), s.kurikulum, "Kurikulum");
                 if (s.sdg) {
@@ -1809,6 +1837,7 @@
                            "bentuk_hasil,indeks_jurnal,penerbit_buku,isbn,jenis_produk,deskripsi_produk,nomor_ec,link_publikasi,keterangan,file_name,sdg_terpilih,sdg_persentase";
         const GUEST_COLS = GUEST_COLS_BASE + ",file_path,file_url"; // v3.3: tamu bisa melihat & mengunduh file
         let guestFileBlocked = false; // true bila database belum menjalankan update-terbaru.sql (lokasi file belum dibuka untuk tamu)
+        let guestColTier = 0;          // tingkat kolom yang berhasil dibaca tamu (0 = lengkap)
         function setGuestFlag(on) {
             try { if (on) sessionStorage.setItem("etd_tamu", "1"); else sessionStorage.removeItem("etd_tamu"); } catch (e) {}
         }
@@ -1825,7 +1854,7 @@
             if (!sb) { showConfigAlert(); return; }
             const s = await sb.auth.getSession();
             if (s.data && s.data.session) await sb.auth.signOut(); // pastikan benar-benar sebagai tamu
-            isGuest = true; guestFileBlocked = false; setGuestFlag(true); resetDataState();
+            isGuest = true; guestFileBlocked = false; guestColTier = 0; setGuestFlag(true); resetDataState();
             document.getElementById("loginScreen").style.display = "none";
             document.getElementById("mainApp").style.display = "block";
             document.getElementById("loginAlert").style.display = "none";
@@ -1937,6 +1966,7 @@
             }
 
             document.getElementById("divKhususRps").style.display = (kat === "RPS") ? "flex" : "none";
+            document.getElementById("sksRps").required = (kat === "RPS"); // SKS wajib untuk RPS
             document.getElementById("divSdg").style.display = (kat === "RPS") ? "block" : "none";
             document.getElementById("divNomorEC").style.display = (kat === "HKI") ? "block" : "none";
             const showPen = (kat === "Penelitian" || kat === "Pengabdian Masyarakat");
@@ -1989,6 +2019,12 @@
                 throw res.error;
             }
             return (res.data && res.data[0]) || null;
+        }
+        // Kolom tertentu belum ada di database (SQL terbaru belum dijalankan)
+        function isMissingCol(e, col) {
+            if (!e || e.code === "23505") return false;
+            const re = new RegExp("column[^]*\\b" + col + "\\b|'" + col + "' column|\\b" + col + "\\b[^]*(does not exist|schema cache)", "i");
+            return (e.code === "42703" || e.code === "PGRST204" || e.code === "42501") && re.test(e.message || "");
         }
         // Kolom file_hash belum dibuat (SQL update v3.0 belum dijalankan) — BUKAN penolakan duplikat (23505)
         function isMissingHashColumn(e) {
@@ -2274,10 +2310,21 @@
                     sdg_persentase: sdgPersentase
                 };
                 if (hashSupported && dupState.file === file && dupState.hash) row.file_hash = dupState.hash;
+                // Jumlah SKS (khusus RPS)
+                let sksTidakTersimpan = false;
+                if (inti.kategori === "RPS") {
+                    const sksVal = parseInt(v("sksRps"), 10);
+                    if (sksVal >= 1 && sksVal <= 8) row.sks = sksVal;
+                }
                 let ins = await sb.from(TABLE).insert(row);
                 if (ins.error && row.file_hash && isMissingHashColumn(ins.error)) {
                     // kolom file_hash belum ada di database → simpan tanpa sidik jari
                     hashSupported = false; delete row.file_hash;
+                    ins = await sb.from(TABLE).insert(row);
+                }
+                if (ins.error && row.sks !== undefined && isMissingCol(ins.error, "sks")) {
+                    // kolom sks belum ada (update-terbaru.sql belum dijalankan) → simpan tanpa SKS, beri tahu
+                    delete row.sks; sksTidakTersimpan = true;
                     ins = await sb.from(TABLE).insert(row);
                 }
                 if (ins.error) {
@@ -2304,7 +2351,8 @@
                     throw ins.error;
                 }
 
-                showAlert("success", "fa-check-circle", "Dokumen berhasil disimpan!");
+                if (sksTidakTersimpan) showAlert("warning", "fa-exclamation-triangle", "<b>Dokumen berhasil disimpan, tetapi jumlah SKS belum tersimpan.</b> Admin perlu menjalankan <code>update-terbaru.sql</code> di Supabase agar SKS ikut tercatat.");
+                else showAlert("success", "fa-check-circle", "Dokumen berhasil disimpan!");
                 form.reset();
                 resetDup();
                 resetIsian();
@@ -2315,7 +2363,11 @@
                 toggleDynamicFields();
                 togglePenelitianFields();
                 loadData();
-                setTimeout(function() { switchTab("list"); alertArea.style.display = "none"; }, 2000);
+                setTimeout(function() {
+                    // pindah ke Daftar Dokumen hanya bila pengguna masih di halaman upload (tidak menarik balik dari Statistik)
+                    if (document.getElementById("tab-upload").style.display !== "none") switchTab("list");
+                    alertArea.style.display = "none";
+                }, 2000);
             } catch (err) {
                 showAlert("danger", "fa-times-circle", "<b>Error:</b> " + esc(err && err.message ? err.message : err));
             } finally {
@@ -2343,6 +2395,7 @@
                 tahunAjaran: d(r.tahun_ajaran), semester: d(r.semester),
                 namaFile: d(r.nama_file), mataKuliah: d(r.mata_kuliah), semesterMK: d(r.semester_mk),
                 metode: d(r.metode), kurikulumRps: d(r.kurikulum_rps),
+                sks: (r.sks === null || r.sks === undefined || r.sks === "") ? null : +r.sks,
                 bentukHasil: d(r.bentuk_hasil), indeksJurnal: d(r.indeks_jurnal),
                 penerbitBuku: d(r.penerbit_buku), isbnBuku: d(r.isbn),
                 jenisProduk: d(r.jenis_produk), deskripsiProduk: d(r.deskripsi_produk),
@@ -2359,13 +2412,16 @@
                 const all = [];
                 const PAGE = 1000;
                 for (let from = 0; ; from += PAGE) {
-                    const cols = !isGuest ? "*" : (guestFileBlocked ? GUEST_COLS_BASE : GUEST_COLS);
-                    let res = await sb.from(TABLE).select(cols).order("created_at", { ascending: false }).range(from, from + PAGE - 1);
-                    if (res.error && isGuest && !guestFileBlocked && res.error.code === "42501") {
-                        // update-terbaru.sql belum dijalankan: tampilkan daftar tanpa akses file
-                        guestFileBlocked = true;
-                        res = await sb.from(TABLE).select(GUEST_COLS_BASE).order("created_at", { ascending: false }).range(from, from + PAGE - 1);
+                    // Tamu: coba kolom terlengkap dulu; bila database belum diperbarui, turun bertahap
+                    //   (1) + SKS + lokasi file → (2) + lokasi file → (3) dasar (tanpa akses file)
+                    const tiers = !isGuest ? ["*"] : [GUEST_COLS + ",sks", GUEST_COLS, GUEST_COLS_BASE].slice(guestColTier);
+                    let res;
+                    for (let t = 0; t < tiers.length; t++) {
+                        res = await sb.from(TABLE).select(tiers[t]).order("created_at", { ascending: false }).range(from, from + PAGE - 1);
+                        if (!res.error || !isGuest || ["42501", "42703", "PGRST204"].indexOf(res.error.code) < 0) break;
+                        guestColTier++;
                     }
+                    if (isGuest) guestFileBlocked = (guestColTier >= 2);
                     if (res.error) throw res.error;
                     all.push.apply(all, res.data);
                     if (res.data.length < PAGE) break;
@@ -2459,6 +2515,7 @@
                 let info = '<b>Oleh:</b> ' + esc(f.pengunggah) + ' <br><small class="text-muted"><i class="far fa-clock me-1"></i>' + esc(f.timestamp) + '</small>';
 
                 if (f.kategori === "RPS") {
+                    if (f.sks) labels += '<span class="badge badge-custom" style="background:#efe7fb;color:#5a32a3;"><i class="fas fa-hashtag me-1"></i>' + f.sks + ' SKS</span>';
                     if (f.metode !== "-") labels += '<span class="badge badge-custom badge-metode"><i class="fas fa-chalkboard-teacher me-1"></i>' + esc(f.metode) + '</span>';
                     if (f.kurikulumRps !== "-") labels += '<span class="badge badge-custom badge-kurikulum"><i class="fas fa-book-open me-1"></i>' + esc(f.kurikulumRps) + '</span>';
                     if (f.sdgPersentase !== "-") {
@@ -2728,30 +2785,88 @@
             return { ta: y + "/" + (y + 1), sems: both, auto: true };
         }
 
+        // Nama mata kuliah lain (di daftar dropdown) yang sama dengan baris kurikulum K6.1
+        const K61_ALIAS = {};
+        [
+            ["Manajemen Kesehatan Lingkungan & Limbah Rumah Sakit", "Manajemen Kesehatan Lingkungan Rumah Sakit"],
+            ["Praktik Manajemen Kesehatan Lingkungan & Limbah Rumah Sakit", "Praktik Manajemen Kesehatan Lingkungan Rumah Sakit"],
+            ["Penyuluhan Kesehatan", "Penyuluhan Kesehatan Rumah Sakit"],
+            ["Praktik Penyuluhan Kesehatan", "Praktik Penyuluhan Kesehatan Rumah Sakit"],
+            ["Ilmu Sosial Dasar", "Pengantar Ilmu Sosial Dasar"],
+            ["Aplikasi Komputer II", "Praktik Aplikasi Komputer II"],
+            ["Bahasa Inggris (dasar dan profesi)", "Bahasa Inggris"],
+            ["Bahasa Inggris (dasar dan profesi)", "Bahasa Inggris (profesi)"]
+        ].forEach(function(a) { const k = normMk(a[0]); (K61_ALIAS[k] = K61_ALIAS[k] || []).push(normMk(a[1])); });
+        function k61Names(n) { return [n].concat(K61_ALIAS[n] || []); }
+        // Form RPS: isi SKS dari data kurikulum bila kolom SKS masih kosong (sebagai saran, tetap bisa diubah)
+        function saranSksKurikulum() {
+            if (document.getElementById("kategori").value !== "RPS") return;
+            const el = document.getElementById("sksRps");
+            if (el.value || el.dataset.touched === "1") return;
+            const v = sksKurikulum(document.getElementById("mataKuliahInput").value, document.getElementById("semesterMK").value);
+            if (v) suggest(el, v, "Jumlah SKS");
+        }
+        // SKS dari data kurikulum (bila tercantum), untuk saran di form RPS
+        function sksKurikulum(mk, smt) {
+            if (!mk) return null;
+            const names = k61Names(normMk(mk)), s = smtNum(smt);
+            const rows = KURIKULUM.filter(function(k) { return k[3] && names.indexOf(normMk(k[1])) > -1; });
+            const r = rows.find(function(k) { return k[2] === s; }) || rows[0];
+            return r ? String(r[3]) : null;
+        }
+
         function k61Build(ta, sems) {
-            const inTa = (window.allFilesData || []).filter(function(f) { return f.tahunAjaran === ta; });
+            const all = window.allFilesData || [];
+            const inTa = all.filter(function(f) { return f.tahunAjaran === ta; });
             const karya = inTa.filter(function(f) { return KARYA_KAT.indexOf(f.kategori) > -1; });
             const emptyDocs = function() { return { rps: [], kontrak: [], jurnal: [], presensi: [], nilai: [], pen: [], pkm: [] }; };
+            // ---- pemeriksaan kelengkapan data: dokumen perangkat pembelajaran pada periode ini ----
+            const cek = { total: 0, masuk: 0, belum: [], luar: {}, perKat: {}, tanpaTa: [], bedaSmt: {} };
+            Object.keys(K61_KAT).forEach(function(k) { cek.perKat[k] = 0; });
+            all.forEach(function(f) { if (K61_KAT[f.kategori] && !/\d{4}\s*\/\s*\d{4}/.test(f.tahunAjaran)) cek.tanpaTa.push(f); });
+            inTa.forEach(function(f) {
+                if (!K61_KAT[f.kategori]) return;
+                const semOk = (f.semester === "Ganjil" || f.semester === "Genap");
+                if (semOk && sems.indexOf(f.semester) < 0) return; // semester lain (filter periode)
+                cek.total++;
+                if (!semOk) cek.belum.push({ f: f, alasan: "Semester (Ganjil/Genap) belum diisi" });
+                else if (f.mataKuliah === "-") cek.belum.push({ f: f, alasan: "Mata kuliah belum diisi" });
+                else { cek.masuk++; cek.perKat[f.kategori]++; }
+            });
+
             const sections = sems.map(function(sem) {
                 const odd = (sem === "Ganjil");
-                const rows = KURIKULUM.map(function(k, i) { return { kode: k[0], nama: k[1], smt: k[2], sks: k[3], idx: i, n: normMk(k[1]), docs: emptyDocs(), extra: false }; })
+                const rows = KURIKULUM.map(function(k, i) { return { kode: k[0], nama: k[1], smt: k[2], sksKur: k[3], idx: i, n: normMk(k[1]), docs: emptyDocs(), extra: false }; })
                     .filter(function(r) { return (r.smt % 2 === 1) === odd; });
-                // dokumen perangkat pembelajaran pada semester ini → baris mata kuliahnya
+                // dokumen perangkat pembelajaran pada semester ini → baris mata kuliahnya (termasuk nama padanan)
                 inTa.filter(function(f) { return f.semester === sem && K61_KAT[f.kategori] && f.mataKuliah !== "-"; }).forEach(function(f) {
-                    const n = normMk(f.mataKuliah), smt = smtNum(f.semesterMK);
-                    const cands = rows.filter(function(r) { return r.n === n; });
+                    const n = normMk(f.mataKuliah), names = k61Names(n), smt = smtNum(f.semesterMK);
+                    const cands = rows.filter(function(r) { return !r.extra && names.indexOf(r.n) > -1; });
                     let r = cands.find(function(c) { return c.smt === smt; }) || cands[0];
+                    if (!r) r = rows.find(function(x) { return x.n === n; });
+                    if (!r) {
+                        // Nama ADA di kurikulum, tetapi semesternya beda ganjil/genap dengan periode upload
+                        // (mis. MK semester genap diajarkan pada periode Ganjil) → tetap pakai baris kurikulumnya
+                        const kk = KURIKULUM.filter(function(k) { return names.indexOf(normMk(k[1])) > -1; });
+                        const k = kk.find(function(x) { return x[2] === smt; }) || kk[0];
+                        if (k) {
+                            r = { kode: k[0], nama: k[1], smt: k[2], sksKur: k[3], idx: 900, n: normMk(k[1]), docs: emptyDocs(), extra: false, bedaSmt: true };
+                            cek.bedaSmt[k[1]] = (cek.bedaSmt[k[1]] || 0) + 1;
+                            rows.push(r);
+                        }
+                    }
                     if (!r) { // MK di luar kurikulum: tetap ditampilkan agar tidak ada dokumen yang terlewat
-                        r = { kode: "-", nama: f.mataKuliah, smt: smt, sks: null, idx: 999, n: n, docs: emptyDocs(), extra: true };
+                        r = { kode: "-", nama: f.mataKuliah, smt: smt, sksKur: null, idx: 999, n: n, docs: emptyDocs(), extra: true };
                         rows.push(r);
                     }
+                    if (r.extra) cek.luar[r.nama] = (cek.luar[r.nama] || 0) + 1;
                     r.docs[K61_KAT[f.kategori]].push(f);
                 });
                 // integrasi hasil Penelitian/PkM pada TA yang sama
                 karya.forEach(function(f) {
                     splitMk(f.mataKuliah).forEach(function(m) {
-                        const n = normMk(m);
-                        rows.filter(function(r) { return r.n === n; }).forEach(function(r) { r.docs[f.kategori === "Penelitian" ? "pen" : "pkm"].push(f); });
+                        const names = k61Names(normMk(m));
+                        rows.filter(function(r) { return names.indexOf(r.n) > -1; }).forEach(function(r) { r.docs[f.kategori === "Penelitian" ? "pen" : "pkm"].push(f); });
                     });
                 });
                 rows.forEach(function(r) {
@@ -2763,6 +2878,10 @@
                     });
                     r.metode = Array.from(met).join(" & ");
                     r.sdg = Array.from(sdg).sort(function(a, b) { return a - b; });
+                    // SKS: dari RPS yang diupload; bila belum ada, dari data kurikulum
+                    const rpsSks = r.docs.rps.map(function(f) { return f.sks; }).find(function(x) { return x >= 1; });
+                    r.sks = rpsSks || r.sksKur || null;
+                    r.sksSumber = rpsSks ? "rps" : (r.sksKur ? "kurikulum" : null);
                     r.st = {
                         rps: r.docs.rps.length > 0, pen: r.docs.pen.length > 0, pkm: r.docs.pkm.length > 0, cm: met.size > 0,
                         kontrak: r.docs.kontrak.length > 0, jurnal: r.docs.jurnal.length > 0, presensi: r.docs.presensi.length > 0,
@@ -2773,21 +2892,33 @@
                     r.skor = K61_KOLOM.filter(function(c) { return r.st[c.key]; }).length;
                 });
                 rows.sort(function(a, b) { return (a.extra - b.extra) || (a.smt - b.smt) || (a.idx - b.idx) || a.nama.localeCompare(b.nama, "id"); });
-                return { sem: sem, rows: rows };
+                const sumSks = function(list) { return list.reduce(function(a, r) { return a + (r.sks || 0); }, 0); };
+                // subtotal SKS per semester MK (1, 3, 5, 7 / 2, 4, 6, 8) + MK di luar kurikulum
+                const grup = [];
+                rows.forEach(function(r) {
+                    const key = r.extra ? "luar" : r.smt;
+                    let g = grup.find(function(x) { return x.key === key; });
+                    if (!g) { g = { key: key, smt: r.smt, extra: r.extra, rows: [] }; grup.push(g); }
+                    g.rows.push(r);
+                });
+                grup.forEach(function(g) { g.sks = sumSks(g.rows); g.tanpaSks = g.rows.filter(function(r) { return !r.sks; }).length; });
+                return { sem: sem, rows: rows, grup: grup, sks: sumSks(rows), tanpaSks: rows.filter(function(r) { return !r.sks; }).length };
             });
-            const all = [].concat.apply([], sections.map(function(s) { return s.rows; }));
+            const rowsAll = [].concat.apply([], sections.map(function(s) { return s.rows; }));
             const persen = {};
             K61_KOLOM.forEach(function(c) {
-                persen[c.key] = { n: all.filter(function(r) { return r.st[c.key]; }).length };
+                persen[c.key] = { n: rowsAll.filter(function(r) { return r.st[c.key]; }).length };
                 sections.forEach(function(s) { persen[c.key][s.sem] = pct(s.rows.filter(function(r) { return r.st[c.key]; }).length, s.rows.length); });
-                persen[c.key].p = pct(persen[c.key].n, all.length);
+                persen[c.key].p = pct(persen[c.key].n, rowsAll.length);
             });
-            const totalAda = all.reduce(function(a, r) { return a + r.skor; }, 0);
+            const totalAda = rowsAll.reduce(function(a, r) { return a + r.skor; }, 0);
             return {
-                ta: ta, sems: sems, sections: sections, total: all.length, persen: persen,
-                rata: all.length ? Math.round(totalAda / (all.length * K61_KOLOM.length) * 100) : 0,
-                lengkap: all.filter(function(r) { return r.skor === K61_KOLOM.length; }).length,
-                kosong: all.filter(function(r) { return r.skor === 0; }).length
+                ta: ta, sems: sems, sections: sections, total: rowsAll.length, persen: persen, cek: cek,
+                sks: sections.reduce(function(a, s) { return a + s.sks; }, 0),
+                tanpaSks: sections.reduce(function(a, s) { return a + s.tanpaSks; }, 0),
+                rata: rowsAll.length ? Math.round(totalAda / (rowsAll.length * K61_KOLOM.length) * 100) : 0,
+                lengkap: rowsAll.filter(function(r) { return r.skor === K61_KOLOM.length; }).length,
+                kosong: rowsAll.filter(function(r) { return r.skor === 0; }).length
             };
         }
 
@@ -2814,12 +2945,25 @@
             const d = k61Build(per.ta, per.sems);
             k61Last = d;
             const semLabel = per.sems.length === 2 ? "Semester Ganjil & Genap" : "Semester " + per.sems[0];
-            const N = K61_KOLOM.length;
+            const N = K61_KOLOM.length, KOL = 6 + N; // jumlah kolom tabel
+            const cek = d.cek;
             let h = '<div class="viz-card"><div class="d-flex justify-content-between align-items-start flex-wrap gap-2">' +
                 '<div><h5><i class="fas fa-clipboard-check me-2 text-primary"></i>Rekapitulasi Perangkat Pembelajaran PS per TA</h5>' +
-                '<div class="viz-sub">Tahun Akademik <b>' + esc(d.ta) + '</b> · ' + semLabel + ' · ' + d.total + ' mata kuliah · status dihitung otomatis dari dokumen yang diupload</div></div>' +
+                '<div class="viz-sub">Tahun Akademik <b>' + esc(d.ta) + '</b> · ' + semLabel + ' · ' + d.total + ' mata kuliah · <b>' + d.sks + ' SKS</b> · status dihitung otomatis dari dokumen yang diupload</div></div>' +
                 '<button type="button" class="btn btn-sm btn-success btn-csv" onclick="unduhK61()"><i class="fas fa-file-excel me-1"></i>Unduh Excel (format K6.1)</button></div>' +
-                (per.auto ? '<div class="small text-muted mb-3"><i class="fas fa-info-circle me-1"></i>Menampilkan tahun akademik terbaru. Pilih tahun akademik lain pada filter <b>Periode</b> di atas.</div>' : '');
+                (per.auto ? '<div class="small text-muted mb-2"><i class="fas fa-info-circle me-1"></i>Menampilkan tahun akademik terbaru. Pilih tahun akademik lain pada filter <b>Periode</b> di atas.</div>' : '');
+
+            // ---- status kelengkapan pencatatan ----
+            const nLuar = Object.keys(cek.luar).reduce(function(a, k) { return a + cek.luar[k]; }, 0);
+            if (!cek.total) {
+                h += '<div class="k61-cek info mb-3"><i class="fas fa-info-circle me-1"></i>Belum ada dokumen perangkat pembelajaran (RPS, kontrak, jurnal, presensi, nilai) pada periode ini.</div>';
+            } else if (!cek.belum.length) {
+                h += '<div class="k61-cek ok mb-3"><i class="fas fa-check-circle me-1"></i><b>Semua ' + cek.total + ' dokumen perangkat pembelajaran</b> pada periode ini sudah tercatat di rekap' +
+                    (nLuar ? ' (' + nLuar + ' di antaranya untuk mata kuliah di luar kurikulum, ditampilkan di bagian bawah tiap semester)' : '') + '.</div>';
+            } else {
+                h += '<div class="k61-cek warn mb-3"><i class="fas fa-exclamation-triangle me-1"></i><b>' + cek.belum.length + ' dari ' + cek.total + ' dokumen</b> belum bisa dihitung karena isiannya belum lengkap. ' +
+                    'Lihat <a href="#k61Periksa" onclick="document.getElementById(\'k61Periksa\').open = true;">Pemeriksaan data</a> di bawah tabel.</div>';
+            }
 
             // ---- ringkasan: kelengkapan rata-rata + persentase per perangkat ----
             h += '<div class="row g-3 mb-3"><div class="col-lg-3"><div class="k61-hero">' +
@@ -2847,29 +2991,59 @@
                 K61_KOLOM.map(function(c) { return '<th class="c" title="' + esc(c.label) + '">' + c.short + '</th>'; }).join("") +
                 '<th class="kl">Kelengkapan</th></tr></thead><tbody>';
             let no = 0;
+            const sksNote = function(n) { return n ? '<span class="text-muted fw-normal"> · ' + n + ' MK belum ada data SKS</span>' : ''; };
             d.sections.forEach(function(sec) {
                 const rata = sec.rows.length ? Math.round(sec.rows.reduce(function(a, r) { return a + r.skor; }, 0) / (sec.rows.length * N) * 100) : 0;
-                h += '<tr class="k61-sec"><td colspan="' + (6 + N) + '">Semester ' + esc(sec.sem) + ' TA ' + esc(d.ta) +
-                    '<span class="fw-normal ms-2">· ' + sec.rows.length + ' mata kuliah · kelengkapan ' + rata + '%</span></td></tr>';
-                sec.rows.forEach(function(r) {
-                    no++;
-                    const q = (r.nama + " " + r.kode + " " + r.dosen.join(" ")).toLowerCase();
-                    h += '<tr class="k61-row" data-q="' + esc(q) + '" data-skor="' + r.skor + '">' +
-                        '<td class="no">' + no + '</td>' +
-                        '<td class="mk"><div class="nm">' + esc(r.nama) + '</div><div class="kd">' + (r.extra ? '<span class="badge bg-warning-subtle text-dark border">di luar kurikulum</span>' : esc(r.kode)) + '</div></td>' +
-                        '<td class="num">' + (r.sks || "–") + '</td>' +
-                        '<td class="dsn">' + (r.dosen.length ? r.dosen.map(esc).join("<br>") : '<span class="text-muted">–</span>') + '</td>' +
-                        '<td class="num">' + (r.smt || "–") + '</td>' +
-                        K61_KOLOM.map(function(c) { return k61Cell(r, c); }).join("") +
-                        '<td class="kl"><div class="k61-meter" title="' + r.skor + ' dari ' + N + ' perangkat"><span style="width:' + Math.round(r.skor / N * 100) + '%"></span></div><span class="small">' + r.skor + '/' + N + '</span></td></tr>';
+                h += '<tr class="k61-sec"><td colspan="' + KOL + '">Semester ' + esc(sec.sem) + ' TA ' + esc(d.ta) +
+                    '<span class="fw-normal ms-2">· ' + sec.rows.length + ' mata kuliah · <b>' + sec.sks + ' SKS</b> · kelengkapan ' + rata + '%</span></td></tr>';
+                sec.grup.forEach(function(g) {
+                    g.rows.forEach(function(r) {
+                        no++;
+                        const q = (r.nama + " " + r.kode + " " + r.dosen.join(" ")).toLowerCase();
+                        const sksCell = !r.sks ? '<span class="text-muted">–</span>'
+                            : r.sksSumber === "rps" ? '<b>' + r.sks + '</b>'
+                            : '<span class="text-muted" title="Dari data kurikulum (SKS belum diisi pada RPS)">' + r.sks + '<sup>*</sup></span>';
+                        h += '<tr class="k61-row" data-q="' + esc(q) + '" data-skor="' + r.skor + '">' +
+                            '<td class="no">' + no + '</td>' +
+                            '<td class="mk"><div class="nm">' + esc(r.nama) + '</div><div class="kd">' + (r.extra ? '<span class="badge bg-warning-subtle text-dark border">di luar kurikulum</span>' : esc(r.kode)) +
+                                (r.bedaSmt ? ' <span class="badge bg-info-subtle text-dark border" title="Di kurikulum mata kuliah ini ada di semester ' + r.smt + ', tetapi dokumennya diupload pada periode ' + esc(sec.sem) + '">semester kurikulum ' + r.smt + '</span>' : '') + '</div></td>' +
+                            '<td class="num">' + sksCell + '</td>' +
+                            '<td class="dsn">' + (r.dosen.length ? r.dosen.map(esc).join("<br>") : '<span class="text-muted">–</span>') + '</td>' +
+                            '<td class="num">' + (r.smt || "–") + '</td>' +
+                            K61_KOLOM.map(function(c) { return k61Cell(r, c); }).join("") +
+                            '<td class="kl"><div class="k61-meter" title="' + r.skor + ' dari ' + N + ' perangkat"><span style="width:' + Math.round(r.skor / N * 100) + '%"></span></div><span class="small">' + r.skor + '/' + N + '</span></td></tr>';
+                    });
+                    // subtotal SKS per semester MK
+                    h += '<tr class="k61-sub"><td class="no"></td><td class="mk">Jumlah SKS ' + (g.extra ? 'MK di luar kurikulum' : 'Semester ' + g.smt) + '</td>' +
+                        '<td class="num">' + g.sks + '</td><td colspan="' + (KOL - 3) + '">' + g.rows.length + ' mata kuliah' + sksNote(g.tanpaSks) + '</td></tr>';
                 });
             });
-            h += '</tbody><tfoot><tr><td colspan="5" class="text-end">Persentase (' + d.total + ' MK)</td>' +
+            h += '</tbody><tfoot><tr><td colspan="2" class="text-end">Total (' + d.total + ' MK)</td><td>' + d.sks + '</td>' +
+                '<td colspan="2" class="text-end">Persentase</td>' +
                 K61_KOLOM.map(function(c) { return '<td class="c">' + d.persen[c.key].p + '%</td>'; }).join("") +
                 '<td class="kl">' + d.rata + '%</td></tr></tfoot></table></div>' +
                 '<div id="k61Kosong" class="viz-empty" style="display:none;">Tidak ada mata kuliah yang cocok dengan pencarian.</div>';
+
+            // ---- pemeriksaan data ----
+            const perKat = Object.keys(cek.perKat).map(function(k) { return '<span class="me-3">' + esc(k) + ': <b>' + cek.perKat[k] + '</b></span>'; }).join("");
+            h += '<details class="k61-periksa mt-3" id="k61Periksa"' + (cek.belum.length ? ' open' : '') + '><summary><i class="fas fa-stethoscope me-1"></i>Pemeriksaan data ' +
+                (cek.belum.length ? '<span class="badge bg-warning text-dark ms-1">' + cek.belum.length + ' perlu dilengkapi</span>' : '<span class="badge bg-success ms-1">lengkap</span>') + '</summary>' +
+                '<div class="mt-2 small">' +
+                '<div class="mb-2"><b>' + cek.masuk + ' dari ' + cek.total + '</b> dokumen perangkat pembelajaran pada periode ini tercatat di rekap. Rinciannya: ' + perKat + '</div>' +
+                (cek.belum.length ? '<div class="mb-1 fw-bold text-danger">Belum terhitung (isian belum lengkap) — hapus lalu upload ulang dengan isian lengkap:</div><ul class="mb-2">' +
+                    cek.belum.map(function(x) { return '<li>' + esc(x.f.kategori) + ' · ' + esc(x.f.mataKuliah !== "-" ? x.f.mataKuliah : judulDok(x.f)) + ' · diupload ' + esc(x.f.pengunggah) + ' (' + esc(x.f.timestamp) + ') — <i>' + esc(x.alasan) + '</i> ' +
+                        '<button type="button" class="btn btn-link btn-sm p-0 align-baseline" data-doc="' + esc(x.f.id) + '">lihat</button></li>'; }).join("") + '</ul>' : '') +
+                (nLuar ? '<div class="mb-1 fw-bold">Mata kuliah di luar daftar kurikulum K6.1 (tetap ditampilkan di tabel):</div><div class="chip-list mb-2">' +
+                    Object.keys(cek.luar).sort().map(function(k) { return '<span>' + esc(k) + ' (' + cek.luar[k] + ' dokumen)</span>'; }).join("") + '</div>' : '') +
+                (Object.keys(cek.bedaSmt).length ? '<div class="mb-1 fw-bold">Diajarkan pada periode berbeda dari semester di kurikulum (tetap dihitung, diberi tanda di tabel):</div><div class="chip-list mb-2">' +
+                    Object.keys(cek.bedaSmt).sort().map(function(k) { return '<span>' + esc(k) + ' (' + cek.bedaSmt[k] + ' dokumen)</span>'; }).join("") + '</div>' : '') +
+                (cek.tanpaTa.length ? '<div class="text-danger mb-1"><b>' + cek.tanpaTa.length + ' dokumen</b> perangkat pembelajaran tidak punya tahun akademik, sehingga tidak muncul di periode mana pun.</div>' : '') +
+                '<div class="text-muted">Nama mata kuliah dengan penulisan berbeda yang sudah dianggap sama: "Manajemen Kesehatan Lingkungan &amp; Limbah RS" = "Manajemen Kesehatan Lingkungan RS", "Penyuluhan Kesehatan" = "Penyuluhan Kesehatan RS", "Ilmu Sosial Dasar" = "Pengantar Ilmu Sosial Dasar", "Aplikasi Komputer II" = "Praktik Aplikasi Komputer II", "Bahasa Inggris (dasar dan profesi)" = Bahasa Inggris (Ganjil) / Bahasa Inggris (profesi) (Genap).</div>' +
+                '</div></details>';
+
             h += '<div class="small text-muted mt-2"><i class="fas fa-info-circle me-1"></i>' +
                 'Baris mata kuliah diambil dari kurikulum Prodi; RPS, kontrak, jurnal, presensi & nilai dicocokkan per semester. ' +
+                'SKS diambil dari isian SKS pada RPS; <sup>*</sup> = dari data kurikulum karena SKS belum diisi pada RPS. ' +
                 'Integrasi Penelitian/PkM dihitung dari dokumen Penelitian/PkM pada TA yang sama yang mencantumkan mata kuliah tersebut. ' +
                 'Bahan kajian saat ini dihitung dari SDGs pada RPS.</div></div>';
             return h;
@@ -2879,22 +3053,23 @@
             const q = (document.getElementById("k61Cari").value || "").toLowerCase().trim();
             const belum = document.getElementById("k61Belum").checked;
             let shown = 0;
-            document.querySelectorAll("#statContent .k61-table tbody tr").forEach(function(tr) {
-                if (tr.classList.contains("k61-sec")) return;
+            document.querySelectorAll("#statContent .k61-table tbody tr.k61-row").forEach(function(tr) {
                 const vis = (!q || tr.dataset.q.indexOf(q) > -1) && (!belum || +tr.dataset.skor < K61_KOLOM.length);
                 tr.style.display = vis ? "" : "none";
                 if (vis) shown++;
             });
+            // baris jumlah SKS hanya tampil saat tidak ada pencarian/penyaringan (agar totalnya tidak menyesatkan)
+            document.querySelectorAll("#statContent .k61-table tbody tr.k61-sub").forEach(function(tr) { tr.style.display = (q || belum) ? "none" : ""; });
             // sembunyikan judul semester yang tidak punya baris tampil
             document.querySelectorAll("#statContent .k61-table tbody tr.k61-sec").forEach(function(sec) {
                 let n = sec.nextElementSibling, any = false;
-                while (n && !n.classList.contains("k61-sec")) { if (n.style.display !== "none") { any = true; break; } n = n.nextElementSibling; }
+                while (n && !n.classList.contains("k61-sec")) { if (n.classList.contains("k61-row") && n.style.display !== "none") { any = true; break; } n = n.nextElementSibling; }
                 sec.style.display = any ? "" : "none";
             });
             document.getElementById("k61Kosong").style.display = shown ? "none" : "block";
         }
 
-        // Unduh Excel dengan susunan kolom yang sama seperti format K6.1
+        // Unduh Excel dengan susunan kolom yang sama seperti format K6.1 (+ jumlah SKS per semester)
         async function unduhK61() {
             const d = k61Last; if (!d) return;
             let X;
@@ -2916,7 +3091,9 @@
                         yn(r.st.rps), yn(r.st.pen), yn(r.st.pkm), r.metode || "", yn(r.st.kontrak), yn(r.st.jurnal),
                         yn(r.st.presensi), yn(r.st.nilai), r.st.bk ? "Ada" : "Belum Ada"]);
                 });
+                aoa.push(["", "", "Jumlah SKS Semester " + sec.sem, sec.sks]);
             });
+            if (d.sections.length > 1) aoa.push(["", "", "Total SKS", d.sks]);
             const pRow = aoa.length;
             aoa.push(["Persentase", "", "", "", "", "", "", ""].concat(K61_KOLOM.map(function(c) { return d.total ? d.persen[c.key].n / d.total : 0; })));
             const ws = X.utils.aoa_to_sheet(aoa);
